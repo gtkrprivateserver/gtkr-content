@@ -6,37 +6,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="logo">GTKR VIDEO</div>
-    <button onclick="window.location.href='index.html'" class="upload-btn">Back</button>
-  </header>
+<header>
+  <div class="logo">GTKR VIDEO</div>
+  <button onclick="window.location.href='index.html'" class="upload-btn">Back</button>
+</header>
 
-  <main class="upload-main">
-    <h1>Upload Video</h1>
-    <form id="uploadForm">
-      <input type="text" name="title" placeholder="Judul Video" required>
-      <input type="file" name="video" accept="video/*" required>
-      <button type="submit">Upload</button>
-    </form>
-    <p id="msg"></p>
-  </main>
+<main class="upload-main">
+  <h1>Upload Video</h1>
+  <form id="uploadForm">
+    <input type="text" name="title" placeholder="Judul Video" required>
+    <input type="file" name="video" accept="video/*" required>
+    <button type="submit">Upload</button>
+  </form>
+  <p id="msg"></p>
+</main>
 
-  <script>
-    const form = document.getElementById('uploadForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-
-      const res = await fetch('/api/upload.js', {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await res.json();
-      const msg = document.getElementById('msg');
-      if (data.success) msg.textContent = 'Upload berhasil!';
-      else msg.textContent = 'Upload gagal!';
-    });
-  </script>
+<script src="upload.js"></script>
 </body>
 </html>
