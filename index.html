@@ -6,52 +6,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="logo">GTKR VIDEO</div>
-    <input type="text" placeholder="Search..." class="search-bar">
-    <button onclick="window.location.href='upload.html'" class="upload-btn">Upload</button>
-  </header>
+<header>
+  <div class="logo">GTKR VIDEO</div>
+  <input type="text" id="search-bar" placeholder="Search videos..." class="search-bar">
+  <button onclick="window.location.href='upload.html'" class="upload-btn">Upload</button>
+</header>
 
-  <!-- Sidebar + Content -->
-  <div class="main-container">
-    <aside class="sidebar">
-      <ul>
-        <li>Home</li>
-        <li>Trending</li>
-        <li>Library</li>
-      </ul>
-    </aside>
+<main>
+  <div class="video-grid" id="video-container"></div>
+  <button id="load-more" class="load-more-btn">Load More</button>
+</main>
 
-    <main>
-      <div class="video-grid" id="video-container">
-        <!-- Video cards akan diisi dengan JS -->
-      </div>
-    </main>
+<div id="video-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <video id="modal-video" controls autoplay></video>
+    <h3 id="modal-title"></h3>
   </div>
+</div>
 
-  <script>
-    async function fetchVideos() {
-      const res = await fetch('/api/videos.js');
-      const videos = await res.json();
-      const container = document.getElementById('video-container');
-      container.innerHTML = '';
-
-      videos.forEach(v => {
-        const card = document.createElement('div');
-        card.className = 'video-card';
-        card.innerHTML = `
-          <div class="video-thumb">
-            <video src="${v.url}" poster="${v.thumbnail || ''}" controls></video>
-          </div>
-          <h3>${v.title}</h3>
-          <p>Uploaded: ${new Date(v.createdAt).toLocaleDateString()}</p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    fetchVideos();
-  </script>
+<script src="script.js"></script>
 </body>
 </html>
