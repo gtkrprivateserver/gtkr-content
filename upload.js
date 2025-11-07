@@ -5,11 +5,11 @@ form.addEventListener('submit', async e => {
   const msg = document.getElementById('msg');
 
   try {
-    const res = await fetch('/api/upload.js', { method:'POST', body:formData });
+    const res = await fetch('/api/upload.js', { method:'POST', body: formData });
     const data = await res.json();
-    if(data.success) msg.textContent='Upload berhasil!';
-    else msg.textContent='Upload gagal!';
-  } catch(err){
-    msg.textContent='Upload gagal!';
+    if(data.success) msg.textContent = 'Upload berhasil!';
+    else msg.textContent = 'Upload gagal!';
+  } catch(err) {
+    msg.textContent = 'Upload gagal!';
   }
 });
