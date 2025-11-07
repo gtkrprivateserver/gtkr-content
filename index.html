@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GTKR Video</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">GTKR VIDEO</div>
+    <input type="text" placeholder="Search..." class="search-bar">
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <div class="video-grid" id="video-container">
+      <!-- Video cards akan diisi dengan JS -->
+    </div>
+  </main>
+
+  <script>
+    async function fetchVideos() {
+      const res = await fetch('/user/videos.js');
+      const videos = await res.json();
+      const container = document.getElementById('video-container');
+      container.innerHTML = '';
+
+      videos.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'video-card';
+        card.innerHTML = `
+          <video src="${v.url}" controls poster="${v.thumbnail || ''}"></video>
+          <h3>${v.title}</h3>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    fetchVideos();
+  </script>
+</body>
+</html>
