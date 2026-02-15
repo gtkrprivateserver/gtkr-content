@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHASTE Official</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaste Kingdom - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    iframe.sidebar-frame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      border: none;
+    }
+    .content { margin-left: 260px; padding: 40px; max-width: 900px; }
+  </style>
 </head>
 <body>
-<header class="nav">
-  <div class="logo"><img src="logo.png">CHASTE</div>
-  <nav id="menu"></nav>
-</header>
 
-<section class="hero">
-  <img src="logo.png" class="hero-logo">
-  <h1>CHASTE</h1>
-  <p>One Name. One Loyalty. One Legacy.</p>
-</section>
+  <!-- Sidebar via iframe -->
+  <iframe src="sidebar.html" class="sidebar-frame"></iframe>
 
-<footer>© 2026 CHASTE Official</footer>
-<script src="menu.js"></script>
+  <div class="content">
+    <header>
+      <h1>Chaste Kingdom</h1>
+      <p>Selamat datang di dunia kerajaan Chaste</p>
+    </header>
+    <p>Ini adalah halaman utama Chaste Kingdom. Jelajahi menu untuk mengetahui lebih banyak tentang kerajaan ini.</p>
+  </div>
+
+  <footer>© OneDev Entertainment</footer>
 </body>
 </html>
