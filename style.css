@@ -1,72 +1,130 @@
 /* ===== Global ===== */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-body { background-color: #f4e9d2; color: #3e2f1c; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+body {
+  background: linear-gradient(to bottom, #f9f5ef, #e0d6c2);
+  color: #3e2f1c;
+  min-height: 100vh;
+}
 
-/* Sidebar */
-.sidebar {
+/* ===== Sidebar via iframe ===== */
+iframe.sidebar-frame {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   width: 250px;
   height: 100%;
-  background-color: #8c6d4c;
-  padding-top: 50px;
+  border: none;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
 }
-.sidebar a {
-  display: block;
-  padding: 15px 20px;
-  color: #f4e9d2;
-  font-weight: bold;
-  border-bottom: 1px solid #6b4f33;
-}
-.sidebar a:hover { background-color: #6b4f33; }
 
-/* Page Content */
+/* ===== Content ===== */
 .content {
-  margin-left: 260px;
-  padding: 40px;
+  margin-left: 270px;
+  padding: 50px 40px;
   max-width: 900px;
 }
 
-/* Header */
+/* ===== Header ===== */
 header {
   text-align: center;
-  padding: 50px 20px 20px 20px;
+  padding: 40px 20px 30px 20px;
   background: url('https://images.unsplash.com/photo-1609875507481-65e38f6c4f73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080') no-repeat center/cover;
   color: #f4e9d2;
   font-family: 'MedievalSharp', cursive;
-  text-shadow: 2px 2px #3e2f1c;
+  text-shadow: 3px 3px #3e2f1c;
+  border-radius: 10px;
+  margin-bottom: 30px;
 }
-header h1 { font-size: 48px; margin-bottom: 10px; }
-header p { font-size: 20px; }
+header h1 {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+header p {
+  font-size: 22px;
+  font-weight: 500;
+}
 
-/* Pages */
-h2 { font-family: 'MedievalSharp', cursive; font-size: 36px; margin-bottom: 20px; }
-p, li { font-size: 18px; line-height: 1.6; }
-ul { padding-left: 20px; }
+/* ===== Headings ===== */
+h2 {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 40px;
+  color: #5a3f29;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #6b4f33;
+  padding-bottom: 5px;
+}
 
-/* Join Form */
-form { display: flex; flex-direction: column; max-width: 400px; }
+/* ===== Paragraphs & Lists ===== */
+p, li {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+ul {
+  padding-left: 25px;
+  list-style: square;
+}
+
+/* ===== Join Form ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 450px;
+  margin-top: 20px;
+}
 input, textarea, button {
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 12px;
   border: 2px solid #6b4f33;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 16px;
+}
+input:focus, textarea:focus {
+  border-color: #8c6d4c;
+  outline: none;
+  box-shadow: 0 0 5px rgba(140,109,76,0.7);
 }
 button {
   background-color: #6b4f33;
   color: #f4e9d2;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
 }
-button:hover { background-color: #5a3f29; }
+button:hover {
+  background-color: #8c6d4c;
+  transform: translateY(-2px);
+}
 
-/* Footer */
+/* ===== Footer ===== */
 footer {
   text-align: center;
   padding: 20px;
   background-color: #8c6d4c;
   color: #f4e9d2;
   margin-top: 40px;
+  border-top: 3px solid #6b4f33;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 5px 5px 0 0;
+}
+
+/* ===== Links Styling ===== */
+.sidebar a {
+  display: block;
+  padding: 15px 20px;
+  color: #f4e9d2;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+.sidebar a:hover {
+  background-color: #6b4f33;
+  transform: translateX(5px);
 }
