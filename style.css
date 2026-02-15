@@ -11,14 +11,25 @@ body {
   overflow-x: hidden;
 }
 
+.container {
+  width: 90%;
+  max-width: 1300px;
+  margin: auto;
+}
+
+/* ================= HEADER ================= */
+
 header {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  padding: 20px 0;
+}
+
+.header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 60px;
-  position: absolute;
-  width: 100%;
-  z-index: 10;
 }
 
 .logo {
@@ -26,8 +37,12 @@ header {
   font-size: 22px;
 }
 
+nav {
+  display: flex;
+  gap: 25px;
+}
+
 nav a {
-  margin: 0 15px;
   text-decoration: none;
   color: #ccc;
   font-weight: 500;
@@ -38,22 +53,32 @@ nav a:hover {
   color: #ff2e2e;
 }
 
+/* ================= HERO ================= */
+
 .hero {
-  height: 100vh;
-  background: linear-gradient(rgba(0,0,30,0.7), rgba(0,0,30,0.8)),
+  min-height: 100vh;
+  background: linear-gradient(rgba(0,0,30,0.75), rgba(0,0,30,0.85)),
   url('https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
   display: flex;
   align-items: center;
-  padding: 0 60px;
-  position: relative;
+  padding: 120px 0 60px 0;
+}
+
+.hero-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
 }
 
 .hero-content {
-  max-width: 600px;
+  flex: 1;
+  min-width: 280px;
 }
 
 .hero h1 {
-  font-size: 70px;
+  font-size: clamp(35px, 6vw, 70px);
   font-weight: 800;
   line-height: 1.1;
 }
@@ -61,11 +86,12 @@ nav a:hover {
 .hero p {
   margin: 20px 0;
   color: #ccc;
+  font-size: clamp(14px, 2vw, 16px);
 }
 
 .btn {
   display: inline-block;
-  padding: 12px 25px;
+  padding: 12px 28px;
   border-radius: 30px;
   background: #ff2e2e;
   color: white;
@@ -78,11 +104,12 @@ nav a:hover {
   background: #e60000;
 }
 
+/* ================= SIDEBAR ================= */
+
 .sidebar {
-  position: absolute;
-  right: 60px;
-  top: 150px;
-  width: 300px;
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
 }
 
 .sidebar h3 {
@@ -102,15 +129,17 @@ nav a:hover {
   color: #ccc;
 }
 
+/* ================= COUNTDOWN ================= */
+
 .match-box {
-  position: absolute;
-  bottom: 50px;
-  right: 60px;
-  background: rgba(0,0,0,0.7);
-  padding: 20px 30px;
-  border-radius: 10px;
+  margin-top: 40px;
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  border-radius: 12px;
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .match-box div {
@@ -126,16 +155,58 @@ nav a:hover {
   color: #aaa;
 }
 
-@media(max-width: 1000px) {
-  .sidebar {
+/* ================= MOBILE MENU ================= */
+
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+
+  nav {
+    position: absolute;
+    top: 70px;
+    right: 5%;
+    background: #111;
+    flex-direction: column;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
     display: none;
   }
 
-  .hero h1 {
-    font-size: 40px;
+  nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .sidebar {
+    max-width: 100%;
   }
 
   .match-box {
-    right: 20px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .match-box {
+    gap: 15px;
+  }
+
+  .match-box h2 {
+    font-size: 22px;
   }
 }
