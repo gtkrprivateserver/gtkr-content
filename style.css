@@ -1,11 +1,72 @@
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
-body{background:#0a0a0a;color:#fff}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 30px;border-bottom:1px solid #222}
-.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:3px}
-.logo img{width:30px;height:30px;border-radius:50%}
-nav a{color:#aaa;margin-left:20px;text-decoration:none}
-nav a:hover{color:#fff}
-.hero{height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-.hero-logo{width:90px;border-radius:50%;margin-bottom:15px}
-.page{max-width:800px;margin:auto;padding:50px 20px;line-height:1.7}
-footer{text-align:center;padding:20px;color:#777;border-top:1px solid #222}
+/* ===== Global ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+body { background-color: #f4e9d2; color: #3e2f1c; }
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #8c6d4c;
+  padding-top: 50px;
+}
+.sidebar a {
+  display: block;
+  padding: 15px 20px;
+  color: #f4e9d2;
+  font-weight: bold;
+  border-bottom: 1px solid #6b4f33;
+}
+.sidebar a:hover { background-color: #6b4f33; }
+
+/* Page Content */
+.content {
+  margin-left: 260px;
+  padding: 40px;
+  max-width: 900px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 50px 20px 20px 20px;
+  background: url('https://images.unsplash.com/photo-1609875507481-65e38f6c4f73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080') no-repeat center/cover;
+  color: #f4e9d2;
+  font-family: 'MedievalSharp', cursive;
+  text-shadow: 2px 2px #3e2f1c;
+}
+header h1 { font-size: 48px; margin-bottom: 10px; }
+header p { font-size: 20px; }
+
+/* Pages */
+h2 { font-family: 'MedievalSharp', cursive; font-size: 36px; margin-bottom: 20px; }
+p, li { font-size: 18px; line-height: 1.6; }
+ul { padding-left: 20px; }
+
+/* Join Form */
+form { display: flex; flex-direction: column; max-width: 400px; }
+input, textarea, button {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 2px solid #6b4f33;
+  border-radius: 5px;
+  font-size: 16px;
+}
+button {
+  background-color: #6b4f33;
+  color: #f4e9d2;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover { background-color: #5a3f29; }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #8c6d4c;
+  color: #f4e9d2;
+  margin-top: 40px;
+}
