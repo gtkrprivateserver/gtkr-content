@@ -9,8 +9,8 @@
     header {position:fixed;top:0;width:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;z-index:999}
     .logo {display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:3px;font-size:20px}
     .logo img {width:32px;height:32px;border-radius:50%;object-fit:cover}
-    nav {position:fixed;top:0;right:-250px;width:220px;height:100vh;background:#000;display:flex;flex-direction:column;padding-top:80px;transition:.4s;box-shadow:-5px 0 20px rgba(0,0,0,0.5)}
-    nav.open {right:0}
+    nav {position:fixed;top:0;left:-250px;width:220px;height:100vh;background:#000;display:flex;flex-direction:column;padding-top:80px;transition:.4s;box-shadow:5px 0 20px rgba(0,0,0,0.5)}
+    nav.open {left:0}
     .menu-toggle {font-size:22px;cursor:pointer;display:none}
     nav a {color:#aaa;margin:15px 20px;text-decoration:none;transition:.3s;position:relative;padding-bottom:5px;font-size:15px}
     nav a {color:#aaa;margin-left:20px;text-decoration:none;transition:.3s;position:relative;padding-bottom:5px;font-size:14px}
@@ -31,7 +31,7 @@
     footer {text-align:center;padding:30px;color:#777;font-size:14px;border-top:1px solid #222}/* MOBILE RESPONSIVE */
 @media (max-width:768px){
   .menu-toggle {display:block}
-  nav {right:-260px}
+  nav {left:-260px}
   .hero h1 {font-size:40px}
   section {padding:80px 20px}
   nav a {margin-left:12px;font-size:13px}
