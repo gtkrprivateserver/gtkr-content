@@ -9,7 +9,12 @@
     header {position:fixed;top:0;width:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);padding:15px 40px;display:flex;justify-content:space-between;align-items:center;z-index:999}
     .logo {display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:3px;font-size:20px}
     .logo img {width:32px;height:32px;border-radius:50%;object-fit:cover}
-    nav a {color:#aaa;margin-left:25px;text-decoration:none;transition:.3s}
+    nav a {color:#aaa;margin-left:25px;text-decoration:none;transition:.3s;position:relative;padding-bottom:5px}
+    nav a::after {content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:#fff;transition:.3s}
+    nav a:hover {color:#fff}
+    nav a:hover::after {width:100%}
+    nav a.active {color:#fff}
+    nav a.active::after {width:100%}
     nav a:hover {color:#fff}
     section {padding:100px 40px}
     .hero {height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(circle at center,#1a1a1a,#000)}
@@ -74,5 +79,23 @@
   </div>
 </section><footer>
   © 2026 CHASTE Official. All Rights Reserved.
-</footer></body>
+</footer><script>
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll("nav a");
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach(sec => {
+      const sectionTop = sec.offsetTop - 120;
+      if (pageYOffset >= sectionTop) current = sec.getAttribute("id");
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === "#" + current) {
+        link.classList.add("active");
+      }
+    });
+  });
+</script></body>
 </html>
