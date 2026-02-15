@@ -1,152 +1,78 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CHASTE — Official Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHASTE Official</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #eaeaea;
-      line-height: 1.6;
-    }
-
-    header {
-      background: linear-gradient(135deg, #111, #1f1f1f);
-      padding: 60px 20px;
-      text-align: center;
-      border-bottom: 1px solid #333;
-    }
-
-    header h1 {
-      font-size: 42px;
-      letter-spacing: 3px;
-      margin-bottom: 10px;
-    }
-
-    header p {
-      color: #aaa;
-      font-size: 18px;
-    }
-
-    section {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-      border-bottom: 1px solid #222;
-    }
-
-    h2 {
-      color: #fff;
-      margin-bottom: 15px;
-      border-left: 4px solid #888;
-      padding-left: 10px;
-    }
-
-    .values {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-
-    .card {
-      background: #181818;
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid #2a2a2a;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      border-color: #555;
-      transform: translateY(-3px);
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #888;
-      font-size: 14px;
-    }
-
-    .tagline {
-      font-weight: bold;
-      color: #ccc;
-      margin-top: 10px;
-    }
+    * {margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
+    body {background:#0a0a0a;color:#fff}
+    header {position:fixed;top:0;width:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);padding:15px 40px;display:flex;justify-content:space-between;align-items:center;z-index:999}
+    .logo {display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:3px;font-size:20px}
+    .logo img {width:32px;height:32px;border-radius:50%;object-fit:cover}
+    nav a {color:#aaa;margin-left:25px;text-decoration:none;transition:.3s}
+    nav a:hover {color:#fff}
+    section {padding:100px 40px}
+    .hero {height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(circle at center,#1a1a1a,#000)}
+    .hero h1 {font-size:60px;letter-spacing:6px}
+    .hero-logo {width:90px;height:90px;border-radius:50%;margin-bottom:15px;object-fit:cover;box-shadow:0 0 25px rgba(255,255,255,0.3)}
+    .hero p {color:#bbb;margin-top:10px}
+    .btn {margin-top:25px;padding:12px 25px;border:1px solid #fff;background:transparent;color:#fff;text-decoration:none;transition:.3s}
+    .btn:hover {background:#fff;color:#000}
+    .card {background:#111;padding:25px;border-radius:12px;margin-top:20px}
+    footer {text-align:center;padding:30px;color:#777;font-size:14px;border-top:1px solid #222}
+    html {scroll-behavior:smooth}
   </style>
 </head>
-<body>
-
-<header>
-  <h1>CHASTE</h1>
-  <p class="tagline">One Name. One Loyalty. One Legacy.</p>
-</header>
-
-<section>
-  <h2>Tentang CHASTE</h2>
-  <p>
-    CHASTE adalah komunitas yang dibangun atas dasar loyalitas, respect, dan integritas.
-    Berdiri bukan karena jumlah, tetapi karena prinsip, CHASTE menjadi simbol kebersamaan yang solid dan berkelas.
-  </p>
-  <p>
-    Setiap member membawa tanggung jawab untuk menjaga nama, menjunjung nilai, dan
-    membangun legacy yang bertahan lama.
-  </p>
-</section>
-
-<section>
-  <h2>Visi</h2>
-  <p>
-    Menjadi squad yang dikenal karena kualitas, loyalitas, dan standar tinggi dalam setiap aspek.
-  </p>
-</section>
-
-<section>
-  <h2>Misi</h2>
-  <ul>
-    <li>Membangun komunitas solid dan saling mendukung</li>
-    <li>Menjaga lingkungan penuh respect dan attitude</li>
-    <li>Menciptakan legacy jangka panjang</li>
-    <li>Mengembangkan member menjadi lebih kuat dan loyal</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Nilai Utama</h2>
-  <div class="values">
-    <div class="card"><strong>Loyalty</strong><br/>Kesetiaan adalah fondasi utama.</div>
-    <div class="card"><strong>Respect</strong><br/>Hormat adalah identitas kami.</div>
-    <div class="card"><strong>Integrity</strong><br/>Sikap mencerminkan nama.</div>
-    <div class="card"><strong>Unity</strong><br/>Kuat karena bersama.</div>
+<body><header>
+  <div class="logo">
+    <img src="logo.png" alt="CHASTE Logo">
+    <span>CHASTE</span>
   </div>
-</section>
-
-<section>
-  <h2>Filosofi</h2>
-  <p>
-    Kami tidak mengejar popularitas — kami membangun reputasi.
-    Kami tidak harus paling ramai — kami memilih paling solid.
-  </p>
-  <p>
-    Di CHASTE, setiap nama berarti. Setiap member memiliki peran.
-    Setiap kehadiran meninggalkan jejak.
-  </p>
-</section>
-
-<section>
-  <h2>Penutup</h2>
-  <p>
-    CHASTE bukan hanya squad. Ini adalah simbol, keluarga, dan perjalanan.
-  </p>
-  <p><strong>Built with loyalty. Carried with pride.</strong></p>
-</section>
-
-<footer>
-  © 2026 CHASTE Squad — All Rights Reserved by ©2026 OneDev Entertainment
-</footer>
-
-</body>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#rules">Rules</a>
+    <a href="#event">Event</a>
+    <a href="#join">Join</a>
+  </nav>
+</header><section id="home" class="hero">
+  <img src="logo.png" class="hero-logo" alt="CHASTE Logo">
+  <h1>CHASTE</h1>
+  <p>One Name. One Loyalty. One Legacy.</p>
+  <a class="btn" href="#join">Join Us</a>
+</section><section id="about">
+  <h2>About CHASTE</h2>
+  <div class="card">
+    CHASTE adalah squad elite yang dibangun dari loyalitas, respect, dan identitas kuat. 
+    Kami tidak mencari keramaian — kami membangun legacy. 
+    Setiap member membawa nama CHASTE dengan kehormatan.
+  </div>
+</section><section id="rules">
+  <h2>Rules</h2>
+  <div class="card">
+    • Respect semua member dan squad lain<br>
+    • Dilarang drama & huru-hara<br>
+    • Jaga nama baik CHASTE<br>
+    • Loyalitas adalah harga mati
+  </div>
+</section><section id="event">
+  <h2>Events</h2>
+  <div class="card">
+    🔥 Voice War Night<br>
+    🎤 Live Performance
+    <br>👑 Elite Talk Session
+    <br>🎉 Anniversary CHASTE
+  </div>
+</section><section id="join">
+  <h2>Join CHASTE</h2>
+  <div class="card">
+    Ingin menjadi bagian dari legacy?
+    <br><br>
+    Hubungi admin atau founder CHASTE untuk proses seleksi.
+    <br><br>
+    Tidak semua bisa masuk. Tapi yang terpilih akan dikenang.
+  </div>
+</section><footer>
+  © 2026 CHASTE Official. All Rights Reserved.
+</footer></body>
 </html>
