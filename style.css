@@ -1,41 +1,11 @@
-/* Reset & Body */
-* {margin:0; padding:0; box-sizing:border-box;}
-body {font-family: Arial, sans-serif; background:#f9f9f9;}
-
-/* Header */
-header {
-  background:#fff; padding:15px 20px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
-  display:flex; align-items:center; justify-content:space-between;
-}
-.logo { font-size:24px; font-weight:bold; color:#ff0000; }
-.search-bar {padding:8px 12px; width:200px; border-radius:20px; border:1px solid #ccc;}
-.upload-btn {padding:8px 16px; border:none; background:#ff0000; color:#fff; border-radius:4px; cursor:pointer;}
-.upload-btn:hover {background:#cc0000;}
-
-/* Video Grid */
-main {padding:20px;}
-.video-grid {display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:20px;}
-.video-card {background:#fff; border-radius:8px; overflow:hidden; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:transform 0.2s;}
-.video-card:hover {transform:scale(1.03);}
-.thumb-container {position:relative;}
-.thumb-container img {width:100%; height:150px; object-fit:cover; display:block;}
-.duration {position:absolute; bottom:5px; right:5px; background:rgba(0,0,0,0.8); color:#fff; padding:2px 6px; font-size:12px; border-radius:3px;}
-.video-card h3 {padding:10px; font-size:16px; color:#333; text-align:center;}
-.load-more-btn {display:block; margin:20px auto; padding:10px 20px; border:none; background:#ff0000; color:#fff; border-radius:5px; cursor:pointer;}
-.load-more-btn:hover {background:#cc0000;}
-
-/* Modal */
-.modal {display:none; position:fixed; z-index:100; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}
-.modal-content {position:relative; margin:50px auto; max-width:700px; background:#fff; padding:10px; border-radius:8px; text-align:center;}
-.modal-content video {width:100%; height:auto;}
-.modal-content h3 {margin-top:10px;}
-.close-btn {position:absolute; top:5px; right:10px; font-size:24px; font-weight:bold; cursor:pointer;}
-
-/* Upload Page */
-.upload-main {max-width:500px; margin:50px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-.upload-main form {display:flex; flex-direction:column;}
-.upload-main input {margin-bottom:15px; padding:10px; font-size:14px;}
-.upload-main button {padding:10px; background:#ff0000; color:#fff; border:none; cursor:pointer; border-radius:4px;}
-.upload-main button:hover {background:#cc0000;}
-#msg {margin-top:10px; color:green;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
+body{background:#0a0a0a;color:#fff}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 30px;border-bottom:1px solid #222}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:3px}
+.logo img{width:30px;height:30px;border-radius:50%}
+nav a{color:#aaa;margin-left:20px;text-decoration:none}
+nav a:hover{color:#fff}
+.hero{height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.hero-logo{width:90px;border-radius:50%;margin-bottom:15px}
+.page{max-width:800px;margin:auto;padding:50px 20px;line-height:1.7}
+footer{text-align:center;padding:20px;color:#777;border-top:1px solid #222}
