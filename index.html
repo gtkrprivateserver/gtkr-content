@@ -11,7 +11,7 @@
     .logo img {width:32px;height:32px;border-radius:50%;object-fit:cover}
     nav {position:fixed;top:0;left:-250px;width:220px;height:100vh;background:#000;display:flex;flex-direction:column;padding-top:80px;transition:.4s;box-shadow:5px 0 20px rgba(0,0,0,0.5)}
     nav.open {left:0}
-    .menu-toggle {font-size:22px;cursor:pointer;display:none}
+    .menu-toggle {font-size:22px;cursor:pointer;display:block}
     nav a {color:#aaa;margin:15px 20px;text-decoration:none;transition:.3s;position:relative;padding-bottom:5px;font-size:15px}
     nav a {color:#aaa;margin-left:20px;text-decoration:none;transition:.3s;position:relative;padding-bottom:5px;font-size:14px}
     nav a::after {content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:#fff;transition:.3s}
@@ -30,7 +30,10 @@
     .card {background:#111;padding:25px;border-radius:12px;margin-top:20px}
     footer {text-align:center;padding:30px;color:#777;font-size:14px;border-top:1px solid #222}/* MOBILE RESPONSIVE */
 @media (max-width:768px){
-  .menu-toggle {display:block}
+  .hero h1 {font-size:40px}
+  section {padding:80px 20px}
+  nav a {font-size:14px}
+}
   nav {left:-260px}
   .hero h1 {font-size:40px}
   section {padding:80px 20px}
