@@ -1,104 +1,47 @@
 /* ============================= */
-/* PENDAFTARAN PAGE */
+/* CONTACT PENDAFTARAN */
 /* ============================= */
 
-.form-section {
-  min-height: 100vh;
-  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-              url('castle.jpg') center/cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-}
-
-.form-container {
-  background: rgba(20, 20, 20, 0.95);
-  padding: 40px;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 0 30px rgba(255,215,0,0.4);
-  animation: fadeIn 0.6s ease-in-out;
-}
-
-.form-container h1 {
+.contact-box {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid gold;
+  border-radius: 12px;
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 28px;
+  width: 100%;
+}
+
+.contact-box h3 {
+  margin-bottom: 8px;
   color: gold;
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
+.contact-box p {
+  font-size: 14px;
+  margin-bottom: 15px;
   color: #ddd;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 10px 12px;
+.wa-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #25D366;
+  color: white;
+  font-weight: 600;
   border-radius: 8px;
-  border: 1px solid #444;
-  background: #111;
-  color: #fff;
-  font-family: 'Cinzel', serif;
+  text-decoration: none;
   transition: 0.3s;
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  border-color: gold;
-  outline: none;
-  box-shadow: 0 0 8px gold;
-}
-
-.form-container button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: gold;
-  color: #000;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.form-container button:hover {
-  background: #ffd700;
+.wa-button:hover {
+  background: #1ebe5d;
   transform: translateY(-2px);
-  box-shadow: 0 0 15px gold;
 }
 
-/* Responsive */
-@media (max-width: 500px) {
-  .form-container {
-    padding: 25px;
-  }
-
-  .form-container h1 {
-    font-size: 22px;
-  }
-}
-
-/* Fade Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.wa-number {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ccc;
 }
