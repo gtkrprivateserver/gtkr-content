@@ -1,15 +1,15 @@
-function toggleMenu() {
-  const nav = document.getElementById("navMenu");
-  nav.classList.toggle("active");
-}
-
-/* Optional: Auto close menu saat klik link (biar lebih profesional) */
 document.addEventListener("DOMContentLoaded", function () {
-  const links = document.querySelectorAll("#navMenu a");
+  const sidebarContainer = document.getElementById("sidebar-container");
 
-  links.forEach(link => {
-    link.addEventListener("click", () => {
-      document.getElementById("navMenu").classList.remove("active");
-    });
-  });
+  const sidebar = document.createElement("div");
+  sidebar.classList.add("sidebar");
+
+  sidebar.innerHTML = `
+    <button title="Shop">🛒</button>
+    <button title="Gallery">🖼</button>
+    <button title="News">📰</button>
+    <button title="Chat">💬</button>
+  `;
+
+  sidebarContainer.appendChild(sidebar);
 });
