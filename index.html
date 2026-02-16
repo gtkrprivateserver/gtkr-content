@@ -1,73 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Football Club United</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chaste Official</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
-  <div class="logo">CHASTE OFFICIAL</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Matches</a>
-    <a href="#">Features</a>
-    <a href="#">Shop</a>
-    <a href="#">Contact</a>
-  </nav>
+<header class="header">
+  <div class="container nav-container">
+    <div class="logo">CHASTE</div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <nav id="navMenu" class="nav">
+      <a href="#">Home</a>
+      <a href="#">Matches</a>
+      <a href="#">Features</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <h1>CHASTE CLUB</h1>
-    <p>
-      Ticket prices for the international challenge match between CHASTE and Spain 
-      have been confirmed for October's encounter.
-    </p>
-    <a href="#" class="btn">Presale Chat</a>
+  <div class="container hero-container">
+
+    <div class="hero-left">
+      <h1>FOOTBALL CLUB CHASTE</h1>
+      <p>
+        Official website of Chaste Football Club.
+        Get latest match info, news and ticket updates.
+      </p>
+
+      <a href="#" class="btn">Presale Ticket</a>
+
+      <div class="countdown">
+        <div><h2 id="days">00</h2><span>Days</span></div>
+        <div><h2 id="hours">00</h2><span>Hrs</span></div>
+        <div><h2 id="minutes">00</h2><span>Mins</span></div>
+        <div><h2 id="seconds">00</h2><span>Secs</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <h3>Latest News</h3>
+
+      <div class="news">
+        <strong>World Cup Finals</strong>
+        <p>March 10, 2026</p>
+      </div>
+
+      <div class="news">
+        <strong>Support Your Team</strong>
+        <p>March 14, 2026</p>
+      </div>
+
+      <div class="news">
+        <strong>Why Football is the Best Sport</strong>
+        <p>March 20, 2026</p>
+      </div>
+
+    </div>
+
   </div>
-
-  <div class="sidebar">
-    <h3>Latest News</h3>
-
-    <div class="news-item">
-      <strong>Chaste World Cup Finals</strong>
-      <p>Monday, September 10, 2018</p>
-    </div>
-
-    <div class="news-item">
-      <strong>The Team that You Support</strong>
-      <p>Friday, September 14, 2018</p>
-    </div>
-
-    <div class="news-item">
-      <strong>Why Soccer is the Best Sport</strong>
-      <p>Saturday, September 29, 2018</p>
-    </div>
-  </div>
-
-  <div class="match-box">
-    <div>
-      <h2 id="days">00</h2>
-      <span>Days</span>
-    </div>
-    <div>
-      <h2 id="hours">00</h2>
-      <span>Hrs</span>
-    </div>
-    <div>
-      <h2 id="minutes">00</h2>
-      <span>Mins</span>
-    </div>
-    <div>
-      <h2 id="seconds">00</h2>
-      <span>Secs</span>
-    </div>
-  </div>
-
 </section>
 
 <script src="script.js"></script>
