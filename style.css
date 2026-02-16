@@ -1,212 +1,120 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+* {
   margin: 0;
   padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background: #0b1b2b;
-  color: #fff;
+  background: #0b1c2d;
+  color: white;
   overflow-x: hidden;
 }
 
-/* ===== CONTAINER STANDARD INDUSTRI ===== */
-.container {
-  width: 90%;
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-/* ===== HEADER ===== */
-
-.header {
+/* NAVBAR */
+.navbar {
   position: absolute;
   width: 100%;
-  z-index: 100;
-  padding: 20px 0;
-}
-
-.nav-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: 20px 60px;
+  z-index: 10;
 }
 
 .logo {
-  font-weight: 800;
   font-size: 22px;
+  font-weight: bold;
+  color: red;
 }
 
-.nav {
+.navbar ul {
   display: flex;
+  list-style: none;
   gap: 30px;
 }
 
-.nav a {
-  text-decoration: none;
-  color: #ccc;
-  font-weight: 500;
+.navbar li {
+  cursor: pointer;
   transition: 0.3s;
 }
 
-.nav a:hover {
-  color: #ff2e2e;
+.navbar li:hover,
+.navbar .active {
+  color: red;
 }
 
-.menu-toggle {
-  display: none;
-  font-size: 26px;
-  cursor: pointer;
-}
-
-/* ===== HERO ===== */
-
+/* HERO */
 .hero {
-  min-height: 100vh;
+  position: relative;
+  height: 100vh;
+  background: url("assets/hero.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
-  padding: 120px 0 80px;
-
-  background:
-    linear-gradient(rgba(0,0,30,0.85), rgba(0,0,30,0.95)),
-    url('https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=1600&q=80')
-    center/cover no-repeat;
+  padding-left: 80px;
 }
 
-.hero-container {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 60px;
-  align-items: center;
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #0b1c2d 40%, transparent);
 }
 
-.hero-left h1 {
-  font-size: clamp(32px, 5vw, 72px);
+.hero-content {
+  position: relative;
+  max-width: 600px;
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: 60px;
   line-height: 1.1;
-  font-weight: 800;
+  margin-bottom: 20px;
 }
 
-.hero-left p {
-  margin: 20px 0;
+.hero p {
+  margin-bottom: 25px;
   color: #ccc;
-  max-width: 500px;
 }
 
 .btn {
-  display: inline-block;
-  padding: 14px 32px;
-  border-radius: 40px;
-  background: #ff2e2e;
-  text-decoration: none;
+  padding: 12px 25px;
+  background: red;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
   color: white;
-  font-weight: 600;
+  font-weight: bold;
   transition: 0.3s;
 }
 
 .btn:hover {
-  background: #e60000;
+  background: darkred;
 }
 
-/* ===== COUNTDOWN ===== */
-
-.countdown {
-  margin-top: 40px;
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  right: 20px;
+  top: 40%;
   display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 20;
 }
 
-.countdown div {
-  background: rgba(0,0,0,0.5);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  min-width: 80px;
+.sidebar button {
+  width: 50px;
+  height: 50px;
+  background: red;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.countdown h2 {
-  font-size: 28px;
-}
-
-.countdown span {
-  font-size: 12px;
-  color: #aaa;
-}
-
-/* ===== SIDEBAR NEWS ===== */
-
-.hero-right h3 {
-  color: #ff2e2e;
-  margin-bottom: 20px;
-}
-
-.news {
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.news p {
-  font-size: 14px;
-  color: #aaa;
-}
-
-/* ===== RESPONSIVE ===== */
-
-/* Tablet */
-@media (max-width: 1024px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .hero-left p {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav {
-    position: absolute;
-    top: 70px;
-    right: 5%;
-    background: #111;
-    flex-direction: column;
-    padding: 20px;
-    border-radius: 10px;
-    display: none;
-  }
-
-  .nav.active {
-    display: flex;
-  }
-
-  .countdown {
-    justify-content: center;
-  }
-}
-
-/* Small phones */
-@media (max-width: 400px) {
-  .countdown div {
-    padding: 15px;
-  }
-
-  .countdown h2 {
-    font-size: 22px;
-  }
+.sidebar button:hover {
+  background: darkred;
 }
