@@ -17,6 +17,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 20px 60px;
   z-index: 10;
 }
@@ -27,20 +28,26 @@ body {
   color: red;
 }
 
-.navbar ul {
+nav ul {
   display: flex;
   list-style: none;
   gap: 30px;
 }
 
-.navbar li {
+nav li {
   cursor: pointer;
   transition: 0.3s;
 }
 
-.navbar li:hover,
-.navbar .active {
+nav li:hover,
+nav .active {
   color: red;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
 }
 
 /* HERO */
@@ -49,8 +56,9 @@ body {
   height: 100vh;
   background: url("assets/hero.jpg") center/cover no-repeat;
   display: flex;
-  align-items: center;
-  padding-left: 80px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 80px;
 }
 
 .overlay {
@@ -68,7 +76,6 @@ body {
 
 .hero h1 {
   font-size: 60px;
-  line-height: 1.1;
   margin-bottom: 20px;
 }
 
@@ -85,11 +92,36 @@ body {
   cursor: pointer;
   color: white;
   font-weight: bold;
-  transition: 0.3s;
 }
 
-.btn:hover {
-  background: darkred;
+/* COUNTDOWN */
+.countdown-container {
+  position: absolute;
+  bottom: 40px;
+  right: 80px;
+  display: flex;
+  gap: 20px;
+  z-index: 2;
+}
+
+.countdown-box {
+  background: rgba(0,0,0,0.6);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  min-width: 90px;
+}
+
+.countdown-box span {
+  font-size: 28px;
+  font-weight: bold;
+  color: red;
+}
+
+.countdown-box small {
+  display: block;
+  margin-top: 5px;
+  color: #ccc;
 }
 
 /* SIDEBAR */
@@ -112,9 +144,59 @@ body {
   font-size: 18px;
   border-radius: 10px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-.sidebar button:hover {
-  background: darkred;
+/* RESPONSIVE */
+@media(max-width: 992px) {
+
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .countdown-container {
+    right: 40px;
+    gap: 10px;
+  }
+}
+
+@media(max-width: 768px) {
+
+  .navbar {
+    padding: 20px;
+  }
+
+  nav {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: #0b1c2d;
+    width: 200px;
+    display: none;
+  }
+
+  nav ul {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero {
+    padding: 0 20px;
+  }
+
+  .countdown-container {
+    position: relative;
+    bottom: unset;
+    right: unset;
+    margin-top: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .sidebar {
+    display: none;
+  }
 }
