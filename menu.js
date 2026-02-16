@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <a href="#kingdom">Kingdom</a>
     <a href="#events">Events</a>
     <a href="#gallery">Gallery</a>
+    <a href="#rules">Aturan</a>
   `;
 
   const overlay = document.createElement("div");
