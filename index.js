@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // COUNTDOWN DATE (ubah sesuai kebutuhan)
-  const matchDate = new Date("March 30, 2026 20:00:00").getTime();
+  const matchDate = new Date("January 19, 2026 18:30:00").getTime();
 
   const interval = setInterval(() => {
     const now = new Date().getTime();
