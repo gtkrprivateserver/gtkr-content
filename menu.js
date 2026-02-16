@@ -1,15 +1,30 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const sidebarContainer = document.getElementById("sidebar-container");
+document.addEventListener("DOMContentLoaded", () => {
 
   const sidebar = document.createElement("div");
   sidebar.classList.add("sidebar");
-
   sidebar.innerHTML = `
-    <button title="Shop">🛒</button>
-    <button title="Gallery">🖼</button>
-    <button title="News">📰</button>
-    <button title="Chat">💬</button>
+    <a href="#home">Home</a>
+    <a href="#kingdom">Kingdom</a>
+    <a href="#events">Events</a>
+    <a href="#gallery">Gallery</a>
   `;
 
-  sidebarContainer.appendChild(sidebar);
+  const overlay = document.createElement("div");
+  overlay.classList.add("sidebar-overlay");
+
+  document.body.appendChild(sidebar);
+  document.body.appendChild(overlay);
+
+  const menuToggle = document.getElementById("menuToggle");
+
+  menuToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+  });
+
+  overlay.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  });
+
 });
