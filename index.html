@@ -1,79 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chaste Official</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Chaste Football Club</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="menu.js"></script>
+  <script defer src="index.js"></script>
 </head>
 <body>
 
-<header class="header">
-  <div class="container nav-container">
+  <!-- NAVBAR -->
+  <header class="navbar">
     <div class="logo">CHASTE</div>
-
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
-    <nav id="navMenu" class="nav">
-      <a href="#">Home</a>
-        <a href="#">Home</a>
-        <a href="rules.js">Rules</a>
-        <a href="events/join.html">Join</a>
-        <a href="contact.html">Contact</a>
+    <nav>
+      <ul>
+        <li class="active">Home</li>
+        <li>Matches</li>
+        <li>Players</li>
+        <li>Shop</li>
+        <li>Contact</li>
+      </ul>
     </nav>
-  </div>
-</header>
+  </header>
 
-<section class="hero">
-  <div class="container hero-container">
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="overlay"></div>
 
-    <div class="hero-left">
-      <h1>FOOTBALL CLUB CHASTE</h1>
+    <div class="hero-content">
+      <h1>FOOTBALL CLUB<br>CHASTE</h1>
       <p>
-        Official website of Chaste Football Club.
-        Get latest match info, news and ticket updates.
+        Ticket prices for the international challenge match between 
+        Chaste FC and Spain have been confirmed.
       </p>
-
-      <a href="#" class="btn">Presale Ticket</a>
-
-      <div class="countdown">
-        <div><h2 id="days">00</h2><span>Days</span></div>
-        <div><h2 id="hours">00</h2><span>Hrs</span></div>
-        <div><h2 id="minutes">00</h2><span>Mins</span></div>
-        <div><h2 id="seconds">00</h2><span>Secs</span></div>
-      </div>
+      <button class="btn">Purchase Ticket</button>
     </div>
+  </section>
 
-    <div class="hero-right">
-      <h3>Latest News</h3>
+  <!-- SIDEBAR (akan diisi dari menu.js) -->
+  <div id="sidebar-container"></div>
 
-      <div class="news">
-        <strong>World Cup Finals</strong>
-        <p>March 10, 2026</p>
-      </div>
-
-      <div class="news">
-        <strong>Support Your Team</strong>
-        <p>March 14, 2026</p>
-      </div>
-
-      <div class="news">
-        <strong>Why Football is the Best Sport</strong>
-        <p>March 20, 2026</p>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<script src="menu.js"></script>
-<script src="script.js"></script>
-</body>
-</html>
 </body>
 </html>
