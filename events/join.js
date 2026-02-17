@@ -1,0 +1,23 @@
+function joinPage() {
+    return `
+        <h1>Join Chaste Dragon Squad</h1>
+        <p>Isi formulir berikut untuk bergabung dengan Chaste Squad:</p>
+        <form onsubmit="sendWhatsApp(event)">
+            <input type="text" id="name" placeholder="Nama Lengkap" required><br><br>
+            <input type="email" id="email" placeholder="Email" required><br><br>
+            <input type="text" id="walla" placeholder="ID Walla" required><br><br>
+            <button type="submit">Kirim ke WhatsApp</button>
+        </form>
+    `;
+}
+
+function sendWhatsApp(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const gameID = document.getElementById('walla').value;
+    const waNumber = '6288269017561'; // Ganti dengan nomor WhatsApp resmi
+    const message = `Halo, saya ingin join Chaste Squad\nNama: ${name}\nEmail: ${email}\nID Walla: ${walla}`;
+    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+}
