@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+#sidebar {
+    width: 220px;
+    background: #1f1f1f;
+    color: white;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+#sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: background 0.2s;
+}
+
+#sidebar ul li:hover {
+    background: #444;
+}
+
+#content {
+    flex: 1;
+    padding: 40px;
+}
