@@ -1,32 +1,21 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-  const sidebar = document.createElement("div");
-  sidebar.classList.add("sidebar");
-  sidebar.innerHTML = `
-    <a href="#home">Home</a>
-    <a href="#kingdom">Kingdom</a>
-    <a href="#events">Events</a>
-    <a href="#gallery">Gallery</a>
-    <a href="rules.html">Aturan</a>
-    <a href="contact.html">Contact</a>
-  `;
-
-  const overlay = document.createElement("div");
-  overlay.classList.add("sidebar-overlay");
-
-  document.body.appendChild(sidebar);
-  document.body.appendChild(overlay);
-
-  const menuToggle = document.getElementById("menuToggle");
-
-  menuToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("active");
-    overlay.classList.toggle("active");
-  });
-
-  overlay.addEventListener("click", () => {
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-  });
-
-});
+function loadPage(page) {
+    switch(page) {
+        case 'event':
+            document.getElementById('content').innerHTML = eventPage();
+            break;
+        case 'join':
+            document.getElementById('content').innerHTML = joinPage();
+            break;
+        case 'rules':
+            document.getElementById('content').innerHTML = rulesPage();
+            break;
+        case 'about':
+            document.getElementById('content').innerHTML = aboutPage();
+            break;
+        case 'credit':
+            document.getElementById('content').innerHTML = creditPage();
+            break;
+        default:
+            document.getElementById('content').innerHTML = "<h1>Selamat datang di Chaste Squad!</h1>";
+    }
+}
