@@ -24,7 +24,7 @@ function sendWhatsApp(e) {
     const status = document.getElementById('status').value;
     const walla = document.getElementById('walla').value;
     const waNumber = '6288269017561'; // Ganti dengan nomor WhatsApp resmi
-    const message = `Halo, saya ingin join Chaste Squad\nNama: ${name}\nEmail: ${email}\nID Walla: ${walla}`;
+    const message = `Halo, saya ingin join Chaste Dragon Squad\nNama: ${name}\nUmur: ${umur}\nAsal Kota: ${askot}\nrole: ${role}\nstatus: ${status}\nWalla: ${walla}`;
     const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
 }
