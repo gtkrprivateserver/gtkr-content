@@ -242,7 +242,7 @@
     <input id="umur" placeholder="Umur" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="role" placeholder="Role (Host/Admin/Member)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="status" placeholder="Status (Single/Taken)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="wa" placeholder="Nomor WhatsApp" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    
   </div>  <div class="join-box">
     <button class="wa-btn" onclick="kirimWA()">
       <div class="dragon-icon"></div>
@@ -263,10 +263,10 @@
     const umur = document.getElementById('umur').value;
     const role = document.getElementById('role').value;
     const status = document.getElementById('status').value;
-    const wa = document.getElementById('wa').value;
+    
 
     const text = `Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0A` +
-                 `Nama: ${nama}%0AUmur: ${umur}%0ARole: ${role}%0AStatus: ${status}%0ANo WA: ${wa}`;
+                 `Nama: ${nama}%0AUmur: ${umur}%0ARole: ${role}%0AStatus: ${status}`;
 
     window.open(`https://wa.me/6288269017561?text=${text}`, '_blank');
   }
