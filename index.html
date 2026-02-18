@@ -1,285 +1,140 @@
-<!DOCTYPE html><html lang="id">
+<!-- ========================= --><!-- CHASTE DRAGON MULTI PAGE VERSION --><!-- File 1: index.html --><!-- ========================= --><!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CHASTE DRAGON</title>
-  <meta name="description" content="CHASTE DRAGON - Golden Dragon Era Squad Website" />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">  <style>
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
       background: radial-gradient(circle at top, #3b1f00, #000);
-      color: #fff;
-      overflow-x: hidden;
+      color: white;
     }
 
-    h1, h2, h3 { font-family: 'Cinzel', serif; }
+    h1,h2 { font-family: 'Cinzel', serif; }
 
-    /* ===== SIDEBAR ===== */
     .sidebar {
       position: fixed;
       left: 0;
       top: 0;
+      width: 250px;
       height: 100vh;
-      width: 260px;
-      background: linear-gradient(180deg, #2b1500, #000);
-      border-right: 1px solid rgba(255, 180, 60, 0.2);
-      padding: 25px 20px;
-      z-index: 1000;
-      transition: 0.4s;
+      background: linear-gradient(#2b1500,#000);
+      padding: 25px;
     }
 
     .logo {
-      font-size: 22px;
-      font-weight: 900;
       color: gold;
+      font-weight: 900;
       text-align: center;
       margin-bottom: 30px;
-      letter-spacing: 2px;
+      font-size: 22px;
     }
 
-    .menu a {
+    .sidebar a {
       display: block;
-      padding: 12px 14px;
-      margin-bottom: 10px;
       color: #ffd27a;
       text-decoration: none;
+      margin: 10px 0;
+      padding: 10px;
       border-radius: 10px;
-      transition: 0.3s;
-      font-weight: 500;
     }
 
-    .menu a:hover {
-      background: linear-gradient(90deg, gold, orange);
-      color: #000;
-      transform: translateX(5px);
-      font-weight: 600;
-    }
-
-    /* Toggle Button */
-    .toggle-btn {
-      display: none;
-      position: fixed;
-      top: 15px;
-      left: 15px;
+    .sidebar a:hover {
       background: gold;
-      color: #000;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 1100;
-      font-weight: bold;
+      color: black;
     }
 
-    /* ===== MAIN ===== */
     .main {
-      margin-left: 260px;
-      padding: 30px 25px 60px;
+      margin-left: 250px;
+      padding: 40px;
     }
 
-    /* ===== HERO ===== */
     .hero {
-      background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9)),
-        url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200&auto=format&fit=crop');
+      background: linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),
+      url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200');
       background-size: cover;
-      background-position: center;
+      padding: 100px 20px;
       border-radius: 20px;
-      padding: 100px 25px;
       text-align: center;
-      margin-bottom: 40px;
-      border: 1px solid rgba(255,200,100,.3);
-      box-shadow: 0 0 60px rgba(255,150,0,.2);
-      animation: glow 3s infinite alternate;
+      box-shadow: 0 0 60px rgba(255,170,0,.3);
     }
 
-    @keyframes glow {
-      from { box-shadow: 0 0 40px rgba(255,140,0,.2); }
-      to { box-shadow: 0 0 70px rgba(255,200,0,.4); }
-    }
+    .hero h1 { font-size: 50px; color: gold; }
 
-    .hero h1 {
-      font-size: 52px;
-      color: gold;
-      text-shadow: 0 0 20px orange;
-      letter-spacing: 3px;
-    }
-
-    .hero p {
-      opacity: .9;
-      margin-top: 15px;
-      color: #ffd27a;
-      font-size: 18px;
-    }
-
-    /* ===== SECTION ===== */
-    .section {
-      margin-bottom: 45px;
-      padding: 30px;
-      border-radius: 18px;
-      background: linear-gradient(145deg, #140900, #000);
-      border: 1px solid rgba(255,180,80,.25);
-      box-shadow: 0 0 25px rgba(255,140,0,.1);
-      animation: fadeIn 1s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section h2 {
-      color: gold;
-      margin-bottom: 15px;
-      font-size: 28px;
-    }
-
-    /* ===== CARDS ===== */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, #1a0d00, #000);
-      border-radius: 15px;
-      padding: 20px;
-      border: 1px solid rgba(255,200,100,.15);
-      transition: 0.3s;
-      text-align: center;
-      font-weight: 500;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 25px rgba(255,170,0,.3);
-    }
-
-    /* ===== JOIN ===== */
-    .join-box {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    .wa-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 24px;
+    .btn {
+      background: linear-gradient(gold,orange);
+      color: black;
+      padding: 12px 18px;
       border-radius: 50px;
-      background: linear-gradient(90deg, gold, orange);
-      color: #000;
-      font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 0 30px rgba(255,170,0,.4);
-      transition: 0.3s;
-    }
-
-    .wa-btn:hover { transform: scale(1.08); }
-
-    .dragon-icon {
-      width: 24px;
-      height: 24px;
-      background: url('https://cdn-icons-png.flaticon.com/512/616/616554.png') no-repeat center/contain;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      opacity: .7;
-      font-size: 14px;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media(max-width: 900px) {
-      .sidebar { transform: translateX(-100%); }
-      .sidebar.active { transform: translateX(0); }
-      .main { margin-left: 0; }
-      .toggle-btn { display: block; }
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 15px;
     }
   </style></head>
-<body><div class="toggle-btn" onclick="toggleMenu()">☰</div><aside class="sidebar" id="sidebar">
+<body><div class="sidebar">
   <div class="logo">🐉 CHASTE</div>
-  <div class="menu">
-    <a href="#about">About</a>
-    <a href="#events">Events</a>
-    <a href="#rules">Rules</a>
-    <a href="#join">Join</a>
-    <a href="#credit">Credit</a>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="events.html">Events</a>
+  <a href="rules.html">Rules</a>
+  <a href="join.html">Join</a>
+  <a href="credit.html">Credit</a>
+</div><div class="main">
+  <div class="hero">
+    <h1>CHASTE DRAGON</h1>
+    <p>Golden Era Squad Website</p>
+    <a class="btn" href="join.html">Join Sekarang</a>
   </div>
-</aside><main class="main"><section class="hero">
-  <h1>CHASTE DRAGON</h1>
-  <p>Golden Power • Loyalty • Elite Brotherhood</p>
-</section><section id="about" class="section">
-  <h2>About</h2>
-  <p>
-    CHASTE DRAGON adalah generasi emas dari CHASTE Squad.
-    Mengusung simbol naga sebagai kekuatan, kepemimpinan, dan kejayaan.
-    Kami adalah komunitas solid, aktif, dan loyal.
-  </p>
-</section><section id="events" class="section">
-  <h2>Events</h2>
-  <div class="cards">
-    <div class="card">🔥 Golden Gathering Night</div>
-    <div class="card">🐉 Dragon Elite Ceremony</div>
-    <div class="card">🎁 Lucky Dragon Event</div>
-    <div class="card">🏆 CHASTE Squad War</div>
-  </div>
-</section><section id="rules" class="section">
-  <h2>Rules</h2>
-  <ul>
-    <li>• Hormati semua member</li>
-    <li>• No toxic & no drama</li>
-    <li>• Loyal dan solid</li>
-    <li>• Wajib aktif event</li>
-    <li>• Dilarang membawa konflik luar</li>
-  </ul>
-</section><section id="join" class="section">
-  <h2>Join CHASTE DRAGON</h2>
-  <p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>  <div class="cards" style="max-width:500px;margin:auto;">
-    <input id="nama" placeholder="Nama" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="umur" placeholder="Umur" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="kota" placeholder="Asal Kota" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="role" placeholder="Role (Top/Bottom/Vers)" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="status" placeholder="Status (Single/Taken)" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="walla" placeholder="Account Walla" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-  </div>  <div class="join-box">
-    <button class="wa-btn" onclick="kirimWA()">
-      <div class="dragon-icon"></div>
-      Kirim Pendaftaran
-    </button>
-  </div>
-</section><section id="credit" class="section">
-  <h2>Credit</h2>
-  <p>
-    CHASTE Squad Creative Division<br>
-    Golden Dragon Inspired Design 2026
-  </p>
-</section><footer>
-  © 2026 CHASTE DRAGON — All Rights Reserved
-</footer></main><script>
-  function kirimWA() {
-    const nama = document.getElementById('nama').value.trim();
-    const umur = document.getElementById('umur').value.trim();
-    const kota = document.getElementById('kota').value.trim();
-    const role = document.getElementById('role').value.trim();
-    const status = document.getElementById('status').value.trim();
-    const walla = document.getElementById('walla').value.trim();
+</div></body>
+</html><!-- ========================= --><!-- File 2: about.html --><!-- ========================= --><!DOCTYPE html><html lang="id">
+<head><title>About - CHASTE</title></head>
+<body style="background:black;color:white;font-family:Poppins;padding:40px;">
+<h1 style="color:gold;">About CHASTE DRAGON</h1>
+<p>CHASTE DRAGON adalah generasi emas dari CHASTE Squad. Komunitas solid, loyal, dan elite dengan simbol naga emas sebagai kejayaan.</p>
+<a href="index.html" style="color:gold;">⬅ Kembali</a>
+</body>
+</html><!-- ========================= --><!-- File 3: events.html --><!-- ========================= --><!DOCTYPE html><html lang="id">
+<head><title>Events - CHASTE</title></head>
+<body style="background:black;color:white;font-family:Poppins;padding:40px;">
+<h1 style="color:gold;">Events</h1>
+<ul>
+<li>🔥 Golden Gathering</li>
+<li>🐉 Dragon Ceremony</li>
+<li>🎁 Lucky Event</li>
+<li>🏆 Squad War</li>
+</ul>
+<a href="index.html" style="color:gold;">⬅ Kembali</a>
+</body>
+</html><!-- ========================= --><!-- File 4: rules.html --><!-- ========================= --><!DOCTYPE html><html lang="id">
+<head><title>Rules - CHASTE</title></head>
+<body style="background:black;color:white;font-family:Poppins;padding:40px;">
+<h1 style="color:gold;">Rules</h1>
+<ul>
+<li>No toxic</li>
+<li>Loyalitas wajib</li>
+<li>Hormati member</li>
+<li>Aktif event</li>
+</ul>
+<a href="index.html" style="color:gold;">⬅ Kembali</a>
+</body>
+</html>
+<!-- ========================= --><!-- File 5: join.html --><!-- ========================= --><!DOCTYPE html><html lang="id">
+<head><title>Join - CHASTE</title></head>
+<body style="background:black;color:white;font-family:Poppins;padding:40px;">
+<h1 style="color:gold;">Join CHASTE DRAGON</h1><input id="nama" placeholder="Nama"><br><br> <input id="umur" placeholder="Umur"><br><br> <input id="kota" placeholder="Asal Kota"><br><br> <input id="role" placeholder="Role"><br><br> <input id="status" placeholder="Status"><br><br> <input id="walla" placeholder="Account Walla"><br><br>
 
-    if (!nama || !umur || !kota || !role || !status || !walla) {
-      alert('Semua data wajib diisi terlebih dahulu!');
-      return;
-    }
+<button onclick="kirimWA()">Kirim WhatsApp</button>
 
-    const text = `Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0A` +
-                 `Nama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${kota}%0ARole: ${role}%0AStatus: ${status}%0AAccount Walla: ${walla}`;
+<script>
+function kirimWA(){
+const n=nama.value,u=umur.value,k=kota.value,r=role.value,s=status.value,w=walla.value;
+if(!n||!u||!k||!r||!s||!w){alert('Wajib isi semua');return}
+const text=`Halo Admin CHASTE DRAGON,%0ANama:${n}%0AUmur:${u}%0AAsal Kota:${k}%0ARole:${r}%0AStatus:${s}%0AAccount Walla:${w}`;
+window.open(`https://wa.me/6281234567890?text=${text}`)
+}
+</script><a href="index.html" style="color:gold;">⬅ Kembali</a>
 
-        window.open(`https://wa.me/6288269017561?text=${text}`, '_blank');
-  }
-
-  function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("active");
-  }
-</script></body>
+</body>
 </html>
