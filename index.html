@@ -235,30 +235,43 @@
     <li>• Wajib aktif event</li>
     <li>• Dilarang membawa konflik luar</li>
   </ul>
-</section><section id="join" class="section">
+</section>
+ <section id="join" class="section">
   <h2>Join CHASTE DRAGON</h2>
-  <p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>  <div class="cards" style="max-width:500px;margin:auto;">
+  <p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>
+
+  <div class="cards" style="max-width:500px;margin:auto;">
     <input id="nama" placeholder="Nama" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="umur" placeholder="Umur" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="kota" placeholder="Asal Kota" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="role" placeholder="Role (Top/Bot/Versi)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="role" placeholder="Role (Top/Bottom/Vers)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="status" placeholder="Status (Single/No Single)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="walla" placeholder="Account Walla" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-  </div>  <div class="join-box">
+  </div>
+
+  <div class="join-box">
     <button class="wa-btn" onclick="kirimWA()">
       <div class="dragon-icon"></div>
       Kirim Pendaftaran
     </button>
   </div>
-</section><section id="credit" class="section">
+</section>
+
+<section id="credit" class="section">
   <h2>Credit</h2>
   <p>
     CHASTE Squad Creative Division<br>
     Golden Dragon Inspired Design 2026
   </p>
-</section><footer>
+</section>
+
+<footer>
   © 2026 CHASTE DRAGON — All Rights Reserved
-</footer></main><script>
+</footer>
+
+</main>
+
+<script>
   function kirimWA() {
     const nama = document.getElementById('nama').value;
     const umur = document.getElementById('umur').value;
@@ -269,7 +282,6 @@
 
     const text = `Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0A` +
                  `Nama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${kota}%0ARole: ${role}%0AStatus: ${status}%0AAccount Walla: ${walla}`;
-
     window.open(`https://wa.me/6288269017561?text=${text}`, '_blank');
   }
 
