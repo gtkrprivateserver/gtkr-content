@@ -240,11 +240,10 @@
   <p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>  <div class="cards" style="max-width:500px;margin:auto;">
     <input id="nama" placeholder="Nama" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="umur" placeholder="Umur" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="askot" placeholder="Asal Kota" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    <input id="role" placeholder="Role (Top/Bot/Vers)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="kota" placeholder="Asal Kota" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="role" placeholder="Role (Top/Bot/Versi)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
     <input id="status" placeholder="Status (Single/No Single)" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-   <input id="walla" placeholder="Username Walla" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
-    
+    <input id="walla" placeholder="Account Walla" style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
   </div>  <div class="join-box">
     <button class="wa-btn" onclick="kirimWA()">
       <div class="dragon-icon"></div>
@@ -263,16 +262,15 @@
   function kirimWA() {
     const nama = document.getElementById('nama').value;
     const umur = document.getElementById('umur').value;
-    const askot = document.getElementById('askot').value;
+    const kota = document.getElementById('kota').value;
     const role = document.getElementById('role').value;
     const status = document.getElementById('status').value;
     const walla = document.getElementById('walla').value;
-    
 
     const text = `Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0A` +
-                 `Nama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${Askot}%0ARole: ${role}%0AStatus: ${status}%0AAccount Walla: ${walla}`;
+                 `Nama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${kota}%0ARole: ${role}%0AStatus: ${status}%0AAccount Walla: ${walla}`;
 
-    window.open(`https://wa.me/6288269017561?text=${text}`, '_blank');
+    window.open(`https://wa.me/6281234567890?text=${text}`, '_blank');
   }
 
   function toggleMenu() {
