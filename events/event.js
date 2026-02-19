@@ -1,10 +1,216 @@
-function eventPage() {
-    return `
-        <h1>Event Chaste Squad</h1>
-        <p>Berikut adalah event terbaru kami.</p>
-        <ul>
-            <li>Event 1 - Tanggal: 20 Februari 2026</li>
-            <li>Event 2 - Tanggal: 28 Februari 2026</li>
-        </ul>
-    `;
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CHASTE DRAGON EVENTS</title>
+<meta name="description" content="CHASTE DRAGON - Walla & HeeSay Event Portal" />
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle at top,#3b1f00,#000);
+  color:#fff;
+  overflow-x:hidden;
 }
+h1,h2,h3{font-family:'Cinzel',serif;}
+
+.sidebar{
+  position:fixed;left:0;top:0;height:100vh;width:260px;
+  background:linear-gradient(180deg,#2b1500,#000);
+  border-right:1px solid rgba(255,180,60,.2);
+  padding:25px 20px;z-index:1000;transition:.4s;
+}
+.logo{
+  font-size:22px;font-weight:900;color:gold;
+  text-align:center;margin-bottom:30px;letter-spacing:2px;
+}
+.menu a{
+  display:block;padding:12px 14px;margin-bottom:10px;
+  color:#ffd27a;text-decoration:none;border-radius:10px;
+  transition:.3s;font-weight:500;
+}
+.menu a:hover{
+  background:linear-gradient(90deg,gold,orange);
+  color:#000;transform:translateX(5px);font-weight:600;
+}
+
+.toggle-btn{
+  display:none;position:fixed;top:15px;left:15px;
+  background:gold;color:#000;padding:8px 12px;
+  border-radius:8px;cursor:pointer;z-index:1100;font-weight:bold;
+}
+
+.main{margin-left:260px;padding:30px 25px 60px;}
+
+.hero{
+  background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),
+  url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200&auto=format&fit=crop');
+  background-size:cover;background-position:center;
+  border-radius:20px;padding:100px 25px;text-align:center;
+  margin-bottom:40px;border:1px solid rgba(255,200,100,.3);
+  box-shadow:0 0 60px rgba(255,150,0,.2);
+}
+.hero h1{font-size:50px;color:gold;text-shadow:0 0 20px orange;}
+.hero p{opacity:.9;margin-top:15px;color:#ffd27a;font-size:18px;}
+
+.section{
+  margin-bottom:45px;padding:30px;border-radius:18px;
+  background:linear-gradient(145deg,#140900,#000);
+  border:1px solid rgba(255,180,80,.25);
+  box-shadow:0 0 25px rgba(255,140,0,.1);
+}
+.section h2{color:gold;margin-bottom:15px;font-size:28px;}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:linear-gradient(180deg,#1a0d00,#000);
+  border-radius:15px;padding:20px;
+  border:1px solid rgba(255,200,100,.15);
+  transition:.3s;text-align:center;font-weight:500;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 25px rgba(255,170,0,.3);
+}
+
+#countdown{
+  font-size:30px;
+  font-weight:700;
+  color:gold;
+  text-align:center;
+  margin:20px 0;
+  text-shadow:0 0 10px orange;
+}
+
+footer{
+  text-align:center;margin-top:50px;
+  opacity:.7;font-size:14px;
+}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.active{transform:translateX(0);}
+  .main{margin-left:0;}
+  .toggle-btn{display:block;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="toggle-btn" onclick="toggleMenu()">☰</div>
+
+<aside class="sidebar" id="sidebar">
+<div class="logo">🐉 CHASTE</div>
+<div class="menu">
+<a href="https://chastedragon.vercel.app">Home</a>
+<a href="#about">About</a>
+<a href="#launching">Launching</a>
+<a href="#events">Events</a>
+</div>
+</aside>
+
+<main class="main">
+
+<section class="hero">
+<h1>CHASTE DRAGON EVENTS</h1>
+<p>Walla • HeeSay • Golden Dragon Era</p>
+</section>
+
+<section id="about" class="section">
+<h2>About Events</h2>
+<p>
+CHASTE DRAGON menghadirkan event eksklusif di platform Walla & HeeSay.
+Fokus pada ranking battle, squad war, ceremony elite, dan hiburan
+berkonsep Golden Dragon Era.
+</p>
+</section>
+
+<section id="launching" class="section">
+<h2>🚀 Countdown Launching</h2>
+<div id="countdown">Loading...</div>
+</section>
+
+<section id="events" class="section">
+<h2>📅 Jadwal Event Otomatis</h2>
+<div class="cards" id="eventSchedule"></div>
+</section>
+
+<footer>
+© 2026 CHASTE DRAGON — Golden Event Portal
+</footer>
+
+</main>
+
+<script>
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("active");
+}
+
+// COUNTDOWN
+const launchDate=new Date("March 3, 2026 03:30:00 GMT+0700").getTime();
+
+const countdownFunction=setInterval(function(){
+const now=new Date().getTime();
+const distance=launchDate-now;
+
+if(distance<0){
+clearInterval(countdownFunction);
+document.getElementById("countdown").innerHTML=
+"🔥 CHASTE DRAGON OFFICIALLY LAUNCHED 🔥";
+return;
+}
+
+const days=Math.floor(distance/(1000*60*60*24));
+const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+const seconds=Math.floor((distance%(1000*60))/1000);
+
+document.getElementById("countdown").innerHTML=
+days+" Hari "+hours+" Jam "+minutes+" Menit "+seconds+" Detik";
+},1000);
+
+// AUTO EVENT
+const events=[
+{name:"🔥 Walla Golden Ranking Battle",date:"2026-03-05 20:00"},
+{name:"🐉 HeeSay Dragon Power Night",date:"2026-03-08 21:00"},
+{name:"🏆 Elite Squad Competition",date:"2026-03-12 19:30"},
+{name:"🎁 Lucky Gift Storm Event",date:"2026-03-15 22:00"}
+];
+
+const container=document.getElementById("eventSchedule");
+
+events.forEach(event=>{
+const card=document.createElement("div");
+card.className="card";
+
+const eventDate=new Date(event.date);
+const formatted=eventDate.toLocaleString("id-ID",{
+weekday:'long',
+day:'numeric',
+month:'long',
+year:'numeric',
+hour:'2-digit',
+minute:'2-digit'
+});
+
+card.innerHTML=`
+<strong>${event.name}</strong>
+<p style="margin-top:10px;color:#ffd27a;">${formatted} WIB</p>
+`;
+
+container.appendChild(card);
+});
+</script>
+
+</body>
+</html>
