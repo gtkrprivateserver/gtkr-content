@@ -35,6 +35,10 @@ input, textarea{
   border:none;
 }
 
+input:invalid, textarea:invalid{
+  outline:2px solid red;
+}
+
 button{
   background:gold;
   color:black;
@@ -75,8 +79,8 @@ button:disabled{
 <div class="container">
   <input type="text" id="nama" placeholder="Nama / Nickname" required>
   <input type="text" id="idakun" placeholder="ID Walla / HeeSay" required>
-  <input type="text" id="asal" placeholder="Asal Squad (jika ada)">
-  <textarea id="pesan" placeholder="Pesan Tambahan (Opsional)"></textarea>
+  <input type="text" id="asal" placeholder="Asal Squad (jika ada)" required>
+  <textarea id="pesan" placeholder="Pesan Tambahan (Wajib Diisi)" required></textarea>
 
   <button id="btnDaftar" onclick="kirimWA()">DAFTAR VIA WHATSAPP</button>
 
@@ -118,20 +122,30 @@ updateCountdown();
 
 // ===== Kirim WhatsApp =====
 function kirimWA(){
-  var nama = document.getElementById("nama").value;
-  var idakun = document.getElementById("idakun").value;
-  var asal = document.getElementById("asal").value;
-  var pesan = document.getElementById("pesan").value;
+
+  var nama = document.getElementById("nama");
+  var idakun = document.getElementById("idakun");
+  var asal = document.getElementById("asal");
+  var pesan = document.getElementById("pesan");
+
+  if(!nama.value || !idakun.value || !asal.value || !pesan.value){
+    alert("⚠️ Semua field wajib diisi sebelum mendaftar!");
+    if(!nama.value) return nama.focus();
+    if(!idakun.value) return idakun.focus();
+    if(!asal.value) return asal.focus();
+    if(!pesan.value) return pesan.focus();
+    return;
+  }
 
   var nomorAdmin = "6288269017561"; // GANTI NOMOR ADMIN
 
   var url = "https://wa.me/" + nomorAdmin + "?text=" 
     + encodeURIComponent(
       "PENDAFTARAN EVENT LAUNCHING CHASTE DRAGON\n\n"
-      + "Nama: " + nama + "\n"
-      + "ID Walla/HeeSay: " + idakun + "\n"
-      + "Asal Squad: " + asal + "\n"
-      + "Pesan: " + pesan + "\n\n"
+      + "Nama: " + nama.value + "\n"
+      + "ID Walla/HeeSay: " + idakun.value + "\n"
+      + "Asal Squad: " + asal.value + "\n"
+      + "Pesan: " + pesan.value + "\n\n"
       + "Konfirmasi Hadir: YA"
     );
 
