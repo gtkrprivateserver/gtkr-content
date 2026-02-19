@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Countdown Idul Fitri - CHASTE DRAGON</title>
+
+<style>
+body{
+  background:black;
+  font-family:Poppins, sans-serif;
+  color:white;
+  text-align:center;
+  padding:40px;
+}
+
+h1{
+  color:gold;
+  margin-bottom:10px;
+}
+
+.card{
+  background:#111;
+  border:2px solid gold;
+  border-radius:15px;
+  padding:30px;
+  max-width:600px;
+  margin:auto;
+  box-shadow:0 0 30px gold;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:20px;
+}
+
+.box{
+  background:black;
+  border:2px solid gold;
+  padding:15px 20px;
+  border-radius:10px;
+  min-width:80px;
+}
+
+.number{
+  font-size:30px;
+  font-weight:bold;
+  color:gold;
+}
+
+.label{
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌙 MENUJU IDUL FITRI 1447H</h1>
+<h2>CHASTE DRAGON 洁龙</h2>
+
+<div class="card">
+  <div class="countdown">
+    <div class="box">
+      <div class="number" id="hari">0</div>
+      <div class="label">Hari</div>
+    </div>
+    <div class="box">
+      <div class="number" id="jam">0</div>
+      <div class="label">Jam</div>
+    </div>
+    <div class="box">
+      <div class="number" id="menit">0</div>
+      <div class="label">Menit</div>
+    </div>
+    <div class="box">
+      <div class="number" id="detik">0</div>
+      <div class="label">Detik</div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// Perkiraan Idul Fitri 2026 (31 Maret 2026)
+const idulFitri = new Date("March 31, 2026 00:00:00").getTime();
+
+const interval = setInterval(function(){
+
+  const sekarang = new Date().getTime();
+  const jarak = idulFitri - sekarang;
+
+  if(jarak <= 0){
+    clearInterval(interval);
+    document.querySelector(".card").innerHTML = 
+      "<h2>🎉 SELAMAT IDUL FITRI 1447H 🎉</h2><p>Mohon Maaf Lahir & Batin</p>";
+    return;
+  }
+
+  const hari = Math.floor(jarak / (1000 * 60 * 60 * 24));
+  const jam = Math.floor((jarak % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const menit = Math.floor((jarak % (1000 * 60 * 60)) / (1000 * 60));
+  const detik = Math.floor((jarak % (1000 * 60)) / 1000);
+
+  document.getElementById("hari").innerText = hari;
+  document.getElementById("jam").innerText = jam;
+  document.getElementById("menit").innerText = menit;
+  document.getElementById("detik").innerText = detik;
+
+}, 1000);
+
+</script>
+
+</body>
+</html>
