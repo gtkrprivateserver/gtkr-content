@@ -5,7 +5,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>List Pendaftar - CHASTE DRAGON</title>
+<title>Management Panel - CHASTE DRAGON</title>
 
 <style>
 body{
@@ -18,21 +18,40 @@ body{
 
 h1{ color:gold; }
 
-.total-box{
-  margin:20px auto;
-  padding:15px;
+.login-box{
   max-width:400px;
+  margin:100px auto;
+  padding:30px;
   background:#111;
   border:2px solid gold;
   border-radius:12px;
-  font-size:20px;
-  font-weight:bold;
-  box-shadow:0 0 20px rgba(255,215,0,0.3);
 }
 
-.total-box span{
-  color:lime;
-  font-size:26px;
+input{
+  width:100%;
+  padding:10px;
+  margin:15px 0;
+  border-radius:8px;
+  border:none;
+}
+
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-login{
+  background:gold;
+  color:black;
+}
+
+.btn-delete{
+  background:red;
+  color:white;
+  margin-top:20px;
 }
 
 table{
@@ -57,45 +76,62 @@ tr:nth-child(even){
   background:#111;
 }
 
-button{
-  margin-top:20px;
-  padding:10px 20px;
-  background:red;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
+.hidden{
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📋 LIST PENDAFTAR</h1>
+<h1>🔐 MANAGEMENT PANEL</h1>
 <h2>CHASTE DRAGON SQUAD</h2>
 
-<div class="total-box">
-TOTAL PESERTA TERDAFTAR: <span id="totalPeserta">0</span>
+<!-- LOGIN BOX -->
+<div class="login-box" id="loginBox">
+  <h3>Login Management</h3>
+  <input type="password" id="password" placeholder="Masukkan Password">
+  <button class="btn-login" onclick="login()">LOGIN</button>
+  <p id="error" style="color:red;"></p>
 </div>
 
-<table id="tabelPendaftar">
-<thead>
-<tr>
-<th>No</th>
-<th>Nama</th>
-<th>ID Walla/HeeSay</th>
-<th>Asal Squad</th>
-<th>Pesan</th>
-<th>Waktu Daftar</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+<!-- DATA LIST -->
+<div id="panelData" class="hidden">
+  <h2>📋 LIST PENDAFTAR</h2>
 
-<button onclick="hapusData()">Hapus Semua Data</button>
+  <table id="tabelPendaftar">
+  <thead>
+  <tr>
+  <th>No</th>
+  <th>Nama</th>
+  <th>ID</th>
+  <th>Asal</th>
+  <th>Pesan</th>
+  <th>Waktu</th>
+  </tr>
+  </thead>
+  <tbody></tbody>
+  </table>
+
+  <button class="btn-delete" onclick="hapusData()">Hapus Semua Data</button>
+</div>
 
 <script>
+
+// 🔑 GANTI PASSWORD DI SINI
+const MANAGEMENT_PASSWORD = "cdsofficially2026Launching";
+
+function login(){
+  var inputPass = document.getElementById("password").value;
+
+  if(inputPass === MANAGEMENT_PASSWORD){
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panelData").classList.remove("hidden");
+    tampilkanData();
+  }else{
+    document.getElementById("error").innerText = "Password salah!";
+  }
+}
 
 function tampilkanData(){
   var daftar = JSON.parse(localStorage.getItem("pendaftar")) || [];
@@ -115,19 +151,14 @@ function tampilkanData(){
     `;
     tbody.innerHTML += row;
   });
-
-  // 🔥 UPDATE TOTAL OTOMATIS
-  document.getElementById("totalPeserta").innerText = daftar.length;
 }
 
 function hapusData(){
-  if(confirm("Yakin ingin menghapus semua data pendaftar?")){
+  if(confirm("Yakin ingin menghapus semua data?")){
     localStorage.removeItem("pendaftar");
     tampilkanData();
   }
 }
-
-tampilkanData();
 
 </script>
 
