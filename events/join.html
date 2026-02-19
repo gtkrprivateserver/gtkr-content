@@ -47,6 +47,7 @@ button{
   border-radius:8px;
   font-weight:bold;
   cursor:pointer;
+  transition:0.3s;
 }
 
 button:disabled{
@@ -61,11 +62,14 @@ button:disabled{
   color:gold;
 }
 
-.closed{
-  color:red;
+.status{
   font-weight:bold;
-  margin-top:20px;
+  margin-top:15px;
 }
+
+.status.open{ color:lime; }
+.status.closed{ color:red; }
+.status.waiting{ color:orange; }
 </style>
 </head>
 
@@ -75,46 +79,81 @@ button:disabled{
 <h2>CHASTE DRAGON SQUAD</h2>
 
 <div class="countdown" id="countdown"></div>
+<div id="statusEvent" class="status waiting"></div>
 
 <div class="container">
-  <input type="text" id="nama" placeholder="Nama / Nickname" required>
-  <input type="text" id="idakun" placeholder="ID Walla / HeeSay" required>
-  <input type="text" id="asal" placeholder="Asal Squad (jika ada)" required>
-  <textarea id="pesan" placeholder="Pesan Tambahan (Wajib Diisi)" required></textarea>
+  <input type="text" id="nama" placeholder="Nama / Nickname" required disabled>
+  <input type="text" id="idakun" placeholder="ID Walla / HeeSay" required disabled>
+  <input type="text" id="asal" placeholder="Asal Squad (jika ada)" required disabled>
+  <textarea id="pesan" placeholder="Pesan Tambahan (Wajib Diisi)" required disabled></textarea>
 
-  <button id="btnDaftar" onclick="kirimWA()">DAFTAR VIA WHATSAPP</button>
-
-  <div id="statusTutup" class="closed"></div>
+  <button id="btnDaftar" onclick="kirimWA()" disabled>
+    PENDAFTARAN BELUM DIBUKA
+  </button>
 </div>
 
 <script>
-// ===== Waktu Launching =====
-const launchDate = new Date("March 3, 2026 03:30:00 GMT+0700").getTime();
+
+// ===== SET TANGGAL =====
+// Waktu pendaftaran dibuka
+const openDate = new Date("February 25, 2026 00:00:00 GMT+0700").getTime();
+
+// Waktu launching / pendaftaran ditutup
+const closeDate = new Date("March 3, 2026 03:30:00 GMT+0700").getTime();
+
 const btn = document.getElementById("btnDaftar");
 const inputs = document.querySelectorAll("input, textarea");
+const statusEvent = document.getElementById("statusEvent");
 
 function updateCountdown(){
   const now = new Date().getTime();
-  const distance = launchDate - now;
 
-  if(distance <= 0){
-    document.getElementById("countdown").innerHTML = "🔥 EVENT TELAH DIMULAI 🔥";
+  // ===== BELUM DIBUKA =====
+  if(now < openDate){
+    const distance = openDate - now;
+    showCountdown(distance, "Pendaftaran Dibuka Dalam");
     btn.disabled = true;
-    btn.innerText = "PENDAFTARAN DITUTUP";
-    inputs.forEach(input => input.disabled = true);
-    document.getElementById("statusTutup").innerText =
-      "Pendaftaran resmi telah ditutup.";
+    btn.innerText = "PENDAFTARAN BELUM DIBUKA";
+    inputs.forEach(i => i.disabled = true);
+    statusEvent.innerText = "Status: MENUNGGU PEMBUKAAN";
+    statusEvent.className = "status waiting";
     return;
   }
 
+  // ===== SEDANG DIBUKA =====
+  if(now >= openDate && now < closeDate){
+    const distance = closeDate - now;
+    showCountdown(distance, "Pendaftaran Ditutup Dalam");
+    btn.disabled = false;
+    btn.innerText = "DAFTAR VIA WHATSAPP";
+    inputs.forEach(i => i.disabled = false);
+    statusEvent.innerText = "Status: PENDAFTARAN DIBUKA";
+    statusEvent.className = "status open";
+    return;
+  }
+
+  // ===== SUDAH DITUTUP =====
+  if(now >= closeDate){
+    document.getElementById("countdown").innerHTML = "🔥 EVENT TELAH DIMULAI 🔥";
+    btn.disabled = true;
+    btn.innerText = "PENDAFTARAN DITUTUP";
+    inputs.forEach(i => i.disabled = true);
+    statusEvent.innerText = "Status: PENDAFTARAN DITUTUP";
+    statusEvent.className = "status closed";
+  }
+}
+
+function showCountdown(distance, label){
   const days = Math.floor(distance / (1000*60*60*24));
   const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
   const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
   const seconds = Math.floor((distance % (1000*60)) / 1000);
 
   document.getElementById("countdown").innerHTML =
-    "Countdown: " + days + "H " + hours + "J "
-    + minutes + "M " + seconds + "D";
+    label + ": " + days + "H "
+    + hours + "J "
+    + minutes + "M "
+    + seconds + "D";
 }
 
 setInterval(updateCountdown, 1000);
@@ -130,10 +169,6 @@ function kirimWA(){
 
   if(!nama.value || !idakun.value || !asal.value || !pesan.value){
     alert("⚠️ Semua field wajib diisi sebelum mendaftar!");
-    if(!nama.value) return nama.focus();
-    if(!idakun.value) return idakun.focus();
-    if(!asal.value) return asal.focus();
-    if(!pesan.value) return pesan.focus();
     return;
   }
 
@@ -151,6 +186,7 @@ function kirimWA(){
 
   window.open(url, '_blank');
 }
+
 </script>
 
 <hr style="border:1px solid gold;margin:30px 0;">
