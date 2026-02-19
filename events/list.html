@@ -1,0 +1,135 @@
+<!-- ========================= -->
+<!-- File: list.html -->
+<!-- ========================= -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>List Pendaftar - CHASTE DRAGON</title>
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins, sans-serif;
+  padding:40px;
+  text-align:center;
+}
+
+h1{ color:gold; }
+
+.total-box{
+  margin:20px auto;
+  padding:15px;
+  max-width:400px;
+  background:#111;
+  border:2px solid gold;
+  border-radius:12px;
+  font-size:20px;
+  font-weight:bold;
+  box-shadow:0 0 20px rgba(255,215,0,0.3);
+}
+
+.total-box span{
+  color:lime;
+  font-size:26px;
+}
+
+table{
+  width:100%;
+  max-width:1000px;
+  margin:auto;
+  border-collapse:collapse;
+  margin-top:30px;
+}
+
+th, td{
+  border:1px solid gold;
+  padding:10px;
+}
+
+th{
+  background:gold;
+  color:black;
+}
+
+tr:nth-child(even){
+  background:#111;
+}
+
+button{
+  margin-top:20px;
+  padding:10px 20px;
+  background:red;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📋 LIST PENDAFTAR</h1>
+<h2>CHASTE DRAGON SQUAD</h2>
+
+<div class="total-box">
+TOTAL PESERTA TERDAFTAR: <span id="totalPeserta">0</span>
+</div>
+
+<table id="tabelPendaftar">
+<thead>
+<tr>
+<th>No</th>
+<th>Nama</th>
+<th>ID Walla/HeeSay</th>
+<th>Asal Squad</th>
+<th>Pesan</th>
+<th>Waktu Daftar</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+<button onclick="hapusData()">Hapus Semua Data</button>
+
+<script>
+
+function tampilkanData(){
+  var daftar = JSON.parse(localStorage.getItem("pendaftar")) || [];
+  var tbody = document.querySelector("#tabelPendaftar tbody");
+  tbody.innerHTML = "";
+
+  daftar.forEach(function(data, index){
+    var row = `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${data.nama}</td>
+        <td>${data.idakun}</td>
+        <td>${data.asal}</td>
+        <td>${data.pesan}</td>
+        <td>${data.waktu}</td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+
+  // 🔥 UPDATE TOTAL OTOMATIS
+  document.getElementById("totalPeserta").innerText = daftar.length;
+}
+
+function hapusData(){
+  if(confirm("Yakin ingin menghapus semua data pendaftar?")){
+    localStorage.removeItem("pendaftar");
+    tampilkanData();
+  }
+}
+
+tampilkanData();
+
+</script>
+
+</body>
+</html>
