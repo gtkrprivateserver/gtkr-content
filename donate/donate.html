@@ -72,7 +72,7 @@ button:disabled{ background:gray; cursor:not-allowed; color:white; }
 }
 
 #qrContainer img{
-  width:120px;  /* ukuran QR */
+  width:120px;
   height:auto;
   border:2px solid gold;
   border-radius:8px;
@@ -107,8 +107,9 @@ const btnQR = document.getElementById("btnQR");
 const countdownEl = document.getElementById("countdown");
 const statusTutup = document.getElementById("statusTutup");
 
-// Waktu penutupan donasi
-const tutupDonasi = new Date(18, February, 2026, 23, 59, 59).getTime(); // 1 Maret 2026 23:59:59
+// ===== Waktu penutupan donasi =====
+// Format: new Date(tahun, bulan-1, tanggal, jam, menit, detik)
+const tutupDonasi = new Date(2026, 3, 1, 23, 59, 59).getTime(); // 1 Maret 2026 23:59:59
 
 function updateCountdown(){
   const now = new Date().getTime();
@@ -130,6 +131,7 @@ function updateCountdown(){
 
   countdownEl.innerText = `Sisa waktu donasi: ${days}H ${hours}J ${minutes}M ${seconds}D`;
 }
+
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
