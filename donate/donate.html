@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Open Donasi - CHASTE DRAGON</title>
-
 <style>
 body{
   margin:0;
@@ -23,23 +22,11 @@ body{
   border-radius:20px;
   padding:40px;
   box-shadow:0 0 30px gold;
-  animation:fadeIn 1.5s ease-in-out;
 }
 
-h1{
-  color:gold;
-  margin-bottom:10px;
-}
-
-h2{
-  color:white;
-  font-weight:300;
-  margin-bottom:20px;
-}
-
-p{
-  margin-bottom:20px;
-}
+h1{ color:gold; margin-bottom:10px; }
+h2{ color:white; font-weight:300; margin-bottom:20px; }
+p{ margin-bottom:20px; }
 
 input, textarea{
   width:100%;
@@ -69,20 +56,44 @@ button:hover{
   box-shadow:0 0 25px gold;
 }
 
-#qrImage{
-  margin-top:20px;
+/* ===== Modal QR ===== */
+#qrModal{
   display:none;
-  max-width:300px;
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+#qrModalContent{
+  text-align:center;
+}
+
+#qrModal img{
+  /* Ukuran sesuai file asli */
+  display:block;
+  margin:0 auto;
   border:2px solid gold;
   border-radius:15px;
 }
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+
+#qrModal button{
+  margin-top:15px;
+  padding:12px 20px;
+  background:gold;
+  color:black;
+  font-weight:bold;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+#qrModal button:hover{
+  background:orange;
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -99,8 +110,15 @@ button:hover{
     <button onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
     <button onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
   </div>
+</div>
 
-  <img id="qrImage" src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg" alt="QR Donasi CHASTE DRAGON">
+<!-- Modal Overlay QR -->
+<div id="qrModal">
+  <div id="qrModalContent">
+    <img src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg" alt="QR Donasi CHASTE DRAGON">
+    <br>
+    <button onclick="tutupQR()">TUTUP QR</button>
+  </div>
 </div>
 
 <script>
@@ -114,7 +132,7 @@ function kirimDonasi(){
     return;
   }
 
-  const nomorAdmin = "6282246142678"; // Ganti nomor admin
+  const nomorAdmin = "6282246142678";
 
   const url = "https://wa.me/" + nomorAdmin + "?text=" 
     + encodeURIComponent(
@@ -129,13 +147,13 @@ function kirimDonasi(){
 }
 
 function tampilkanQR(){
-  const qr = document.getElementById("qrImage");
-  qr.style.display = qr.style.display === "none" ? "block" : "none";
+  document.getElementById("qrModal").style.display = "flex";
+}
+
+function tutupQR(){
+  document.getElementById("qrModal").style.display = "none";
 }
 </script>
-<hr style="border:1px solid gold;margin:30px 0;">
-
-<a href="https://chastedragon.vercel.app" style="color:gold;">⬅ Back</a>
 
 </body>
 </html>
