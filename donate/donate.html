@@ -56,11 +56,17 @@ button:hover{
   box-shadow:0 0 25px gold;
 }
 
-/* QR di bawah tombol, ukuran sesuai tombol */
+button:disabled{
+  background:gray;
+  color:white;
+  cursor:not-allowed;
+}
+
+/* QR di bawah tombol */
 #qrContainer{
   display:none;
   text-align:center;
-  margin-top:10px; /* jarak tipis dari tombol */
+  margin-top:10px;
 }
 
 #qrContainer img{
@@ -68,8 +74,24 @@ button:hover{
   margin:0 auto;
   border:2px solid gold;
   border-radius:12px;
-  width:150px;   /* sesuaikan ukuran tombol/area kontak */
-  height:auto;   /* proporsional */
+  width:150px;
+  height:auto;
+}
+
+/* Status Donasi Tutup */
+#statusTutup{
+  color:red;
+  font-weight:bold;
+  margin-top:20px;
+  font-size:1.1rem;
+}
+
+/* Countdown */
+#countdown{
+  color:gold;
+  font-weight:bold;
+  font-size:1.2rem;
+  margin-bottom:15px;
 }
 </style>
 </head>
@@ -81,22 +103,60 @@ button:hover{
 
   <p>Terima kasih atas dukunganmu! Donasi akan digunakan untuk event, merchandise, dan pengembangan squad.</p>
 
+  <div id="countdown">Sisa waktu donasi: --</div>
+
   <input type="text" id="nama" placeholder="Nama / Nickname" required>
   <input type="text" id="jumlah" placeholder="Jumlah Donasi (Rp)" required>
   <textarea id="pesan" placeholder="Pesan Tambahan (Opsional)"></textarea>
 
   <div>
-    <button onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
-    <button onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
+    <button id="btnWhatsApp" onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
+    <button id="btnQR" onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
   </div>
 
-  <!-- QR muncul tepat di bawah tombol -->
   <div id="qrContainer">
     <img src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg" alt="QR Donasi CHASTE DRAGON">
   </div>
+
+  <div id="statusTutup"></div>
 </div>
 
 <script>
+const btnWhatsApp = document.getElementById("btnWhatsApp");
+const btnQR = document.getElementById("btnQR");
+const statusTutup = document.getElementById("statusTutup");
+const countdownEl = document.getElementById("countdown");
+
+// ===== Set waktu penutupan donasi =====
+const tutupDonasi = new Date(2026, 2, 20, 23, 59, 59).getTime(); // 1 Maret 2026, 23:59:59
+
+// ===== Update Countdown =====
+function updateCountdown(){
+  const now = new Date().getTime();
+  const distance = tutupDonasi - now;
+
+  if(distance <= 0){
+    countdownEl.innerText = "⛔ Donasi telah ditutup";
+    btnWhatsApp.disabled = true;
+    btnQR.disabled = true;
+    document.getElementById("qrContainer").style.display = "none";
+    statusTutup.innerText = "Donasi resmi telah ditutup.";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+  countdownEl.innerText = `Sisa waktu donasi: ${days}H ${hours}J ${minutes}M ${seconds}D`;
+}
+
+// Update setiap detik
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ===== Kirim Donasi =====
 function kirimDonasi(){
   const nama = document.getElementById("nama").value.trim();
   const jumlah = document.getElementById("jumlah").value.trim();
@@ -127,6 +187,7 @@ function tampilkanQR(){
   qrC.style.display = (qrC.style.display === "none") ? "block" : "none";
 }
 </script>
+
 <hr style="border:1px solid gold;margin:30px 0;">
 <a href="https://chastedragon.vercel.app" style="color:gold;">⬅ Kembali</a>
 
