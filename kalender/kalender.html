@@ -84,6 +84,10 @@ h1{
 .label{
   font-size:14px;
 }
+
+.footer{
+  margin-top:40px;
+}
 </style>
 </head>
 
@@ -96,27 +100,34 @@ h1{
 
 <script>
 
-const ramadhanStart = new Date("February 19, 2026 00:00:00").getTime();
 const totalHari = 30;
-const idulFitri = new Date("March 20, 2026 00:00:00").getTime();
 
-function updateSystem(){
+const versi = {
+  NU: {
+    start: new Date("February 19, 2026 00:00:00").getTime(),
+    end: new Date("March 20, 2026 00:00:00").getTime()
+  },
+  Muhammadiyah: {
+    start: new Date("February 18, 2026 00:00:00").getTime(),
+    end: new Date("March 19, 2026 00:00:00").getTime()
+  }
+};
+
+function buatCard(nama, data){
 
   const now = new Date().getTime();
-  const selisihHari = Math.floor((now - ramadhanStart) / (1000*60*60*24)) + 1;
-  const jarak = idulFitri - now;
-
-  const container = document.getElementById("ramadhanContainer");
+  const selisihHari = Math.floor((now - data.start) / (1000*60*60*24)) + 1;
+  const jarak = data.end - now;
 
   if(jarak <= 0){
-    container.innerHTML = `
+    return `
       <div class="card">
         <h2>🎉 SELAMAT IDUL FITRI 1447H 🎉</h2>
+        <p><strong>${nama}</strong></p>
         <p>Mohon Maaf Lahir & Batin</p>
         <p>CHASTE DRAGON 洁龙</p>
       </div>
     `;
-    return;
   }
 
   let persen = 0;
@@ -129,9 +140,11 @@ function updateSystem(){
   const menitCD = Math.floor((jarak % (1000 * 60 * 60)) / (1000 * 60));
   const detikCD = Math.floor((jarak % (1000 * 60)) / 1000);
 
-  container.innerHTML = `
+  return `
     <div class="card">
-      <div class="hari">NU - Hari ke-${selisihHari > 0 ? selisihHari : 0}</div>
+      <h3 style="color:gold;">Versi ${nama}</h3>
+
+      <div class="hari">Hari ke-${selisihHari > 0 ? selisihHari : 0}</div>
 
       <div class="progress-container">
         <div class="progress-bar" style="width:${persen}%">
@@ -165,13 +178,25 @@ function updateSystem(){
   `;
 }
 
+function updateSystem(){
+  const container = document.getElementById("ramadhanContainer");
+  container.innerHTML =
+    buatCard("NU", versi.NU) +
+    buatCard("Muhammadiyah", versi.Muhammadiyah);
+}
+
 updateSystem();
 setInterval(updateSystem, 1000);
 
 </script>
-<hr style="border:1px solid gold;margin:30px 0;">
 
-<a href="https://chastedragon.vercel.app" style="color:gold;">⬅ Back</a>
+<hr style="border:1px solid gold;margin:40px 0;">
+
+<div class="footer">
+<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">
+⬅ Back
+</a>
+</div>
 
 </body>
 </html>
