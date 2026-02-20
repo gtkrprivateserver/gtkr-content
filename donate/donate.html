@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Donasi - CHASTE DRAGON</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  font-family:Poppins, sans-serif;
+  color:white;
+  text-align:center;
+  padding:40px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  background:#111;
+  border:2px solid gold;
+  border-radius:20px;
+  padding:40px;
+  box-shadow:0 0 30px gold;
+  animation:fadeIn 1.5s ease-in-out;
+}
+
+h1{
+  color:gold;
+  margin-bottom:10px;
+}
+
+h2{
+  color:white;
+  font-weight:300;
+  margin-bottom:20px;
+}
+
+p{
+  margin-bottom:20px;
+}
+
+input, textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+  border:none;
+  font-size:16px;
+}
+
+button{
+  background:gold;
+  color:black;
+  padding:15px 25px;
+  border:none;
+  border-radius:12px;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 0 10px gold;
+  margin-top:10px;
+}
+
+button:hover{
+  background:orange;
+  box-shadow:0 0 25px gold;
+}
+
+#qrImage{
+  margin-top:20px;
+  display:none;
+  max-width:300px;
+  border:2px solid gold;
+  border-radius:15px;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>💛 OPEN DONASI</h1>
+  <h2>CHASTE DRAGON SQUAD 洁龙</h2>
+
+  <p>Terima kasih atas dukunganmu! Donasi akan digunakan untuk event, merchandise, dan pengembangan squad.</p>
+
+  <input type="text" id="nama" placeholder="Nama / Nickname" required>
+  <input type="text" id="jumlah" placeholder="Jumlah Donasi (Rp)" required>
+  <textarea id="pesan" placeholder="Pesan Tambahan (Opsional)"></textarea>
+
+  <div>
+    <button onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
+    <button onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
+  </div>
+
+  <img id="qrImage" src="qr-donasi.png" alt="QR Donasi CHASTE DRAGON">
+</div>
+
+<script>
+function kirimDonasi(){
+  const nama = document.getElementById("nama").value.trim();
+  const jumlah = document.getElementById("jumlah").value.trim();
+  const pesan = document.getElementById("pesan").value.trim();
+
+  if(!nama || !jumlah){
+    alert("⚠️ Nama dan Jumlah Donasi wajib diisi!");
+    return;
+  }
+
+  const nomorAdmin = "628XXXXXXXXXX"; // Ganti nomor admin
+
+  const url = "https://wa.me/" + nomorAdmin + "?text=" 
+    + encodeURIComponent(
+      "💛 DONASI CHASTE DRAGON SQUAD\n\n" +
+      "Nama: " + nama + "\n" +
+      "Jumlah Donasi: Rp" + jumlah + "\n" +
+      "Pesan: " + (pesan ? pesan : "-") + "\n\n" +
+      "Terima kasih atas dukunganmu!"
+    );
+
+  window.open(url, "_blank");
+}
+
+function tampilkanQR(){
+  const qr = document.getElementById("qrImage");
+  qr.style.display = qr.style.display === "none" ? "block" : "none";
+}
+</script>
+
+</body>
+</html>
