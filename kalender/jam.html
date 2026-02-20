@@ -2,54 +2,76 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Ramadhan Puasa - CHASTE DRAGON</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramadhan System - CHASTE DRAGON</title>
 
 <style>
-body {
+body{
   background:black;
-  color:white;
   font-family:Poppins, sans-serif;
-  padding:30px;
+  color:white;
   text-align:center;
+  padding:30px;
 }
-h1, h2 { color:gold; }
-select {
-  padding:10px;
-  border-radius:8px;
-  border:none;
-  margin-bottom:15px;
-  font-size:16px;
-}
-.card {
+
+h1{ color:gold; }
+
+.card{
   background:#111;
   border:2px solid gold;
   border-radius:15px;
   padding:25px;
-  max-width:700px;
-  margin:auto;
-  box-shadow:0 0 25px gold;
+  max-width:850px;
+  margin:30px auto;
+  box-shadow:0 0 20px gold;
 }
-.countdown {
+
+.progress-container{
+  width:100%;
+  background:#222;
+  border-radius:50px;
+  margin-top:20px;
+  overflow:hidden;
+  height:25px;
+}
+
+.progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,gold,orange);
+  text-align:center;
+  line-height:25px;
+  color:black;
+  font-weight:bold;
+}
+
+.countdown{
   display:flex;
   justify-content:center;
   gap:15px;
   margin-top:20px;
+  flex-wrap:wrap;
 }
-.box {
+
+.box{
   background:black;
   border:2px solid gold;
   padding:15px 20px;
   border-radius:10px;
   min-width:80px;
 }
-.number {
-  color:gold;
-  font-size:26px;
+
+.number{
+  font-size:22px;
   font-weight:bold;
+  color:gold;
 }
-.label { font-size:14px; }
-.status { margin-top:15px; font-size:18px; color:gold; }
+
+.label{ font-size:13px; }
+
+.status{
+  margin-top:15px;
+  font-size:16px;
+  color:gold;
+}
 </style>
 </head>
 
@@ -58,111 +80,132 @@ select {
 <h1>🌙 RAMADHAN 1447H</h1>
 <h2>CHASTE DRAGON 洁龙</h2>
 
-<label for="cityPicker">Pilih Kota:</label><br>
-<select id="cityPicker">
-  <option value="-6.2088,106.8456">Jakarta</option>
-  <option value="-7.2575,112.7521">Surabaya</option>
-  <option value="-6.9175,107.6191">Bandung</option>
-  <option value="3.5970,98.6785">Medan</option>
-  <option value="-5.1477,119.4327">Makassar</option>
-  <option value="-7.7956,110.3695">Yogyakarta</option>
-  <option value="-6.9667,110.4167">Semarang</option>
-  <option value="-2.9909,104.7560">Palembang</option>
-  <option value="-3.3191,114.5901">Banjarmasin</option>
-  <option value="-8.6500,115.2167">Denpasar</option>
-</select>
-
-<div class="card">
-  <div id="jadwalInfo" class="status">Ambil jadwal...</div>
-
-  <div class="countdown">
-    <div class="box">
-      <div class="number" id="jam">0</div><div class="label">Jam</div>
-    </div>
-    <div class="box">
-      <div class="number" id="menit">0</div><div class="label">Menit</div>
-    </div>
-    <div class="box">
-      <div class="number" id="detik">0</div><div class="label">Detik</div>
-    </div>
-  </div>
-</div>
+<div id="versiNU"></div>
+<div id="versiMuhammadiyah"></div>
+<div id="imsakCard"></div>
 
 <script>
 
-let jadwalImsak = "";
-let jadwalMaghrib = "";
+/* =========================
+   DATA VERSI RAMADHAN
+========================= */
 
-// Ambil data dari API Aladhan
-function fetchJadwal(lat, lon) {
-  document.getElementById("jadwalInfo").innerText = "Mengambil jadwal berdasarkan lokasi...";
-  fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=11`)
-    .then(res => res.json())
-    .then(res => {
-      jadwalImsak = res.data.timings.Imsak.split(" ")[0];     // hh:mm
-      jadwalMaghrib = res.data.timings.Maghrib.split(" ")[0]; // hh:mm
-      document.getElementById("jadwalInfo").innerHTML =
-        `🕌 Imsak: ${jadwalImsak} | 🌇 Maghrib: ${jadwalMaghrib}`;
-      startCountdown();
-    })
-    .catch(err => {
-      document.getElementById("jadwalInfo").innerText = "Gagal mengambil jadwal";
-      console.error(err);
-    });
+const totalHari = 30;
+
+const versi = {
+  NU: {
+    start: new Date("February 19, 2026 00:00:00").getTime(),
+    end: new Date("March 20, 2026 00:00:00").getTime()
+  },
+  Muhammadiyah: {
+    start: new Date("February 18, 2026 00:00:00").getTime(),
+    end: new Date("March 19, 2026 00:00:00").getTime()
+  }
+};
+
+/* =========================
+   IMSAK & MAGHRIB
+========================= */
+
+const waktuImsak = "04:30";
+const waktuMaghrib = "18:00";
+
+/* =========================
+   GENERATE CARD RAMADHAN
+========================= */
+
+function generateRamadhanCard(nama, data){
+
+  const now = new Date().getTime();
+  const selisihHari = Math.floor((now - data.start)/(1000*60*60*24))+1;
+  const persen = Math.min(Math.floor((selisihHari/totalHari)*100),100);
+  const jarak = data.end - now;
+
+  const hari = Math.floor(jarak/(1000*60*60*24));
+  const jam = Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
+  const menit = Math.floor((jarak%(1000*60*60))/(1000*60));
+  const detik = Math.floor((jarak%(1000*60))/1000);
+
+  return `
+  <div class="card">
+    <h3 style="color:gold;">Versi ${nama}</h3>
+    <div>Hari ke-${selisihHari > 0 ? selisihHari : 0}</div>
+
+    <div class="progress-container">
+      <div class="progress-bar" style="width:${persen}%">${persen}%</div>
+    </div>
+
+    <div class="status">⏳ Menuju Idul Fitri (${nama})</div>
+
+    <div class="countdown">
+      <div class="box"><div class="number">${hari}</div><div class="label">Hari</div></div>
+      <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
+      <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
+      <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
+    </div>
+  </div>`;
 }
 
-// Hitung target waktu
-function getTargetTime() {
+/* =========================
+   AUTO IMSAK ↔ BERBUKA
+========================= */
+
+function getTargetWaktu(){
   const now = new Date();
   const today = now.toDateString();
 
-  const [ih, im] = jadwalImsak.split(":");
-  const [mh, mm] = jadwalMaghrib.split(":");
+  const imsak = new Date(today + " " + waktuImsak);
+  const maghrib = new Date(today + " " + waktuMaghrib);
 
-  const imsak = new Date(today + " " + ih + ":" + im + ":00").getTime();
-  const maghrib = new Date(today + " " + mh + ":" + mm + ":00").getTime();
-
-  if (now < maghrib && now >= imsak) {
-    return { status: "Menuju Berbuka Puasa", target: maghrib };
+  if(now >= imsak && now < maghrib){
+    return { label: "Menuju Waktu Berbuka", target: maghrib.getTime() };
   } else {
-    if (now >= maghrib) {
-      // menuju imsak besok
-      return { status: "Menuju Imsak (Sahur)", target: new Date(today + " " + ih + ":" + im + ":00").getTime() + 86400000 };
-    } else {
-      // sebelum imsak
-      return { status: "Menuju Imsak (Sahur)", target: imsak };
+    if(now >= maghrib){
+      imsak.setDate(imsak.getDate()+1);
     }
+    return { label: "Menuju Waktu Imsak", target: imsak.getTime() };
   }
 }
 
-function startCountdown(){
-  setInterval(() => {
-    const now = new Date().getTime();
-    const targetData = getTargetTime();
+function updateImsak(){
 
-    const diff = targetData.target - now;
+  const now = new Date().getTime();
+  const waktu = getTargetWaktu();
+  const jarak = waktu.target - now;
 
-    const jam = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000*60*60));
-    const menit = Math.floor((diff % (1000*60*60)) / (1000*60));
-    const detik = Math.floor((diff % (1000*60)) / 1000);
+  const jam = Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
+  const menit = Math.floor((jarak%(1000*60*60))/(1000*60));
+  const detik = Math.floor((jarak%(1000*60))/1000);
 
-    document.getElementById("jadwalInfo").innerText = targetData.status;
-    document.getElementById("jam").innerText = jam;
-    document.getElementById("menit").innerText = menit;
-    document.getElementById("detik").innerText = detik;
+  document.getElementById("imsakCard").innerHTML = `
+  <div class="card">
+    <h3 style="color:gold;">Jadwal Puasa Hari Ini</h3>
+    <div>Imsak: ${waktuImsak} | Maghrib: ${waktuMaghrib}</div>
 
-  }, 1000);
+    <div class="status">⏳ ${waktu.label}</div>
+
+    <div class="countdown">
+      <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
+      <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
+      <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
+    </div>
+  </div>`;
 }
 
-// Ketika pilih kota
-document.getElementById("cityPicker").addEventListener("change", function(){
-  const [lat, lon] = this.value.split(",");
-  fetchJadwal(lat, lon);
-});
+/* ========================= */
 
-// Set awal (default Jakarta)
-const init = document.getElementById("cityPicker").value.split(",");
-fetchJadwal(init[0], init[1]);
+function updateAll(){
+  document.getElementById("versiNU").innerHTML =
+    generateRamadhanCard("NU", versi.NU);
+
+  document.getElementById("versiMuhammadiyah").innerHTML =
+    generateRamadhanCard("Muhammadiyah", versi.Muhammadiyah);
+
+  updateImsak();
+}
+
+updateAll();
+setInterval(updateAll,1000);
 
 </script>
 
