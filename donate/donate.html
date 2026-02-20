@@ -111,9 +111,9 @@ button:disabled{
 
   <!-- Tombol Upload Bukti Transfer -->
   <div>
-    <label for="buktiTransfer" style="display:block; margin:10px 0; cursor:pointer;">
-      <button type="button">UPLOAD BUKTI TRANSFER</button>
-    </label>
+    <button type="button" onclick="document.getElementById('buktiTransfer').click()">
+      UPLOAD BUKTI TRANSFER
+    </button>
     <input type="file" id="buktiTransfer" accept="image/*" style="display:none;" onchange="tampilkanNamaFile()">
     <div id="namaFile" style="color:gold; margin-top:5px;"></div>
   </div>
@@ -136,10 +136,10 @@ const btnQR = document.getElementById("btnQR");
 const statusTutup = document.getElementById("statusTutup");
 const countdownEl = document.getElementById("countdown");
 
-// Set waktu penutupan donasi
+// ===== Set waktu penutupan donasi =====
 const tutupDonasi = new Date(2026, 2, 20, 23, 59, 59).getTime(); 
 
-// Update Countdown
+// ===== Update Countdown =====
 function updateCountdown(){
   const now = new Date().getTime();
   const distance = tutupDonasi - now;
@@ -160,10 +160,12 @@ function updateCountdown(){
 
   countdownEl.innerText = `Sisa waktu donasi: ${days}H ${hours}J ${minutes}M ${seconds}D`;
 }
+
+// Update setiap detik
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Kirim Donasi
+// ===== Kirim Donasi =====
 function kirimDonasi(){
   const nama = document.getElementById("nama").value.trim();
   const jumlah = document.getElementById("jumlah").value.trim();
@@ -192,7 +194,7 @@ function kirimDonasi(){
   window.open(url, "_blank");
 }
 
-// Toggle QR
+// Toggle QR muncul/hilang
 function tampilkanQR(){
   const qrC = document.getElementById("qrContainer");
   qrC.style.display = (qrC.style.display === "none") ? "block" : "none";
