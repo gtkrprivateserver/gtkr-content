@@ -1,3 +1,6 @@
+<!-- ========================= -->
+<!-- File: donasi.html -->
+<!-- ========================= -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,34 +8,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Open Donasi - CHASTE DRAGON</title>
 <style>
-body {
-  margin:0;
+body{
   background:black;
-  font-family:Poppins, sans-serif;
   color:white;
+  font-family:Poppins, sans-serif;
+  padding:40px;
   text-align:center;
-  padding:40px;
+  line-height:1.8;
 }
 
-.container{
-  max-width:700px;
-  margin:auto;
-  background:#111;
-  border:2px solid gold;
-  border-radius:20px;
-  padding:40px;
-  box-shadow:0 0 30px gold;
+h1, h2{
+  color:gold;
+  margin-bottom:10px;
 }
 
-h1{ color:gold; margin-bottom:10px; }
-h2{ color:white; font-weight:300; margin-bottom:20px; }
-p{ margin-bottom:20px; }
+hr{
+  border:1px solid gold;
+  margin:30px 0;
+}
 
-input, textarea{
+input{
   width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:10px;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
   border:none;
   font-size:16px;
 }
@@ -40,97 +39,77 @@ input, textarea{
 button{
   background:gold;
   color:black;
-  padding:15px 25px;
+  padding:10px 20px;
   border:none;
-  border-radius:12px;
+  border-radius:8px;
   font-weight:bold;
   font-size:16px;
   cursor:pointer;
+  margin:5px;
   transition:0.3s;
-  box-shadow:0 0 10px gold;
-  margin-top:10px;
 }
 
-button:hover{
-  background:orange;
-  box-shadow:0 0 25px gold;
-}
+button:hover{ background:orange; }
+button:disabled{ background:gray; cursor:not-allowed; color:white; }
 
-button:disabled{
-  background:gray;
-  color:white;
-  cursor:not-allowed;
-}
-
-/* QR container di bawah tombol */
-#qrContainer{
-  display:none;
-  text-align:center;
-  margin-top:15px;
-}
-
-#qrContainer img{
-  display:block;
-  margin:0 auto;
-  border:2px solid gold;
-  border-radius:12px;
-  width:150px;
-  height:auto;
-}
-
-/* Countdown */
 #countdown{
   color:gold;
   font-weight:bold;
-  font-size:1.2rem;
+  font-size:1rem;
   margin-bottom:15px;
 }
 
-/* Status donasi tutup */
 #statusTutup{
   color:red;
   font-weight:bold;
-  margin-top:20px;
-  font-size:1.1rem;
+  font-size:1rem;
+  margin-top:10px;
+}
+
+#qrContainer{
+  display:none;
+  margin-top:10px;
+}
+
+#qrContainer img{
+  width:120px;  /* ukuran QR */
+  height:auto;
+  border:2px solid gold;
+  border-radius:8px;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>💛 OPEN DONASI</h1>
-  <h2>CHASTE DRAGON SQUAD 洁龙</h2>
+<h1>💛 OPEN DONASI</h1>
+<h2>CHASTE DRAGON SQUAD 洁龙</h2>
+<hr>
 
-  <p>Terima kasih atas dukunganmu! Donasi akan digunakan untuk event, merchandise, dan pengembangan squad.</p>
+<div id="countdown">Sisa waktu donasi: --</div>
 
-  <div id="countdown">Sisa waktu donasi: --</div>
+<input type="text" id="nama" placeholder="Nama / Nickname" required>
+<input type="number" id="jumlah" placeholder="Jumlah Donasi (Rp)" required>
 
-  <input type="text" id="nama" placeholder="Nama / Nickname" required>
-  <input type="number" id="jumlah" placeholder="Jumlah Donasi (Rp)" required>
-  <textarea id="pesan" placeholder="Pesan Tambahan (Opsional)"></textarea>
-
-  <div>
-    <button id="btnWhatsApp" onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
-    <button id="btnQR" onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
-  </div>
-
-  <div id="qrContainer">
-    <img src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg" alt="QR Donasi CHASTE DRAGON">
-  </div>
-
-  <div id="statusTutup"></div>
+<div>
+  <button id="btnWhatsApp" onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
+  <button id="btnQR" onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
 </div>
+
+<div id="qrContainer">
+  <img src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg" alt="QR Donasi CHASTE DRAGON">
+</div>
+
+<div id="statusTutup"></div>
 
 <script>
 const btnWhatsApp = document.getElementById("btnWhatsApp");
 const btnQR = document.getElementById("btnQR");
-const statusTutup = document.getElementById("statusTutup");
 const countdownEl = document.getElementById("countdown");
+const statusTutup = document.getElementById("statusTutup");
 
-// ===== Set waktu penutupan donasi =====
-const tutupDonasi = new Date(2026, 2, 18, 23, 59, 59).getTime(); // 1 Maret 2026, 23:59:59
+// Waktu penutupan donasi
+const tutupDonasi = new Date(2026, 2, 20, 23, 59, 59).getTime(); // 1 Maret 2026 23:59:59
 
-// ===== Update Countdown =====
 function updateCountdown(){
   const now = new Date().getTime();
   const distance = tutupDonasi - now;
@@ -151,16 +130,12 @@ function updateCountdown(){
 
   countdownEl.innerText = `Sisa waktu donasi: ${days}H ${hours}J ${minutes}M ${seconds}D`;
 }
-
-// Update setiap detik
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ===== Kirim Donasi =====
 function kirimDonasi(){
   const nama = document.getElementById("nama").value.trim();
   const jumlah = document.getElementById("jumlah").value.trim();
-  const pesan = document.getElementById("pesan").value.trim();
 
   if(!nama || !jumlah){
     alert("⚠️ Nama dan Jumlah Donasi wajib diisi!");
@@ -173,23 +148,21 @@ function kirimDonasi(){
     + encodeURIComponent(
       "💛 DONASI CHASTE DRAGON SQUAD\n\n" +
       "Nama: " + nama + "\n" +
-      "Jumlah Donasi: Rp" + jumlah + "\n" +
-      "Pesan: " + (pesan ? pesan : "-") + "\n\n" +
+      "Jumlah Donasi: Rp" + jumlah + "\n\n" +
       "Terima kasih atas dukunganmu!"
     );
 
   window.open(url, "_blank");
 }
 
-// Toggle QR muncul/hilang
 function tampilkanQR(){
   const qrC = document.getElementById("qrContainer");
   qrC.style.display = (qrC.style.display === "none") ? "block" : "none";
 }
 </script>
 
-<hr style="border:1px solid gold;margin:30px 0;">
-<a href="https://chastedragon.vercel.app" style="color:gold;">⬅ Kembali</a>
+<hr>
+<a href="index.html" style="color:gold;">⬅ Kembali</a>
 
 </body>
 </html>
