@@ -48,7 +48,7 @@ button{
   cursor:pointer;
   transition:0.3s;
   box-shadow:0 0 10px gold;
-  margin-top:10px;
+  margin:10px 5px;
 }
 
 button:hover{
@@ -109,6 +109,15 @@ button:disabled{
   <input type="number" id="jumlah" placeholder="Jumlah Donasi (Rp)" required>
   <textarea id="pesan" placeholder="Pesan Tambahan (Opsional)"></textarea>
 
+  <!-- Tombol Upload Bukti Transfer -->
+  <div>
+    <label for="buktiTransfer" style="display:block; margin:10px 0; cursor:pointer;">
+      <button type="button">UPLOAD BUKTI TRANSFER</button>
+    </label>
+    <input type="file" id="buktiTransfer" accept="image/*" style="display:none;" onchange="tampilkanNamaFile()">
+    <div id="namaFile" style="color:gold; margin-top:5px;"></div>
+  </div>
+
   <div>
     <button id="btnWhatsApp" onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
     <button id="btnQR" onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
@@ -127,10 +136,10 @@ const btnQR = document.getElementById("btnQR");
 const statusTutup = document.getElementById("statusTutup");
 const countdownEl = document.getElementById("countdown");
 
-// ===== Set waktu penutupan donasi =====
-const tutupDonasi = new Date(2026, 2, 20, 23, 59, 59).getTime(); // 1 Maret 2026, 23:59:59
+// Set waktu penutupan donasi
+const tutupDonasi = new Date(2026, 3, 1, 23, 59, 59).getTime(); 
 
-// ===== Update Countdown =====
+// Update Countdown
 function updateCountdown(){
   const now = new Date().getTime();
   const distance = tutupDonasi - now;
@@ -151,40 +160,53 @@ function updateCountdown(){
 
   countdownEl.innerText = `Sisa waktu donasi: ${days}H ${hours}J ${minutes}M ${seconds}D`;
 }
-
-// Update setiap detik
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// ===== Kirim Donasi =====
+// Kirim Donasi
 function kirimDonasi(){
   const nama = document.getElementById("nama").value.trim();
   const jumlah = document.getElementById("jumlah").value.trim();
   const pesan = document.getElementById("pesan").value.trim();
+  const bukti = document.getElementById("buktiTransfer").files[0];
 
   if(!nama || !jumlah){
     alert("⚠️ Nama dan Jumlah Donasi wajib diisi!");
     return;
   }
 
+  let pesanBukti = bukti ? `Bukti Transfer: ${bukti.name}` : "-";
+
   const nomorAdmin = "6282246142678";
 
   const url = "https://wa.me/" + nomorAdmin + "?text=" 
     + encodeURIComponent(
-      "💛 DONASI CHASTE DRAGON SQUAD\n\n" +
-      "Nama: " + nama + "\n" +
-      "Jumlah Donasi: Rp" + jumlah + "\n" +
-      "Pesan: " + (pesan ? pesan : "-") + "\n\n" +
+      `💛 DONASI CHASTE DRAGON SQUAD\n\n` +
+      `Nama: ${nama}\n` +
+      `Jumlah Donasi: Rp${jumlah}\n` +
+      `Pesan: ${pesan ? pesan : "-"}\n` +
+      `${pesanBukti}\n\n` +
       "Terima kasih atas dukunganmu!"
     );
 
   window.open(url, "_blank");
 }
 
-// Toggle QR muncul/hilang
+// Toggle QR
 function tampilkanQR(){
   const qrC = document.getElementById("qrContainer");
   qrC.style.display = (qrC.style.display === "none") ? "block" : "none";
+}
+
+// Tampilkan nama file yang diupload
+function tampilkanNamaFile(){
+  const fileInput = document.getElementById("buktiTransfer");
+  const namaFile = document.getElementById("namaFile");
+  if(fileInput.files.length > 0){
+    namaFile.innerText = "File terpilih: " + fileInput.files[0].name;
+  } else {
+    namaFile.innerText = "";
+  }
 }
 </script>
 
