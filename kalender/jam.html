@@ -22,13 +22,7 @@ h1{ color:gold; }
   padding:25px;
   max-width:800px;
   margin:30px auto;
-  box-shadow:0 0 25px gold;
-}
-
-.hari{
-  font-size:24px;
-  font-weight:bold;
-  color:gold;
+  box-shadow:0 0 20px gold;
 }
 
 .progress-container{
@@ -75,7 +69,7 @@ h1{ color:gold; }
 .label{ font-size:13px; }
 
 .status{
-  margin-top:20px;
+  margin-top:15px;
   font-size:18px;
   color:gold;
 }
@@ -87,32 +81,76 @@ h1{ color:gold; }
 <h1>🌙 RAMADHAN 1447H</h1>
 <h2>CHASTE DRAGON 洁龙</h2>
 
-<div id="ramadhanContainer"></div>
+<!-- ============================= -->
+<!-- CARD 1 - PROGRESS RAMADHAN -->
+<!-- ============================= -->
+<div id="idulFitriCard"></div>
+
+<!-- ============================= -->
+<!-- CARD 2 - IMSAK & BERBUKA -->
+<!-- ============================= -->
+<div id="imsakCard"></div>
 
 <script>
 
+/* =========================
+   DATA RAMADHAN
+========================= */
+
+const startRamadhan = new Date("February 19, 2026 00:00:00").getTime();
+const endRamadhan = new Date("March 20, 2026 00:00:00").getTime();
 const totalHari = 30;
 
-/* ======================
-   TANGGAL RAMADHAN
-====================== */
-const versi = {
-  NU: {
-    start: new Date("February 19, 2026 00:00:00").getTime(),
-    end: new Date("March 20, 2026 00:00:00").getTime()
-  },
-  Muhammadiyah: {
-    start: new Date("February 18, 2026 00:00:00").getTime(),
-    end: new Date("March 19, 2026 00:00:00").getTime()
-  }
-};
-
-/* ======================
+/* =========================
    WAKTU IMSAK & MAGHRIB
-   (BISA DIGANTI PER KOTA)
-====================== */
+   (BISA GANTI SESUAI KOTA)
+========================= */
+
 const waktuImsak = "04:30";
 const waktuMaghrib = "18:00";
+
+/* =========================
+   COUNTDOWN IDUL FITRI
+========================= */
+
+function updateIdulFitri(){
+
+  const now = new Date().getTime();
+  const selisihHari = Math.floor((now - startRamadhan) / (1000*60*60*24)) + 1;
+  const persen = Math.min(Math.floor((selisihHari / totalHari) * 100),100);
+  const jarak = endRamadhan - now;
+
+  const hari = Math.floor(jarak / (1000 * 60 * 60 * 24));
+  const jam = Math.floor((jarak % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const menit = Math.floor((jarak % (1000 * 60 * 60)) / (1000 * 60));
+  const detik = Math.floor((jarak % (1000 * 60)) / 1000);
+
+  document.getElementById("idulFitriCard").innerHTML = `
+    <div class="card">
+      <h3 style="color:gold;">Progress Ramadhan</h3>
+      <div>Hari ke-${selisihHari > 0 ? selisihHari : 0}</div>
+
+      <div class="progress-container">
+        <div class="progress-bar" style="width:${persen}%">
+          ${persen}%
+        </div>
+      </div>
+
+      <div class="status">⏳ Menuju Idul Fitri</div>
+
+      <div class="countdown">
+        <div class="box"><div class="number">${hari}</div><div class="label">Hari</div></div>
+        <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
+        <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
+        <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
+      </div>
+    </div>
+  `;
+}
+
+/* =========================
+   AUTO IMSAK ↔ BERBUKA
+========================= */
 
 function getTargetWaktu(){
 
@@ -123,27 +161,18 @@ function getTargetWaktu(){
   const maghrib = new Date(today + " " + waktuMaghrib);
 
   if(now >= imsak && now < maghrib){
-    return {
-      label: "Menuju Waktu Berbuka",
-      target: maghrib.getTime()
-    };
+    return { label: "Menuju Waktu Berbuka", target: maghrib.getTime() };
   } else {
     if(now >= maghrib){
       imsak.setDate(imsak.getDate() + 1);
     }
-    return {
-      label: "Menuju Waktu Imsak",
-      target: imsak.getTime()
-    };
+    return { label: "Menuju Waktu Imsak", target: imsak.getTime() };
   }
 }
 
-function buatCard(nama, data){
+function updateImsak(){
 
   const now = new Date().getTime();
-  const selisihHari = Math.floor((now - data.start) / (1000*60*60*24)) + 1;
-  const persen = Math.min(Math.floor((selisihHari / totalHari) * 100),100);
-
   const waktu = getTargetWaktu();
   const jarak = waktu.target - now;
 
@@ -152,67 +181,34 @@ function buatCard(nama, data){
   const menit = Math.floor((jarak % (1000 * 60 * 60)) / (1000 * 60));
   const detik = Math.floor((jarak % (1000 * 60)) / 1000);
 
-  return `
+  document.getElementById("imsakCard").innerHTML = `
     <div class="card">
-      <h3 style="color:gold;">Versi ${nama}</h3>
+      <h3 style="color:gold;">Jadwal Puasa Hari Ini</h3>
+      <div>Imsak: ${waktuImsak} | Maghrib: ${waktuMaghrib}</div>
 
-      <div class="hari">Hari ke-${selisihHari > 0 ? selisihHari : 0}</div>
-
-      <div class="progress-container">
-        <div class="progress-bar" style="width:${persen}%">
-          ${persen}%
-        </div>
-      </div>
-
-      <div class="status">
-        ⏳ ${waktu.label}
-      </div>
+      <div class="status">⏳ ${waktu.label}</div>
 
       <div class="countdown">
-        <div class="box">
-          <div class="number">${hari}</div>
-          <div class="label">Hari</div>
-        </div>
-        <div class="box">
-          <div class="number">${jam}</div>
-          <div class="label">Jam</div>
-        </div>
-        <div class="box">
-          <div class="number">${menit}</div>
-          <div class="label">Menit</div>
-        </div>
-        <div class="box">
-          <div class="number">${detik}</div>
-          <div class="label">Detik</div>
-        </div>
+        <div class="box"><div class="number">${hari}</div><div class="label">Hari</div></div>
+        <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
+        <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
+        <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
       </div>
     </div>
   `;
 }
 
-function updateSystem(){
-  const container = document.getElementById("ramadhanContainer");
-  container.innerHTML =
-    buatCard("NU", versi.NU) +
-    buatCard("Muhammadiyah", versi.Muhammadiyah);
+/* ========================= */
+
+function updateAll(){
+  updateIdulFitri();
+  updateImsak();
 }
 
-updateSystem();
-setInterval(updateSystem, 1000);
+updateAll();
+setInterval(updateAll,1000);
 
 </script>
-
-<hr style="border:1px solid gold;margin:40px 0;">
-
-<div>
-<a href="jam.html" style="color:gold;text-decoration:none;">
-⬅ Jam Berbuka-Imsak
-</a>
-&nbsp;&nbsp;&nbsp;
-<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">
-⬅ Back
-</a>
-</div>
 
 </body>
 </html>
