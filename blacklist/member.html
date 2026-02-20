@@ -1,106 +1,52 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blacklist Member - CHASTE DRAGON</title>
-<style>
-body {
-  background:black;
-  color:white;
-  font-family:Poppins, sans-serif;
-  padding:30px;
-  text-align:center;
-}
-
-h1{
-  color:gold;
-  margin-bottom:10px;
-}
-
-table{
-  width:100%;
-  max-width:1000px;
-  margin:auto;
-  border-collapse:collapse;
-  margin-top:20px;
-}
-
-th, td{
-  border:1px solid gold;
-  padding:10px;
-  text-align:center;
-}
-
-th{
-  background:gold;
-  color:black;
-}
-
-tr:nth-child(even){
-  background:#111;
-}
-
-button{
-  margin-top:20px;
-  padding:10px 20px;
-  background:red;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Blacklist Member - CHASTE DRAGON</title>
 </head>
-<body>
 
-<h1>⚠️ BLACKLIST MEMBER</h1>
-<h2>CHASTE DRAGON SQUAD</h2>
+<body style="background:black;color:white;font-family:Poppins;padding:40px;line-height:1.8;">
 
-<table id="blacklistTable">
+<h1 style="color:gold;">BLACKLIST MEMBER</h1>
+<h2 style="color:gold;">CHASTE DRAGON SQUAD</h2>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<p>Berikut daftar member yang telah diblacklist beserta alasan resmi dari Manajemen CHASTE DRAGON:</p>
+
+<table style="width:100%; max-width:800px; margin:auto; border-collapse:collapse; color:white;">
   <thead>
-    <tr>
-      <th>No</th>
-      <th>Nama</th>
-      <th>Nickname</th>
-      <th>Alasan Blacklist</th>
-      <th>Tanggal</th>
+    <tr style="background:gold; color:black;">
+      <th style="border:1px solid gold; padding:10px;">No</th>
+      <th style="border:1px solid gold; padding:10px;">Nama</th>
+      <th style="border:1px solid gold; padding:10px;">Nickname</th>
+      <th style="border:1px solid gold; padding:10px;">Alasan Blacklist</th>
+      <th style="border:1px solid gold; padding:10px;">Tanggal</th>
     </tr>
   </thead>
   <tbody>
-    <!-- Contoh data awal -->
-    <tr>
-      <td>1</td>
-      <td>C***</td>
-      <td>CimDragon</td>
-      <td>Membuat keributan dengan squad lain</td>
-      <td>2026-02-15</td>
+    <tr style="background:#111;">
+      <td style="border:1px solid gold; padding:10px;">1</td>
+      <td style="border:1px solid gold; padding:10px;">Cimoy</td>
+      <td style="border:1px solid gold; padding:10px;">CimDragon</td>
+      <td style="border:1px solid gold; padding:10px;">Membuat keributan dengan squad lain</td>
+      <td style="border:1px solid gold; padding:10px;">2026-02-15</td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>I***</td>
-      <td>IfDragon</td>
-      <td>Melanggar undang-undang CHASTE DRAGON</td>
-      <td>2026-02-16</td>
+    <tr style="background:black;">
+      <td style="border:1px solid gold; padding:10px;">2</td>
+      <td style="border:1px solid gold; padding:10px;">Ifan</td>
+      <td style="border:1px solid gold; padding:10px;">IfDragon</td>
+      <td style="border:1px solid gold; padding:10px;">Melanggar undang-undang CHASTE DRAGON</td>
+      <td style="border:1px solid gold; padding:10px;">2026-02-16</td>
     </tr>
   </tbody>
 </table>
 
-<button onclick="hapusBlacklist()">Hapus Semua Blacklist</button>
+<hr style="border:1px solid gold;margin:30px 0;">
 
-<script>
-// Hapus semua data blacklist (hanya untuk management)
-function hapusBlacklist(){
-  if(confirm("Yakin ingin menghapus semua data blacklist?")){
-    const tbody = document.querySelector("#blacklistTable tbody");
-    tbody.innerHTML = "";
-    alert("Semua blacklist telah dihapus.");
-  }
-}
-</script>
-<div style="text-align:center;margin-top:40px;">
-  <a href="https://chastedragon.vercel.app">⬅ Kembali</a>
-</div>
+<p style="color:gold;"><strong>Catatan:</strong> Member yang masuk blacklist dianggap **tidak diperkenankan mengikuti kegiatan resmi CHASTE DRAGON** dan keputusan bersifat final.</p>
+
+<a href="https://chastedragon.vercel.app" style="color:gold; margin-right:20px;">⬅ Back</a>
 
 </body>
 </html>
