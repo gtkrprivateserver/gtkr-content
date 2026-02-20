@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>CHASTE DRAGON ELITE GAME</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins, sans-serif;
+  padding:40px;
+  text-align:center;
+}
+
+h1{
+  color:gold;
+  font-size:32px;
+}
+
+button{
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+input{
+  padding:10px;
+  border-radius:5px;
+  border:none;
+  width:250px;
+}
+
+#leaderboard{
+  margin-top:20px;
+}
+
+.dragon-effect{
+  position:fixed;
+  top:40%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:40px;
+  color:gold;
+  animation:fade 2s ease-out;
+}
+
+@keyframes fade{
+  0%{opacity:1; transform:translate(-50%,-50%) scale(1);}
+  100%{opacity:0; transform:translate(-50%,-50%) scale(1.5);}
+}
+</style>
+</head>
+
+<body>
+
+<h1>🐉 CHASTE DRAGON ELITE TEST 🐉</h1>
+<p>Buktikan Loyalitas & Disiplinmu!</p>
+
+<input type="text" id="playerName" placeholder="Masukkan Nama Anda">
+<br><br>
+
+<div id="gameArea"></div>
+
+<div style="margin-top:15px;">
+⏳ Waktu: <span id="timer">20</span>
+</div>
+
+<div>
+🏆 Skor: <span id="score">0</span>
+</div>
+
+<br>
+
+<button onclick="startGame()" 
+style="padding:10px 25px;background:gold;border:none;border-radius:5px;font-weight:bold;">
+Mulai Ujian
+</button>
+
+<button onclick="fullscreenMode()" 
+style="padding:10px 25px;background:black;color:gold;border:1px solid gold;border-radius:5px;margin-left:10px;">
+Mode Panggung
+</button>
+
+<h2 style="color:gold;margin-top:50px;">🏆 Leaderboard Top 10</h2>
+<div id="leaderboard"></div>
+
+<audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3"></audio>
+<audio id="wrongSound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-bass-buzzer-948.mp3"></audio>
+
+<script>
+
+const questions = [
+{q:"Berapa hari tidak aktif masuk evaluasi?",a:["7 Hari","30 Hari","90 Hari"],c:1},
+{q:"Keputusan final ada pada?",a:["Voting","Leader & Manajemen","Semua Member"],c:1},
+{q:"Sanksi pelanggaran berat?",a:["Teguran","Skorsing","Blacklist Permanen"],c:2},
+{q:"Apa yang wajib dijaga?",a:["Nama Baik Squad","Rahasia Pribadi","Jabatan"],c:0}
+];
+
+let current=0,score=0,timeLeft=20,timerInterval;
+
+function startGame(){
+  const name=document.getElementById("playerName").value;
+  if(!name){alert("Masukkan nama dulu!");return;}
+  current=0;score=0;
+  document.getElementById("score").innerText=score;
+  nextQuestion();
+}
+
+function nextQuestion(){
+  if(current>=questions.length){
+    endGame();
+    return;
+  }
+
+  timeLeft=20;
+  document.getElementById("timer").innerText=timeLeft;
+
+  const q=questions[current];
+  let html="<h3>"+q.q+"</h3>";
+  q.a.forEach((ans,i)=>{
+    html+=`<button onclick="checkAnswer(${i})"
+    style="margin:5px;padding:10px 15px;background:black;color:gold;border:1px solid gold;border-radius:5px;">
+    ${ans}</button><br>`;
+  });
+
+  document.getElementById("gameArea").innerHTML=html;
+
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    document.getElementById("timer").innerText=timeLeft;
+    if(timeLeft<=0){
+      clearInterval(timerInterval);
+      current++;
+      nextQuestion();
+    }
+  },1000);
+}
+
+function checkAnswer(i){
+  if(i===questions[current].c){
+    score+=25;
+    document.getElementById("correctSound").play();
+  }else{
+    document.getElementById("wrongSound").play();
+  }
+  document.getElementById("score").innerText=score;
+  clearInterval(timerInterval);
+  current++;
+  nextQuestion();
+}
+
+function endGame(){
+  const name=document.getElementById("playerName").value;
+  saveScore(name,score);
+  showDragonEffect();
+  loadLeaderboard();
+
+  let rank="BRONZE";
+  if(score>=50) rank="SILVER";
+  if(score>=75) rank="GOLD";
+  if(score>=100) rank="🐉 DRAGON KING";
+
+  document.getElementById("gameArea").innerHTML=
+  "<h2>🔥 Ujian Selesai 🔥</h2>"+
+  "<p>Skor: "+score+"</p>"+
+  "<h3>Peringkat: "+rank+"</h3>";
+}
+
+function saveScore(name,score){
+  let data=JSON.parse(localStorage.getItem("chasteScore"))||[];
+  data.push({name,score});
+  data.sort((a,b)=>b.score-a.score);
+  localStorage.setItem("chasteScore",JSON.stringify(data.slice(0,10)));
+}
+
+function loadLeaderboard(){
+  let data=JSON.parse(localStorage.getItem("chasteScore"))||[];
+  let html="<ol>";
+  data.forEach(p=>{
+    html+="<li>"+p.name+" - "+p.score+"</li>";
+  });
+  html+="</ol>";
+  document.getElementById("leaderboard").innerHTML=html;
+}
+
+function showDragonEffect(){
+  const effect=document.createElement("div");
+  effect.className="dragon-effect";
+  effect.innerHTML="🐉🔥 DRAGON POWER 🔥🐉";
+  document.body.appendChild(effect);
+  setTimeout(()=>effect.remove(),2000);
+}
+
+function fullscreenMode(){
+  document.documentElement.requestFullscreen();
+}
+
+loadLeaderboard();
+
+</script>
+
+</body>
+</html>
