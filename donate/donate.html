@@ -56,21 +56,20 @@ button:hover{
   box-shadow:0 0 25px gold;
 }
 
-/* QR di bawah tombol */
+/* QR di bawah tombol, ukuran sesuai tombol */
 #qrContainer{
-  display:none;         /* default hidden */
+  display:none;
   text-align:center;
-  margin-top:20px;
+  margin-top:10px; /* jarak tipis dari tombol */
 }
 
 #qrContainer img{
   display:block;
   margin:0 auto;
   border:2px solid gold;
-  border-radius:15px;
-  /* ukuran sesuai file asli, tidak dipaksa */
-  max-width:250px;       /* bisa disesuaikan */
-  height:auto;
+  border-radius:12px;
+  width:150px;   /* sesuaikan ukuran tombol/area kontak */
+  height:auto;   /* proporsional */
 }
 </style>
 </head>
@@ -91,7 +90,7 @@ button:hover{
     <button onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
   </div>
 
-  <!-- QR muncul di bawah tombol -->
+  <!-- QR muncul tepat di bawah tombol -->
   <div id="qrContainer">
     <img src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg" alt="QR Donasi CHASTE DRAGON">
   </div>
