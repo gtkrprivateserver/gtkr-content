@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ramadhan System - CHASTE DRAGON</title>
 
 <style>
@@ -13,22 +14,22 @@ body{
   padding:30px;
 }
 
-h1{
+h1,h2,h3{
   color:gold;
 }
 
 .card{
   background:#111;
   border:2px solid gold;
-  border-radius:15px;
-  padding:25px;
-  max-width:700px;
+  border-radius:20px;
+  padding:30px;
+  max-width:750px;
   margin:30px auto;
-  box-shadow:0 0 25px gold;
+  box-shadow:0 0 30px gold;
 }
 
 .hari{
-  font-size:26px;
+  font-size:28px;
   font-weight:bold;
   color:gold;
 }
@@ -56,7 +57,7 @@ h1{
 
 @keyframes glow{
   from{box-shadow:0 0 5px gold;}
-  to{box-shadow:0 0 20px gold;}
+  to{box-shadow:0 0 25px gold;}
 }
 
 .countdown{
@@ -71,8 +72,8 @@ h1{
   background:black;
   border:2px solid gold;
   padding:15px 20px;
-  border-radius:10px;
-  min-width:80px;
+  border-radius:12px;
+  min-width:90px;
 }
 
 .number{
@@ -83,6 +84,11 @@ h1{
 
 .label{
   font-size:14px;
+}
+
+hr{
+  border:1px solid gold;
+  margin:35px 0;
 }
 
 .footer{
@@ -98,9 +104,22 @@ h1{
 
 <div id="ramadhanContainer"></div>
 
+<!-- Audio Adzan -->
+<audio id="adzanSound">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b8a7a33d5.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
 const totalHari = 30;
+
+// =======================
+// EDIT JADWAL WIB DISINI
+// =======================
+const jadwalWIB = {
+  imsak: "04:49:00",
+  maghrib: "18:35:00"
+};
 
 const versi = {
   NU: {
@@ -112,6 +131,19 @@ const versi = {
     end: new Date("March 19, 2026 00:00:00").getTime()
   }
 };
+
+function getTodayTime(jamString){
+  const today = new Date();
+  const [h,m,s] = jamString.split(":");
+  return new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+    h,m,s
+  ).getTime();
+}
+
+let adzanPlayed = false;
 
 function buatCard(nama, data){
 
@@ -135,14 +167,34 @@ function buatCard(nama, data){
     persen = Math.floor((selisihHari / totalHari) * 100);
   }
 
+  // Countdown Idul Fitri
   const hariCD = Math.floor(jarak / (1000 * 60 * 60 * 24));
   const jamCD = Math.floor((jarak % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const menitCD = Math.floor((jarak % (1000 * 60 * 60)) / (1000 * 60));
   const detikCD = Math.floor((jarak % (1000 * 60)) / 1000);
 
+  // Sahur & Buka
+  const imsakTime = getTodayTime(jadwalWIB.imsak);
+  const maghribTime = getTodayTime(jadwalWIB.maghrib);
+
+  let menujuBuka = maghribTime - now;
+
+  if(menujuBuka <= 0 && !adzanPlayed){
+    document.getElementById("adzanSound").play();
+    adzanPlayed = true;
+  }
+
+  if(menujuBuka < 0){
+    menujuBuka = 0;
+  }
+
+  const bukaJam = Math.floor((menujuBuka % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const bukaMenit = Math.floor((menujuBuka % (1000 * 60 * 60)) / (1000 * 60));
+  const bukaDetik = Math.floor((menujuBuka % (1000 * 60)) / 1000);
+
   return `
     <div class="card">
-      <h3 style="color:gold;">Versi ${nama}</h3>
+      <h3>Versi ${nama}</h3>
 
       <div class="hari">Hari ke-${selisihHari > 0 ? selisihHari : 0}</div>
 
@@ -152,28 +204,29 @@ function buatCard(nama, data){
         </div>
       </div>
 
-      <h3 style="margin-top:25px;color:gold;">
-        ⏳ Menuju Idul Fitri
-      </h3>
+      <h3 style="margin-top:25px;">⏳ Menuju Idul Fitri</h3>
 
       <div class="countdown">
-        <div class="box">
-          <div class="number">${hariCD}</div>
-          <div class="label">Hari</div>
-        </div>
-        <div class="box">
-          <div class="number">${jamCD}</div>
-          <div class="label">Jam</div>
-        </div>
-        <div class="box">
-          <div class="number">${menitCD}</div>
-          <div class="label">Menit</div>
-        </div>
-        <div class="box">
-          <div class="number">${detikCD}</div>
-          <div class="label">Detik</div>
-        </div>
+        <div class="box"><div class="number">${hariCD}</div><div class="label">Hari</div></div>
+        <div class="box"><div class="number">${jamCD}</div><div class="label">Jam</div></div>
+        <div class="box"><div class="number">${menitCD}</div><div class="label">Menit</div></div>
+        <div class="box"><div class="number">${detikCD}</div><div class="label">Detik</div></div>
       </div>
+
+      <hr>
+
+      <h3>🕌 Jadwal Hari Ini (WIB)</h3>
+      <p>🌙 Sahur / Imsak : <strong>${jadwalWIB.imsak}</strong></p>
+      <p>🌇 Berbuka : <strong>${jadwalWIB.maghrib}</strong></p>
+
+      <h3 style="margin-top:20px;">⏳ Countdown Menuju Berbuka</h3>
+
+      <div class="countdown">
+        <div class="box"><div class="number">${bukaJam}</div><div class="label">Jam</div></div>
+        <div class="box"><div class="number">${bukaMenit}</div><div class="label">Menit</div></div>
+        <div class="box"><div class="number">${bukaDetik}</div><div class="label">Detik</div></div>
+      </div>
+
     </div>
   `;
 }
@@ -190,7 +243,7 @@ setInterval(updateSystem, 1000);
 
 </script>
 
-<hr style="border:1px solid gold;margin:40px 0;">
+<hr>
 
 <div class="footer">
 <a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">
