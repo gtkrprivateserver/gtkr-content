@@ -2,218 +2,45 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Ramadhan System - CHASTE DRAGON</title>
-
+<title>Kalender Hari Raya Dunia - CHASTE DRAGON</title>
 <style>
 body{
   background:black;
-  font-family:Poppins, sans-serif;
   color:white;
+  font-family:Poppins,sans-serif;
   text-align:center;
-  padding:30px;
+  padding:40px;
 }
-
 h1{ color:gold; }
-
-.card{
-  background:#111;
+a{
+  display:block;
+  margin:15px;
+  padding:15px;
   border:2px solid gold;
-  border-radius:15px;
-  padding:25px;
-  max-width:850px;
-  margin:30px auto;
-  box-shadow:0 0 20px gold;
+  border-radius:12px;
+  color:gold;
+  text-decoration:none;
 }
-
-.progress-container{
-  width:100%;
-  background:#222;
-  border-radius:50px;
-  margin-top:20px;
-  overflow:hidden;
-  height:25px;
-}
-
-.progress-bar{
-  height:100%;
-  background:linear-gradient(90deg,gold,orange);
-  text-align:center;
-  line-height:25px;
+a:hover{
+  background:gold;
   color:black;
-  font-weight:bold;
-}
-
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin-top:20px;
-  flex-wrap:wrap;
-}
-
-.box{
-  background:black;
-  border:2px solid gold;
-  padding:15px 20px;
-  border-radius:10px;
-  min-width:80px;
-}
-
-.number{
-  font-size:22px;
-  font-weight:bold;
-  color:gold;
-}
-
-.label{ font-size:13px; }
-
-.status{
-  margin-top:15px;
-  font-size:16px;
-  color:gold;
 }
 </style>
 </head>
-
 <body>
 
-<h1>🌙 RAMADHAN 1447H</h1>
+<h1>📅 KALENDER HARI RAYA DUNIA</h1>
 <h2>CHASTE DRAGON 洁龙</h2>
 
-<div id="versiNU"></div>
-<div id="versiMuhammadiyah"></div>
-<div id="imsakCard"></div>
+<a href="imlek.html">🧧 Tahun Baru Imlek</a>
+<a href="ramadhan.html">🌙 Bulan Puasa Ramadhan</a>
+<a href="idulfitri.html">🕌 Hari Raya Idul Fitri</a>
+<a href="iduladha.html">🐐 Hari Raya Idul Adha</a>
+<a href="nyepi.html">🕉️ Hari Raya Nyepi</a>
+<a href="waisak.html">🪷 Hari Raya Waisak</a>
+<a href="diwali.html">🪔 Festival Diwali</a>
+<a href="natal.html">✝️ Hari Raya Natal</a>
+<a href="tahunbaru.html">🎆 Tahun Baru Masehi</a>
 
-<script>
-
-/* =========================
-   DATA VERSI RAMADHAN
-========================= */
-
-const totalHari = 30;
-
-const versi = {
-  NU: {
-    start: new Date("February 19, 2026 00:00:00").getTime(),
-    end: new Date("March 20, 2026 00:00:00").getTime()
-  },
-  Muhammadiyah: {
-    start: new Date("February 18, 2026 00:00:00").getTime(),
-    end: new Date("March 19, 2026 00:00:00").getTime()
-  }
-};
-
-/* =========================
-   IMSAK & MAGHRIB
-========================= */
-
-const waktuImsak = "04:49";
-const waktuMaghrib = "18:35";
-
-/* =========================
-   GENERATE CARD RAMADHAN
-========================= */
-
-function generateRamadhanCard(nama, data){
-
-  const now = new Date().getTime();
-  const selisihHari = Math.floor((now - data.start)/(1000*60*60*24))+1;
-  const persen = Math.min(Math.floor((selisihHari/totalHari)*100),100);
-  const jarak = data.end - now;
-
-  const hari = Math.floor(jarak/(1000*60*60*24));
-  const jam = Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
-  const menit = Math.floor((jarak%(1000*60*60))/(1000*60));
-  const detik = Math.floor((jarak%(1000*60))/1000);
-
-  return `
-  <div class="card">
-    <h3 style="color:gold;">Versi ${nama}</h3>
-    <div>Hari ke-${selisihHari > 0 ? selisihHari : 0}</div>
-
-    <div class="progress-container">
-      <div class="progress-bar" style="width:${persen}%">${persen}%</div>
-    </div>
-
-    <div class="status">⏳ Menuju Idul Fitri (${nama})</div>
-
-    <div class="countdown">
-      <div class="box"><div class="number">${hari}</div><div class="label">Hari</div></div>
-      <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
-      <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
-      <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
-    </div>
-  </div>`;
-}
-
-/* =========================
-   AUTO IMSAK ↔ BERBUKA
-========================= */
-
-function getTargetWaktu(){
-  const now = new Date();
-  const today = now.toDateString();
-
-  const imsak = new Date(today + " " + waktuImsak);
-  const maghrib = new Date(today + " " + waktuMaghrib);
-
-  if(now >= imsak && now < maghrib){
-    return { label: "Menuju Waktu Berbuka", target: maghrib.getTime() };
-  } else {
-    if(now >= maghrib){
-      imsak.setDate(imsak.getDate()+1);
-    }
-    return { label: "Menuju Waktu Imsak", target: imsak.getTime() };
-  }
-}
-
-function updateImsak(){
-
-  const now = new Date().getTime();
-  const waktu = getTargetWaktu();
-  const jarak = waktu.target - now;
-
-  const jam = Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
-  const menit = Math.floor((jarak%(1000*60*60))/(1000*60));
-  const detik = Math.floor((jarak%(1000*60))/1000);
-
-  document.getElementById("imsakCard").innerHTML = `
-  <div class="card">
-    <h3 style="color:gold;">Jadwal Puasa Hari Ini DiBatam</h3>
-    <div>Imsak: ${waktuImsak} | Maghrib: ${waktuMaghrib}</div>
-
-    <div class="status">⏳ ${waktu.label}</div>
-
-    <div class="countdown">
-      <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
-      <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
-      <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
-    </div>
-  </div>`;
-}
-
-/* ========================= */
-
-function updateAll(){
-  document.getElementById("versiNU").innerHTML =
-    generateRamadhanCard("NU", versi.NU);
-
-  document.getElementById("versiMuhammadiyah").innerHTML =
-    generateRamadhanCard("Muhammadiyah", versi.Muhammadiyah);
-
-  updateImsak();
-}
-
-updateAll();
-setInterval(updateAll,1000);
-
-</script>
-<hr style="border:1px solid gold;margin:40px 0;">
-
-<div class="footer">
-<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">
-⬅ Back
-</a>
-</div>
 </body>
 </html>
