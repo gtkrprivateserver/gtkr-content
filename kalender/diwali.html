@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Festival Diwali - CHASTE DRAGON</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  font-family:Poppins, sans-serif;
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
+
+h1{ color:gold; margin-top:40px; }
+
+.card{
+  background:#111;
+  border:2px solid gold;
+  border-radius:15px;
+  padding:25px;
+  max-width:850px;
+  margin:30px auto;
+  box-shadow:0 0 25px gold;
+  position:relative;
+  z-index:2;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+.box{
+  background:black;
+  border:2px solid gold;
+  padding:15px 20px;
+  border-radius:10px;
+  min-width:80px;
+}
+
+.number{
+  font-size:22px;
+  font-weight:bold;
+  color:gold;
+}
+
+.label{ font-size:13px; }
+
+.status{
+  margin-top:15px;
+  font-size:16px;
+  color:gold;
+}
+
+/* Lampu Diya */
+.diya{
+  position:fixed;
+  bottom:20px;
+  font-size:30px;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{ opacity:0.6; transform:scale(1); }
+  to{ opacity:1; transform:scale(1.2); }
+}
+
+/* Fireworks */
+.firework{
+  position:fixed;
+  font-size:20px;
+  animation:explode 1.5s linear forwards;
+}
+
+@keyframes explode{
+  from{
+    transform:translateY(0) scale(0.5);
+    opacity:1;
+  }
+  to{
+    transform:translateY(-200px) scale(2);
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🪔 FESTIVAL DIWALI</h1>
+<h2>CHASTE DRAGON 洁龙</h2>
+
+<div id="diwaliCard"></div>
+
+<div class="diya" style="left:20%;">🪔</div>
+<div class="diya" style="left:50%;">🪔</div>
+<div class="diya" style="left:80%;">🪔</div>
+
+<script>
+
+/* =========================
+   COUNTDOWN DIWALI
+========================= */
+
+function getNextDiwali(){
+  const now = new Date();
+  const year = now.getFullYear();
+
+  // Perkiraan umum (biasanya Okt/Nov)
+  let diwali = new Date("November 1, " + year + " 00:00:00");
+
+  if(now.getTime() > diwali.getTime()){
+    diwali = new Date("November 1, " + (year+1) + " 00:00:00");
+  }
+
+  return diwali;
+}
+
+function generateDiwaliCard(){
+
+  const now = new Date();
+  const diwali = getNextDiwali();
+
+  const jarak = diwali.getTime() - now.getTime();
+
+  const hari = Math.floor(jarak/(1000*60*60*24));
+  const jam = Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
+  const menit = Math.floor((jarak%(1000*60*60))/(1000*60));
+  const detik = Math.floor((jarak%(1000*60))/1000);
+
+  return `
+  <div class="card">
+    <h3 style="color:gold;">🪔 Countdown Menuju Diwali</h3>
+
+    <div style="margin-bottom:10px;">
+      📅 Perkiraan Tanggal: ${diwali.toDateString()}
+    </div>
+
+    <div class="status">✨ Festival Cahaya Akan Datang ✨</div>
+
+    <div class="countdown">
+      <div class="box"><div class="number">${hari}</div><div class="label">Hari</div></div>
+      <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
+      <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
+      <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
+    </div>
+  </div>`;
+}
+
+function updateAll(){
+  document.getElementById("diwaliCard").innerHTML =
+    generateDiwaliCard();
+}
+
+updateAll();
+setInterval(updateAll,1000);
+
+/* =========================
+   FIREWORK EFFECT
+========================= */
+
+function createFirework(){
+  const fire = document.createElement("div");
+  fire.classList.add("firework");
+  fire.innerHTML = "✨";
+  fire.style.left = Math.random()*100 + "vw";
+  fire.style.bottom = "0px";
+  document.body.appendChild(fire);
+
+  setTimeout(()=>{
+    fire.remove();
+  },1500);
+}
+
+setInterval(createFirework,800);
+
+</script>
+<hr style="border:1px solid gold;margin:40px 0;">
+
+<div class="footer">
+<a href="kalender.html" style="color:gold;text-decoration:none;">
+⬅ Back
+</a>
+</div>
+
+</body>
+</html>
