@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHASTE DRAGON EVENT SYSTEM</title>
 
-<!-- FIREBASE V8 (STABLE) -->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
 <style>
 body{
   margin:0;
@@ -111,43 +107,45 @@ button:hover{background:orange;}
 
 </div>
 
-<script>
+<!-- FIREBASE MODULAR V12 -->
+<script type="module">
 
-/* FIREBASE CONFIG */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
   authDomain: "chastedragon.firebaseapp.com",
-  projectId: "chastedragon"
+  projectId: "chastedragon",
+  storageBucket: "chastedragon.firebasestorage.app",
+  messagingSenderId: "926861094687",
+  appId: "1:926861094687:web:a99c7c0df0365457e0ca2a",
+  measurementId: "G-FNG5JNQ8C7"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+getAnalytics(app);
 
 /* CEK STATUS SAAT LOAD */
-window.addEventListener("load", ()=>{
-  checkJoinStatus();
-});
-
-/* CEK LOCAL STORAGE */
-function checkJoinStatus(){
+window.addEventListener("load", async ()=>{
   const phone = localStorage.getItem("eventPhone");
   if(!phone) return;
 
-  db.collection("eventReceh")
-    .where("phone","==",phone)
-    .get()
-    .then(snapshot=>{
-      if(!snapshot.empty){
-        const btn = document.getElementById("joinBtn");
-        btn.innerText="✔ SUDAH TERDAFTAR";
-        btn.disabled=true;
-        btn.style.background="green";
-      }
-    });
-}
+  const q = query(collection(db,"eventReceh"), where("phone","==",phone));
+  const snapshot = await getDocs(q);
+
+  if(!snapshot.empty){
+    const btn = document.getElementById("joinBtn");
+    btn.innerText="✔ SUDAH TERDAFTAR";
+    btn.disabled=true;
+    btn.style.background="green";
+  }
+});
 
 /* JOIN EVENT */
-function joinEvent(){
+window.joinEvent = async function(){
 
   const akun = document.getElementById("eventAkun").value.trim();
   const link = document.getElementById("eventLink").value.trim();
@@ -159,46 +157,41 @@ function joinEvent(){
     return;
   }
 
-  db.collection("eventReceh")
-    .where("phone","==",phone)
-    .get()
-    .then(snapshot=>{
+  const q = query(collection(db,"eventReceh"), where("phone","==",phone));
+  const snapshot = await getDocs(q);
 
-      if(!snapshot.empty){
-        alert("Nomor sudah terdaftar!");
-        return;
-      }
+  if(!snapshot.empty){
+    alert("Nomor sudah terdaftar!");
+    return;
+  }
 
-      db.collection("eventReceh").add({
-        akun,
-        link,
-        namaAsli,
-        phone,
-        verified:false,
-        created:firebase.firestore.FieldValue.serverTimestamp()
-      });
+  await addDoc(collection(db,"eventReceh"),{
+    akun,
+    link,
+    namaAsli,
+    phone,
+    verified:false,
+    created: Date.now()
+  });
 
-      localStorage.setItem("eventPhone", phone);
+  localStorage.setItem("eventPhone", phone);
 
-      const btn = document.getElementById("joinBtn");
-      btn.innerText="✔ SUDAH TERDAFTAR";
-      btn.disabled=true;
-      btn.style.background="green";
+  const btn = document.getElementById("joinBtn");
+  btn.innerText="✔ SUDAH TERDAFTAR";
+  btn.disabled=true;
+  btn.style.background="green";
 
-      alert("Berhasil join event!");
-    });
+  alert("Berhasil join event!");
 }
 
 /* REALTIME LIST */
-db.collection("eventReceh")
-.orderBy("created","desc")
-.onSnapshot(snapshot=>{
+onSnapshot(collection(db,"eventReceh"), (snapshot)=>{
   let html="";
   let total=0;
 
-  snapshot.forEach(doc=>{
+  snapshot.forEach(docSnap=>{
     total++;
-    let d=doc.data();
+    const d = docSnap.data();
 
     html+=`
     <div class="listItem">
@@ -217,8 +210,8 @@ db.collection("eventReceh")
 /* ADMIN */
 const ADMIN_PASS="chaste2026";
 
-function adminLogin(){
-  let pass=document.getElementById("adminPass").value;
+window.adminLogin = function(){
+  const pass=document.getElementById("adminPass").value;
   if(pass===ADMIN_PASS){
     document.getElementById("adminPanel").style.display="block";
     loadAdmin();
@@ -228,17 +221,17 @@ function adminLogin(){
 }
 
 function loadAdmin(){
-  db.collection("eventReceh").onSnapshot(snapshot=>{
+  onSnapshot(collection(db,"eventReceh"), (snapshot)=>{
     let html="";
-    snapshot.forEach(doc=>{
-      let d=doc.data();
+    snapshot.forEach(docSnap=>{
+      const d=docSnap.data();
       html+=`
       <div style="border-bottom:1px solid #333;padding:8px;">
         <b>${d.akun}</b><br>
         ${d.namaAsli}<br>
         ${d.phone}<br>
         ${d.verified?'✔ Verified':'Belum Verified'}
-        ${!d.verified?`<button onclick="verifyMember('${doc.id}')">Verify</button>`:''}
+        ${!d.verified?`<button onclick="verifyMember('${docSnap.id}')">Verify</button>`:''}
       </div>
       `;
     });
@@ -246,8 +239,8 @@ function loadAdmin(){
   });
 }
 
-function verifyMember(id){
-  db.collection("eventReceh").doc(id).update({
+window.verifyMember = async function(id){
+  await updateDoc(doc(db,"eventReceh",id),{
     verified:true
   });
 }
