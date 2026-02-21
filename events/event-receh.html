@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verified Badge - CHASTE DRAGON</title>
+<title>CHASTE DRAGON EVENT & VERIFIED SYSTEM</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
 
 <style>
@@ -24,7 +23,7 @@ header{
 }
 h1{color:gold;}
 .container{
-  max-width:500px;
+  max-width:600px;
   margin:auto;
   padding:20px;
 }
@@ -60,139 +59,155 @@ button:hover{background:orange;}
 .verified{background:green;}
 .unverified{background:red;}
 .admin{display:none;}
+.listItem{
+  margin:8px 0;
+  padding:8px;
+  border-bottom:1px solid #333;
+}
 </style>
 </head>
 <body>
 
 <header>
-<h1>VERIFIED BADGE SYSTEM</h1>
-<p>CHASTE DRAGON OFFICIAL</p>
+<h1>CHASTE DRAGON LEADER</h1>
+<p>Event Receh & Verified Badge System</p>
 </header>
 
 <div class="container">
 
+<!-- JOIN EVENT -->
 <div class="card">
-<h3>Daftar & Verifikasi OTP</h3>
+<h3>Join Event Receh</h3>
 
-<input type="text" id="akun" placeholder="Nama Akun Walla">
-<input type="text" id="link" placeholder="Link Akun Walla">
-<input type="text" id="nama" placeholder="Nama Asli">
-<input type="text" id="phone" placeholder="+62xxxx">
+<input type="text" id="eventAkun" placeholder="Nama Akun Walla">
+<input type="text" id="eventLink" placeholder="Link Akun Walla">
+<input type="text" id="eventNamaAsli" placeholder="Nama Asli">
+<input type="text" id="eventPhone" placeholder="Nomor WhatsApp (+62xxx)">
 
-<div id="recaptcha-container"></div>
-
-<button onclick="sendOTP()">Kirim OTP</button>
-
-<input type="text" id="otp" placeholder="Masukkan OTP">
-<button onclick="verifyOTP()">Verifikasi & Simpan</button>
+<button id="joinBtn" onclick="joinEvent()">JOIN EVENT</button>
 
 </div>
 
+<!-- LIST PESERTA -->
 <div class="card">
-<h3>List Member</h3>
-<div id="memberList"></div>
+<h3>Peserta Event</h3>
+<div id="eventList"></div>
 </div>
 
+<!-- ADMIN LOGIN -->
 <div class="card">
 <h3>Admin Login</h3>
-<input type="password" id="adminPass" placeholder="Password">
+<input type="password" id="adminPass" placeholder="Password Admin">
 <button onclick="adminLogin()">Login</button>
 </div>
 
+<!-- ADMIN PANEL -->
 <div class="card admin" id="adminPanel">
-<h3>Admin Panel</h3>
+<h3>Admin Panel - Verifikasi</h3>
 <div id="adminList"></div>
 </div>
 
 </div>
 
 <script>
-/* ======== GANTI DENGAN CONFIG FIREBASE ANDA ======== */
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
-    authDomain: "chastedragon.firebaseapp.com",
-    projectId: "chastedragon",
-    storageBucket: "chastedragon.firebasestorage.app",
-    messagingSenderId: "926861094687",
-    appId: "1:926861094687:web:37df8a6e763e9825e0ca2a",
-    measurementId: "G-X1FY25WW2P"
-  };
-/* =================================================== */
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
+  authDomain: "chastedragon.firebaseapp.com",
+  projectId: "chastedragon",
+  storageBucket: "chastedragon.firebasestorage.app",
+  messagingSenderId: "926861094687",
+  appId: "1:926861094687:web:43b817d47f604eb9e0ca2a",
+  measurementId: "G-SLKV9ZKXJ0"
+};
 
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 const db = firebase.firestore();
 
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-'recaptcha-container',
-{ size: 'normal' }
-);
+/* CEK STATUS SAAT LOAD */
+window.addEventListener("load", ()=>{
+  checkJoinStatus();
+});
 
-let confirmationResult;
+/* CEK STATUS LOCAL */
+function checkJoinStatus(){
+  const phone = localStorage.getItem("eventPhone");
+  if(!phone) return;
 
-/* KIRIM OTP */
-function sendOTP(){
-  const phone = document.getElementById("phone").value;
-  auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
-  .then((result)=>{
-    confirmationResult = result;
-    alert("OTP dikirim!");
-  }).catch((error)=>{
-    alert(error.message);
-  });
+  db.collection("eventReceh")
+    .where("phone","==",phone)
+    .get()
+    .then(snapshot=>{
+      if(!snapshot.empty){
+        document.getElementById("joinBtn").innerText="✔ SUDAH TERDAFTAR";
+        document.getElementById("joinBtn").disabled=true;
+        document.getElementById("joinBtn").style.background="green";
+      }
+    });
 }
 
-/* VERIFIKASI OTP */
-function verifyOTP(){
-  const code = document.getElementById("otp").value;
-  confirmationResult.confirm(code).then((result)=>{
-    saveToDatabase();
-  }).catch(()=>{
-    alert("OTP salah!");
-  });
+/* JOIN EVENT */
+function joinEvent(){
+
+  const akun = document.getElementById("eventAkun").value;
+  const link = document.getElementById("eventLink").value;
+  const namaAsli = document.getElementById("eventNamaAsli").value;
+  const phone = document.getElementById("eventPhone").value;
+
+  if(!akun || !link || !namaAsli || !phone){
+    alert("Lengkapi semua data!");
+    return;
+  }
+
+  db.collection("eventReceh")
+    .where("phone","==",phone)
+    .get()
+    .then(snapshot=>{
+
+      if(!snapshot.empty){
+        alert("Nomor sudah terdaftar!");
+        return;
+      }
+
+      db.collection("eventReceh").add({
+        akun:akun,
+        link:link,
+        namaAsli:namaAsli,
+        phone:phone,
+        verified:false,
+        created:new Date()
+      });
+
+      localStorage.setItem("eventPhone", phone);
+
+      document.getElementById("joinBtn").innerText="✔ SUDAH TERDAFTAR";
+      document.getElementById("joinBtn").disabled=true;
+      document.getElementById("joinBtn").style.background="green";
+
+      alert("Berhasil join event!");
+    });
 }
 
-/* SIMPAN DATA */
-function saveToDatabase(){
-  const akun = document.getElementById("akun").value;
-  const link = document.getElementById("link").value;
-  const nama = document.getElementById("nama").value;
-  const phone = document.getElementById("phone").value;
-
-  db.collection("members").add({
-    akun:akun,
-    link:link,
-    nama:nama,
-    phone:phone,
-    verified:false,
-    created: new Date()
-  });
-
-  alert("Data tersimpan!");
-}
-
-/* REALTIME LIST */
-db.collection("members").orderBy("created","desc")
+/* REALTIME LIST PESERTA */
+db.collection("eventReceh").orderBy("created","desc")
 .onSnapshot(snapshot=>{
   let html="";
   snapshot.forEach(doc=>{
-    let data = doc.data();
+    let d=doc.data();
     html+=`
-    <div style="margin:8px 0;">
-      ${data.akun}
-      <span class="badge ${data.verified?'verified':'unverified'}">
-      ${data.verified?'✔ Verified':'Belum Verified'}
+    <div class="listItem">
+      <b>${d.akun}</b>
+      <span class="badge ${d.verified?'verified':'unverified'}">
+      ${d.verified?'✔ Verified':'Belum Verified'}
       </span>
     </div>
     `;
   });
-  document.getElementById("memberList").innerHTML=html;
+  document.getElementById("eventList").innerHTML=html;
 });
 
-/* ADMIN */
+/* ADMIN SYSTEM */
 const ADMIN_PASS="chaste2026";
 
 function adminLogin(){
@@ -201,19 +216,19 @@ function adminLogin(){
     document.getElementById("adminPanel").style.display="block";
     loadAdmin();
   }else{
-    alert("Salah password!");
+    alert("Password salah!");
   }
 }
 
 function loadAdmin(){
-  db.collection("members").onSnapshot(snapshot=>{
+  db.collection("eventReceh").onSnapshot(snapshot=>{
     let html="";
     snapshot.forEach(doc=>{
       let d=doc.data();
       html+=`
-      <div style="border-bottom:1px solid #333;padding:5px;">
+      <div style="border-bottom:1px solid #333;padding:8px;">
         <b>${d.akun}</b><br>
-        ${d.nama}<br>
+        ${d.namaAsli}<br>
         ${d.phone}<br>
         ${d.verified?'✔ Verified':'Belum Verified'}
         ${!d.verified?`<button onclick="verifyMember('${doc.id}')">Verify</button>`:''}
@@ -225,10 +240,11 @@ function loadAdmin(){
 }
 
 function verifyMember(id){
-  db.collection("members").doc(id).update({
+  db.collection("eventReceh").doc(id).update({
     verified:true
   });
 }
+
 </script>
 
 </body>
