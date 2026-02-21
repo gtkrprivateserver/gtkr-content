@@ -122,7 +122,7 @@ button:disabled{
 <h3>Daftar Peserta</h3>
 
 <input type="text" id="nameInput" placeholder="Nama">
-<input type="text" id="waInput" placeholder="Nomor WA (08xxxx)">
+<input type="number" id="waInput" placeholder="Nomor WA (08xxxx)">
 <br>
 <button id="joinBtn" onclick="joinEvent()">JOIN</button>
 
@@ -152,7 +152,6 @@ const firebaseConfig = {
     messagingSenderId: "926861094687",
     appId: "1:926861094687:web:43b817d47f604eb9e0ca2a"
 };
-};
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -160,7 +159,7 @@ const database = getDatabase(app);
 const ADMIN_PASSWORD = "CHASTE2026";
 
 /* ================= TANGGAL EVENT ================= */
-const eventTanggal = "March 28, 2026 21:00:00";
+const eventTanggal = "February 28, 2026 21:00:00";
 let eventClosed = false;
 
 /* ================= COUNTDOWN ================= */
