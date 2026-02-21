@@ -19,6 +19,21 @@ h1{
   text-shadow:0 0 15px gold;
 }
 
+.status{
+  font-weight:bold;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+
+.aktif{
+  background:green;
+}
+
+.tutup{
+  background:red;
+}
+
 .card{
   background:#111;
   border:2px solid gold;
@@ -51,10 +66,6 @@ h1{
   color:gold;
 }
 
-.label{
-  font-size:13px;
-}
-
 input{
   padding:10px;
   border-radius:8px;
@@ -76,17 +87,14 @@ button{
   margin:5px;
 }
 
-button:hover{
-  opacity:0.8;
+button:disabled{
+  background:gray;
+  cursor:not-allowed;
 }
 
 .member{
   padding:8px;
   border-bottom:1px solid gold;
-}
-
-.footer{
-  margin-top:40px;
 }
 </style>
 </head>
@@ -96,30 +104,31 @@ button:hover{
 <h1>🐉 EVENT RECEH</h1>
 <h2>CHASTE DRAGON LEADER</h2>
 
+<div id="eventStatus" class="status aktif">EVENT AKTIF</div>
+
 <div class="card">
 
 <h3>🔥 Countdown Menuju Event 🔥</h3>
 
 <div class="countdown">
-  <div class="box"><div class="number" id="hari">0</div><div class="label">Hari</div></div>
-  <div class="box"><div class="number" id="jam">0</div><div class="label">Jam</div></div>
-  <div class="box"><div class="number" id="menit">0</div><div class="label">Menit</div></div>
-  <div class="box"><div class="number" id="detik">0</div><div class="label">Detik</div></div>
+  <div class="box"><div class="number" id="hari">0</div>Hari</div>
+  <div class="box"><div class="number" id="jam">0</div>Jam</div>
+  <div class="box"><div class="number" id="menit">0</div>Menit</div>
+  <div class="box"><div class="number" id="detik">0</div>Detik</div>
 </div>
 
 <hr style="border:1px solid gold;margin:30px 0;">
 
-<h3>Daftar Peserta (WhatsApp)</h3>
+<h3>Daftar Peserta</h3>
 
 <input type="text" id="nameInput" placeholder="Nama">
 <input type="text" id="waInput" placeholder="Nomor WA (08xxxx)">
 <br>
-<button onclick="joinEvent()">JOIN</button>
+<button id="joinBtn" onclick="joinEvent()">JOIN</button>
 
 <hr style="border:1px solid gold;margin:30px 0;">
 
 <h3>Total Peserta: <span id="totalPeserta">0</span></h3>
-
 <div id="memberList"></div>
 
 <br>
@@ -130,18 +139,10 @@ button:hover{
 
 </div>
 
-<div class="footer">
-<a href="event.html" style="color:gold;text-decoration:none;">
-⬅ Back
-</a>
-</div>
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-/* ================= FIREBASE CONFIG ================= */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
@@ -151,16 +152,18 @@ const firebaseConfig = {
     messagingSenderId: "926861094687",
     appId: "1:926861094687:web:43b817d47f604eb9e0ca2a"
 };
+};
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-/* ================= ADMIN PASSWORD ================= */
 const ADMIN_PASSWORD = "CHASTE2026";
 
-/* ================= COUNTDOWN ================= */
+/* ================= TANGGAL EVENT ================= */
+const eventTanggal = "March 28, 2026 21:00:00";
+let eventClosed = false;
 
-const eventTanggal = "March 03, 2026 21:00:00";
+/* ================= COUNTDOWN ================= */
 
 function updateCountdown(){
 
@@ -168,10 +171,15 @@ function updateCountdown(){
   let eventDate = new Date(eventTanggal);
 
   if(now.getTime() > eventDate.getTime()){
-    eventDate.setFullYear(eventDate.getFullYear() + 1);
+    eventClosed = true;
   }
 
   const jarak = eventDate.getTime() - now.getTime();
+
+  if(jarak <= 0){
+    closeEvent();
+    return;
+  }
 
   document.getElementById("hari").innerText =
     Math.floor(jarak/(1000*60*60*24));
@@ -183,12 +191,25 @@ function updateCountdown(){
     Math.floor((jarak%(1000*60))/1000);
 }
 
+function closeEvent(){
+  document.getElementById("eventStatus").innerText = "EVENT DITUTUP";
+  document.getElementById("eventStatus").classList.remove("aktif");
+  document.getElementById("eventStatus").classList.add("tutup");
+
+  document.getElementById("joinBtn").disabled = true;
+}
+
 setInterval(updateCountdown,1000);
 updateCountdown();
 
 /* ================= JOIN EVENT ================= */
 
 window.joinEvent = function(){
+
+  if(eventClosed){
+    alert("Event sudah ditutup!");
+    return;
+  }
 
   const name = document.getElementById("nameInput").value.trim();
   const wa = document.getElementById("waInput").value.trim();
@@ -280,7 +301,7 @@ window.pickWinner = function(){
     "🏆 Pemenang: " + winner.nama + " (" + winner.wa + ")";
 }
 
-/* ================= EXPORT EXCEL ================= */
+/* ================= EXPORT CSV ================= */
 
 window.exportExcel = function(){
 
