@@ -2,324 +2,204 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>CHASTE DRAGON - Event Receh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Receh - CHASTE DRAGON</title>
 
 <style>
 body{
   margin:0;
-  background:black;
-  font-family:Poppins, sans-serif;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#000,#111,#1a1a1a);
   color:white;
   text-align:center;
+}
+
+header{
   padding:30px;
+  background:black;
+  border-bottom:2px solid gold;
 }
 
 h1{
   color:gold;
-  text-shadow:0 0 15px gold;
+  margin:0;
 }
 
-.status{
+.countdown{
+  font-size:28px;
+  margin:20px 0;
+  color:#00ffcc;
   font-weight:bold;
-  padding:10px;
-  border-radius:10px;
-  margin-bottom:20px;
 }
 
-.aktif{
-  background:green;
-}
-
-.tutup{
-  background:red;
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:20px;
 }
 
 .card{
   background:#111;
-  border:2px solid gold;
-  border-radius:20px;
-  padding:30px;
-  max-width:900px;
-  margin:30px auto;
-  box-shadow:0 0 30px gold;
-}
-
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin-top:20px;
-  flex-wrap:wrap;
-}
-
-.box{
-  background:black;
-  border:2px solid gold;
+  border:1px solid gold;
+  border-radius:12px;
   padding:20px;
-  border-radius:15px;
-  min-width:90px;
-}
-
-.number{
-  font-size:24px;
-  font-weight:bold;
-  color:gold;
+  margin-top:20px;
 }
 
 input{
+  width:90%;
   padding:10px;
+  margin:8px 0;
   border-radius:8px;
-  border:2px solid gold;
-  background:black;
-  color:white;
-  width:180px;
-  margin:5px;
+  border:none;
+  font-size:14px;
 }
 
 button{
-  padding:8px 15px;
+  padding:10px 18px;
+  margin:6px;
   border:none;
   border-radius:8px;
   background:gold;
-  color:black;
   font-weight:bold;
   cursor:pointer;
-  margin:5px;
 }
 
-button:disabled{
-  background:gray;
-  cursor:not-allowed;
+button:hover{
+  background:orange;
 }
 
-.member{
-  padding:8px;
-  border-bottom:1px solid gold;
+.list{
+  margin-top:20px;
+  text-align:left;
+  font-size:14px;
+}
+
+.badge{
+  font-size:12px;
+  padding:3px 6px;
+  border-radius:6px;
+  margin-left:6px;
+}
+
+.verified{
+  background:green;
+}
+
+.unverified{
+  background:red;
+}
+
+footer{
+  margin-top:40px;
+  padding:20px;
+  font-size:13px;
+  background:black;
+  border-top:1px solid gold;
 }
 </style>
 </head>
-
 <body>
 
-<h1>🐉 EVENT RECEH</h1>
-<h2>CHASTE DRAGON LEADER</h2>
+<header>
+  <h1>EVENT RECEH</h1>
+  <p>Room: CHASTE DRAGON LEADER</p>
+</header>
 
-<div id="eventStatus" class="status aktif">EVENT AKTIF</div>
+<div class="countdown" id="countdown"></div>
 
-<div class="card">
+<div class="container">
 
-<h3>🔥 Countdown Menuju Event 🔥</h3>
+  <div class="card">
+    <h3>Daftar Event</h3>
+    <input type="text" id="nickname" placeholder="Masukkan Nickname Walla">
+    <input type="text" id="wallaid" placeholder="Masukkan ID Walla">
+    <input type="text" id="kodeverifikasi" placeholder="Masukkan Kode Verifikasi">
+    <br>
+    <button onclick="joinEvent()">JOIN</button>
+  </div>
 
-<div class="countdown">
-  <div class="box"><div class="number" id="hari">0</div>Hari</div>
-  <div class="box"><div class="number" id="jam">0</div>Jam</div>
-  <div class="box"><div class="number" id="menit">0</div>Menit</div>
-  <div class="box"><div class="number" id="detik">0</div>Detik</div>
-</div>
-
-<hr style="border:1px solid gold;margin:30px 0;">
-
-<h3>Daftar Peserta</h3>
-
-<input type="text" id="nameInput" placeholder="Nama">
-<input type="number" id="waInput" placeholder="Nomor WA (08xxxx)">
-<br>
-<button id="joinBtn" onclick="joinEvent()">JOIN</button>
-
-<hr style="border:1px solid gold;margin:30px 0;">
-
-<h3>Total Peserta: <span id="totalPeserta">0</span></h3>
-<div id="memberList"></div>
-
-<br>
-<button onclick="pickWinner()">🎲 Random Pick Winner</button>
-<button onclick="exportExcel()">📥 Export Excel</button>
-
-<h2 id="winner" style="color:gold;margin-top:20px;"></h2>
+  <div class="card">
+    <h3>List Peserta</h3>
+    <div class="list" id="pesertaList"></div>
+  </div>
 
 </div>
 
-<script type="module">
+<footer>
+  Event khusus member APK Walla  
+  CHASTE DRAGON 2026
+</footer>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script>
+// ================= COUNTDOWN =================
+var eventDate = new Date("March 30, 2026 20:00:00").getTime();
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
-    authDomain: "chastedragon.firebaseapp.com",
-    projectId: "chastedragon",
-    storageBucket: "chastedragon.firebasestorage.app",
-    messagingSenderId: "926861094687",
-    appId: "1:926861094687:web:43b817d47f604eb9e0ca2a"
-};
+var x = setInterval(function(){
+  var now = new Date().getTime();
+  var distance = eventDate - now;
 
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+  if(distance < 0){
+    document.getElementById("countdown").innerHTML = "EVENT DIMULAI 🔥";
+    clearInterval(x);
+  } else {
+    var days = Math.floor(distance/(1000*60*60*24));
+    var hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+    var minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+    var seconds = Math.floor((distance%(1000*60))/1000);
 
-const ADMIN_PASSWORD = "CHASTE2026";
-
-/* ================= TANGGAL EVENT ================= */
-const eventTanggal = "February 28, 2026 21:00:00";
-let eventClosed = false;
-
-/* ================= COUNTDOWN ================= */
-
-function updateCountdown(){
-
-  const now = new Date();
-  let eventDate = new Date(eventTanggal);
-
-  if(now.getTime() > eventDate.getTime()){
-    eventClosed = true;
+    document.getElementById("countdown").innerHTML =
+      days+" Hari "+hours+" Jam "+minutes+" Menit "+seconds+" Detik";
   }
+},1000);
 
-  const jarak = eventDate.getTime() - now.getTime();
+// ================= SISTEM PESERTA =================
+let peserta = [];
+const KODE_UNIK = "CD2026";
 
-  if(jarak <= 0){
-    closeEvent();
+function joinEvent(){
+  let nickname = document.getElementById("nickname").value;
+  let id = document.getElementById("wallaid").value;
+  let kode = document.getElementById("kodeverifikasi").value;
+
+  if(nickname === "" || id === ""){
+    alert("Isi semua data!");
     return;
   }
 
-  document.getElementById("hari").innerText =
-    Math.floor(jarak/(1000*60*60*24));
-  document.getElementById("jam").innerText =
-    Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
-  document.getElementById("menit").innerText =
-    Math.floor((jarak%(1000*60*60))/(1000*60));
-  document.getElementById("detik").innerText =
-    Math.floor((jarak%(1000*60))/1000);
-}
+  let status = "Belum Verifikasi";
+  let badgeClass = "unverified";
 
-function closeEvent(){
-  document.getElementById("eventStatus").innerText = "EVENT DITUTUP";
-  document.getElementById("eventStatus").classList.remove("aktif");
-  document.getElementById("eventStatus").classList.add("tutup");
-
-  document.getElementById("joinBtn").disabled = true;
-}
-
-setInterval(updateCountdown,1000);
-updateCountdown();
-
-/* ================= JOIN EVENT ================= */
-
-window.joinEvent = function(){
-
-  if(eventClosed){
-    alert("Event sudah ditutup!");
-    return;
+  if(kode === KODE_UNIK){
+    status = "Terverifikasi";
+    badgeClass = "verified";
   }
 
-  const name = document.getElementById("nameInput").value.trim();
-  const wa = document.getElementById("waInput").value.trim();
-
-  if(name === "" || wa === ""){
-    alert("Nama & Nomor WA wajib diisi!");
-    return;
-  }
-
-  const regex = /^08[0-9]{8,13}$/;
-  if(!regex.test(wa)){
-    alert("Format nomor WA tidak valid!");
-    return;
-  }
-
-  push(ref(database, "chasteEventParticipants"), {
-    nama: name,
-    wa: wa,
-    waktu: new Date().toLocaleString()
+  peserta.push({
+    nickname:nickname,
+    id:id,
+    status:status,
+    badge:badgeClass
   });
 
-  document.getElementById("nameInput").value = "";
-  document.getElementById("waInput").value = "";
+  renderPeserta();
+  document.getElementById("nickname").value="";
+  document.getElementById("wallaid").value="";
+  document.getElementById("kodeverifikasi").value="";
 }
 
-/* ================= REALTIME LIST ================= */
-
-let participants = {};
-
-onValue(ref(database, "chasteEventParticipants"), (snapshot) => {
-
-  const data = snapshot.val();
-  const list = document.getElementById("memberList");
-  const total = document.getElementById("totalPeserta");
-
-  list.innerHTML = "";
-  participants = {};
-
-  if(!data){
-    total.innerText = 0;
-    return;
-  }
-
-  let index = 1;
-
-  for(let key in data){
-    participants[key] = data[key];
-
-    list.innerHTML += `
-      <div class="member">
-        ${index}. ${data[key].nama} - ${data[key].wa}
-        <button onclick="hapusPeserta('${key}')">❌</button>
+function renderPeserta(){
+  let html="";
+  peserta.forEach(function(p){
+    html += `
+      <div>
+        ${p.nickname} (ID: ${p.id})
+        <span class="badge ${p.badge}">${p.status}</span>
       </div>
     `;
-    index++;
-  }
-
-  total.innerText = index - 1;
-});
-
-/* ================= HAPUS PESERTA ================= */
-
-window.hapusPeserta = function(key){
-
-  const pass = prompt("Masukkan Password Admin:");
-  if(pass !== ADMIN_PASSWORD){
-    alert("Password salah!");
-    return;
-  }
-
-  remove(ref(database, "chasteEventParticipants/" + key));
+  });
+  document.getElementById("pesertaList").innerHTML = html;
 }
-
-/* ================= RANDOM PICKER ================= */
-
-window.pickWinner = function(){
-
-  const keys = Object.keys(participants);
-
-  if(keys.length === 0){
-    alert("Belum ada peserta!");
-    return;
-  }
-
-  const randomKey = keys[Math.floor(Math.random()*keys.length)];
-  const winner = participants[randomKey];
-
-  document.getElementById("winner").innerText =
-    "🏆 Pemenang: " + winner.nama + " (" + winner.wa + ")";
-}
-
-/* ================= EXPORT CSV ================= */
-
-window.exportExcel = function(){
-
-  let csv = "No,Nama,Nomor WA\n";
-  let index = 1;
-
-  for(let key in participants){
-    csv += index + "," + participants[key].nama + "," + participants[key].wa + "\n";
-    index++;
-  }
-
-  const blob = new Blob([csv], {type: "text/csv"});
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "Peserta_CHASTE_DRAGON.csv";
-  a.click();
-}
-
 </script>
 
 </body>
