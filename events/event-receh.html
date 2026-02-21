@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Event Receh - CHASTE DRAGON LEADER</title>
+<title>CHASTE DRAGON - Event Receh</title>
 
 <style>
 body{
@@ -55,58 +55,39 @@ h1{
   font-size:13px;
 }
 
-.status{
-  margin-top:15px;
-  font-size:16px;
-  color:gold;
-}
-
-/* JOIN SECTION */
-.join-section{
-  margin-top:30px;
-}
-
 input{
   padding:10px;
   border-radius:8px;
   border:2px solid gold;
   background:black;
   color:white;
-  width:200px;
+  width:180px;
+  margin:5px;
 }
 
 button{
-  padding:10px 20px;
+  padding:8px 15px;
   border:none;
   border-radius:8px;
   background:gold;
   color:black;
   font-weight:bold;
   cursor:pointer;
-  margin-left:10px;
+  margin:5px;
 }
 
 button:hover{
   opacity:0.8;
 }
 
-.list{
-  margin-top:25px;
-  text-align:left;
-  max-width:400px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-.list h3{
-  color:gold;
-}
-
 .member{
-  padding:6px 0;
+  padding:8px;
   border-bottom:1px solid gold;
 }
 
+.footer{
+  margin-top:40px;
+}
 </style>
 </head>
 
@@ -115,18 +96,73 @@ button:hover{
 <h1>🐉 EVENT RECEH</h1>
 <h2>CHASTE DRAGON LEADER</h2>
 
-<div id="eventCard"></div>
+<div class="card">
 
-<script>
+<h3>🔥 Countdown Menuju Event 🔥</h3>
 
-/* =========================
-   TANGGAL EVENT
-========================= */
+<div class="countdown">
+  <div class="box"><div class="number" id="hari">0</div><div class="label">Hari</div></div>
+  <div class="box"><div class="number" id="jam">0</div><div class="label">Jam</div></div>
+  <div class="box"><div class="number" id="menit">0</div><div class="label">Menit</div></div>
+  <div class="box"><div class="number" id="detik">0</div><div class="label">Detik</div></div>
+</div>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<h3>Daftar Peserta (WhatsApp)</h3>
+
+<input type="text" id="nameInput" placeholder="Nama">
+<input type="text" id="waInput" placeholder="Nomor WA (08xxxx)">
+<br>
+<button onclick="joinEvent()">JOIN</button>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<h3>Total Peserta: <span id="totalPeserta">0</span></h3>
+
+<div id="memberList"></div>
+
+<br>
+<button onclick="pickWinner()">🎲 Random Pick Winner</button>
+<button onclick="exportExcel()">📥 Export Excel</button>
+
+<h2 id="winner" style="color:gold;margin-top:20px;"></h2>
+
+</div>
+
+<div class="footer">
+<a href="event.html" style="color:gold;text-decoration:none;">
+⬅ Back
+</a>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+/* ================= FIREBASE CONFIG ================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
+    authDomain: "chastedragon.firebaseapp.com",
+    projectId: "chastedragon",
+    storageBucket: "chastedragon.firebasestorage.app",
+    messagingSenderId: "926861094687",
+    appId: "1:926861094687:web:43b817d47f604eb9e0ca2a"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+/* ================= ADMIN PASSWORD ================= */
+const ADMIN_PASSWORD = "CHASTE2026";
+
+/* ================= COUNTDOWN ================= */
 
 const eventTanggal = "March 03, 2026 21:00:00";
-let members = [];
 
-function generateEventCard(){
+function updateCountdown(){
 
   const now = new Date();
   let eventDate = new Date(eventTanggal);
@@ -137,83 +173,134 @@ function generateEventCard(){
 
   const jarak = eventDate.getTime() - now.getTime();
 
-  const hari = Math.floor(jarak/(1000*60*60*24));
-  const jam = Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
-  const menit = Math.floor((jarak%(1000*60*60))/(1000*60));
-  const detik = Math.floor((jarak%(1000*60))/1000);
-
-  return `
-  <div class="card">
-    <h3 style="color:gold;">🔥 Countdown Menuju Event 🔥</h3>
-
-    <div>📅 ${eventDate.toLocaleString()}</div>
-
-    <div class="status">⏳ Menuju Keseruan Receh!</div>
-
-    <div class="countdown">
-      <div class="box"><div class="number">${hari}</div><div class="label">Hari</div></div>
-      <div class="box"><div class="number">${jam}</div><div class="label">Jam</div></div>
-      <div class="box"><div class="number">${menit}</div><div class="label">Menit</div></div>
-      <div class="box"><div class="number">${detik}</div><div class="label">Detik</div></div>
-    </div>
-
-    <div class="join-section">
-      <h3 style="color:gold;">Daftar Peserta</h3>
-      <input type="text" id="nameInput" placeholder="Masukkan Nama">
-      <button onclick="joinEvent()">JOIN</button>
-
-      <div class="list" id="memberList">
-        <h3>👑 List Member:</h3>
-      </div>
-    </div>
-  </div>`;
+  document.getElementById("hari").innerText =
+    Math.floor(jarak/(1000*60*60*24));
+  document.getElementById("jam").innerText =
+    Math.floor((jarak%(1000*60*60*24))/(1000*60*60));
+  document.getElementById("menit").innerText =
+    Math.floor((jarak%(1000*60*60))/(1000*60));
+  document.getElementById("detik").innerText =
+    Math.floor((jarak%(1000*60))/1000);
 }
 
-function updateCountdown(){
-  document.getElementById("eventCard").innerHTML =
-    generateEventCard();
-  renderMembers();
-}
-
-function joinEvent(){
-  const name = document.getElementById("nameInput").value.trim();
-
-  if(name === ""){
-    alert("Masukkan nama dulu!");
-    return;
-  }
-
-  if(members.includes(name)){
-    alert("Nama sudah terdaftar!");
-    return;
-  }
-
-  members.push(name);
-  document.getElementById("nameInput").value = "";
-  renderMembers();
-}
-
-function renderMembers(){
-  const list = document.getElementById("memberList");
-  if(!list) return;
-
-  list.innerHTML = "<h3>👑 List Member:</h3>";
-
-  members.forEach((member, index)=>{
-    list.innerHTML += `<div class="member">${index+1}. ${member}</div>`;
-  });
-}
-
-updateCountdown();
 setInterval(updateCountdown,1000);
+updateCountdown();
+
+/* ================= JOIN EVENT ================= */
+
+window.joinEvent = function(){
+
+  const name = document.getElementById("nameInput").value.trim();
+  const wa = document.getElementById("waInput").value.trim();
+
+  if(name === "" || wa === ""){
+    alert("Nama & Nomor WA wajib diisi!");
+    return;
+  }
+
+  const regex = /^08[0-9]{8,13}$/;
+  if(!regex.test(wa)){
+    alert("Format nomor WA tidak valid!");
+    return;
+  }
+
+  push(ref(database, "chasteEventParticipants"), {
+    nama: name,
+    wa: wa,
+    waktu: new Date().toLocaleString()
+  });
+
+  document.getElementById("nameInput").value = "";
+  document.getElementById("waInput").value = "";
+}
+
+/* ================= REALTIME LIST ================= */
+
+let participants = {};
+
+onValue(ref(database, "chasteEventParticipants"), (snapshot) => {
+
+  const data = snapshot.val();
+  const list = document.getElementById("memberList");
+  const total = document.getElementById("totalPeserta");
+
+  list.innerHTML = "";
+  participants = {};
+
+  if(!data){
+    total.innerText = 0;
+    return;
+  }
+
+  let index = 1;
+
+  for(let key in data){
+    participants[key] = data[key];
+
+    list.innerHTML += `
+      <div class="member">
+        ${index}. ${data[key].nama} - ${data[key].wa}
+        <button onclick="hapusPeserta('${key}')">❌</button>
+      </div>
+    `;
+    index++;
+  }
+
+  total.innerText = index - 1;
+});
+
+/* ================= HAPUS PESERTA ================= */
+
+window.hapusPeserta = function(key){
+
+  const pass = prompt("Masukkan Password Admin:");
+  if(pass !== ADMIN_PASSWORD){
+    alert("Password salah!");
+    return;
+  }
+
+  remove(ref(database, "chasteEventParticipants/" + key));
+}
+
+/* ================= RANDOM PICKER ================= */
+
+window.pickWinner = function(){
+
+  const keys = Object.keys(participants);
+
+  if(keys.length === 0){
+    alert("Belum ada peserta!");
+    return;
+  }
+
+  const randomKey = keys[Math.floor(Math.random()*keys.length)];
+  const winner = participants[randomKey];
+
+  document.getElementById("winner").innerText =
+    "🏆 Pemenang: " + winner.nama + " (" + winner.wa + ")";
+}
+
+/* ================= EXPORT EXCEL ================= */
+
+window.exportExcel = function(){
+
+  let csv = "No,Nama,Nomor WA\n";
+  let index = 1;
+
+  for(let key in participants){
+    csv += index + "," + participants[key].nama + "," + participants[key].wa + "\n";
+    index++;
+  }
+
+  const blob = new Blob([csv], {type: "text/csv"});
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Peserta_CHASTE_DRAGON.csv";
+  a.click();
+}
 
 </script>
-<hr style="border:1px solid gold;margin:40px 0;">
 
-<div class="footer">
-<a href="event.html" style="color:gold;text-decoration:none;">
-⬅ Back
-</a>
-</div>
 </body>
 </html>
