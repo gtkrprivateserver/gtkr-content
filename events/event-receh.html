@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHASTE DRAGON EVENT & VERIFIED SYSTEM</title>
+<title>CHASTE DRAGON EVENT SYSTEM</title>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+<!-- FIREBASE V8 (STABLE) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 <style>
 body{
@@ -64,6 +65,11 @@ button:hover{background:orange;}
   padding:8px;
   border-bottom:1px solid #333;
 }
+.counter{
+  font-size:18px;
+  margin-bottom:10px;
+  color:gold;
+}
 </style>
 </head>
 <body>
@@ -75,7 +81,6 @@ button:hover{background:orange;}
 
 <div class="container">
 
-<!-- JOIN EVENT -->
 <div class="card">
 <h3>Join Event Receh</h3>
 
@@ -85,23 +90,20 @@ button:hover{background:orange;}
 <input type="text" id="eventPhone" placeholder="Nomor WhatsApp (+62xxx)">
 
 <button id="joinBtn" onclick="joinEvent()">JOIN EVENT</button>
-
 </div>
 
-<!-- LIST PESERTA -->
 <div class="card">
 <h3>Peserta Event</h3>
+<div class="counter">Total Peserta: <span id="totalPeserta">0</span></div>
 <div id="eventList"></div>
 </div>
 
-<!-- ADMIN LOGIN -->
 <div class="card">
 <h3>Admin Login</h3>
 <input type="password" id="adminPass" placeholder="Password Admin">
 <button onclick="adminLogin()">Login</button>
 </div>
 
-<!-- ADMIN PANEL -->
 <div class="card admin" id="adminPanel">
 <h3>Admin Panel - Verifikasi</h3>
 <div id="adminList"></div>
@@ -110,27 +112,12 @@ button:hover{background:orange;}
 </div>
 
 <script>
-  
-// Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
   authDomain: "chastedragon.firebaseapp.com",
-  projectId: "chastedragon",
-  storageBucket: "chastedragon.firebasestorage.app",
-  messagingSenderId: "926861094687",
-  appId: "1:926861094687:web:43b817d47f604eb9e0ca2a",
-  measurementId: "G-SLKV9ZKXJ0"
+  projectId: "chastedragon"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -141,7 +128,7 @@ window.addEventListener("load", ()=>{
   checkJoinStatus();
 });
 
-/* CEK STATUS LOCAL */
+/* CEK LOCAL STORAGE */
 function checkJoinStatus(){
   const phone = localStorage.getItem("eventPhone");
   if(!phone) return;
@@ -151,9 +138,10 @@ function checkJoinStatus(){
     .get()
     .then(snapshot=>{
       if(!snapshot.empty){
-        document.getElementById("joinBtn").innerText="✔ SUDAH TERDAFTAR";
-        document.getElementById("joinBtn").disabled=true;
-        document.getElementById("joinBtn").style.background="green";
+        const btn = document.getElementById("joinBtn");
+        btn.innerText="✔ SUDAH TERDAFTAR";
+        btn.disabled=true;
+        btn.style.background="green";
       }
     });
 }
@@ -161,10 +149,10 @@ function checkJoinStatus(){
 /* JOIN EVENT */
 function joinEvent(){
 
-  const akun = document.getElementById("eventAkun").value;
-  const link = document.getElementById("eventLink").value;
-  const namaAsli = document.getElementById("eventNamaAsli").value;
-  const phone = document.getElementById("eventPhone").value;
+  const akun = document.getElementById("eventAkun").value.trim();
+  const link = document.getElementById("eventLink").value.trim();
+  const namaAsli = document.getElementById("eventNamaAsli").value.trim();
+  const phone = document.getElementById("eventPhone").value.trim();
 
   if(!akun || !link || !namaAsli || !phone){
     alert("Lengkapi semua data!");
@@ -182,30 +170,36 @@ function joinEvent(){
       }
 
       db.collection("eventReceh").add({
-        akun:akun,
-        link:link,
-        namaAsli:namaAsli,
-        phone:phone,
+        akun,
+        link,
+        namaAsli,
+        phone,
         verified:false,
-        created:new Date()
+        created:firebase.firestore.FieldValue.serverTimestamp()
       });
 
       localStorage.setItem("eventPhone", phone);
 
-      document.getElementById("joinBtn").innerText="✔ SUDAH TERDAFTAR";
-      document.getElementById("joinBtn").disabled=true;
-      document.getElementById("joinBtn").style.background="green";
+      const btn = document.getElementById("joinBtn");
+      btn.innerText="✔ SUDAH TERDAFTAR";
+      btn.disabled=true;
+      btn.style.background="green";
 
       alert("Berhasil join event!");
     });
 }
 
-/* REALTIME LIST PESERTA */
-db.collection("eventReceh").orderBy("created","desc")
+/* REALTIME LIST */
+db.collection("eventReceh")
+.orderBy("created","desc")
 .onSnapshot(snapshot=>{
   let html="";
+  let total=0;
+
   snapshot.forEach(doc=>{
+    total++;
     let d=doc.data();
+
     html+=`
     <div class="listItem">
       <b>${d.akun}</b>
@@ -215,10 +209,12 @@ db.collection("eventReceh").orderBy("created","desc")
     </div>
     `;
   });
+
   document.getElementById("eventList").innerHTML=html;
+  document.getElementById("totalPeserta").innerText=total;
 });
 
-/* ADMIN SYSTEM */
+/* ADMIN */
 const ADMIN_PASS="chaste2026";
 
 function adminLogin(){
