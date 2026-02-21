@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Event Receh - CHASTE DRAGON</title>
+<title>Verified Badge - CHASTE DRAGON</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
 
 <style>
 body{
@@ -13,192 +17,217 @@ body{
   color:white;
   text-align:center;
 }
-
 header{
-  padding:30px;
+  padding:20px;
   background:black;
   border-bottom:2px solid gold;
 }
-
-h1{
-  color:gold;
-  margin:0;
-}
-
-.countdown{
-  font-size:28px;
-  margin:20px 0;
-  color:#00ffcc;
-  font-weight:bold;
-}
-
+h1{color:gold;}
 .container{
   max-width:500px;
   margin:auto;
   padding:20px;
 }
-
 .card{
   background:#111;
-  border:1px solid gold;
-  border-radius:12px;
   padding:20px;
+  border-radius:12px;
+  border:1px solid gold;
   margin-top:20px;
 }
-
 input{
-  width:90%;
+  width:95%;
   padding:10px;
   margin:8px 0;
   border-radius:8px;
   border:none;
-  font-size:14px;
 }
-
 button{
-  padding:10px 18px;
-  margin:6px;
+  padding:10px 15px;
+  margin:5px;
   border:none;
   border-radius:8px;
   background:gold;
   font-weight:bold;
   cursor:pointer;
 }
-
-button:hover{
-  background:orange;
-}
-
-.list{
-  margin-top:20px;
-  text-align:left;
-  font-size:14px;
-}
-
+button:hover{background:orange;}
 .badge{
-  font-size:12px;
-  padding:3px 6px;
+  padding:4px 8px;
   border-radius:6px;
-  margin-left:6px;
+  font-size:12px;
 }
-
-.verified{
-  background:green;
-}
-
-.unverified{
-  background:red;
-}
-
-footer{
-  margin-top:40px;
-  padding:20px;
-  font-size:13px;
-  background:black;
-  border-top:1px solid gold;
-}
+.verified{background:green;}
+.unverified{background:red;}
+.admin{display:none;}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>EVENT RECEH</h1>
-  <p>Room: CHASTE DRAGON LEADER</p>
+<h1>VERIFIED BADGE SYSTEM</h1>
+<p>CHASTE DRAGON OFFICIAL</p>
 </header>
-
-<div class="countdown" id="countdown"></div>
 
 <div class="container">
 
-  <div class="card">
-    <h3>Daftar Event</h3>
-    <input type="text" id="nickname" placeholder="Masukkan Nickname Walla">
-    <input type="text" id="wallaid" placeholder="Masukkan ID Walla">
-    <input type="text" id="kodeverifikasi" placeholder="Masukkan Kode Verifikasi">
-    <br>
-    <button onclick="joinEvent()">JOIN</button>
-  </div>
+<div class="card">
+<h3>Daftar & Verifikasi OTP</h3>
 
-  <div class="card">
-    <h3>List Peserta</h3>
-    <div class="list" id="pesertaList"></div>
-  </div>
+<input type="text" id="akun" placeholder="Nama Akun Walla">
+<input type="text" id="link" placeholder="Link Akun Walla">
+<input type="text" id="nama" placeholder="Nama Asli">
+<input type="text" id="phone" placeholder="+62xxxx">
+
+<div id="recaptcha-container"></div>
+
+<button onclick="sendOTP()">Kirim OTP</button>
+
+<input type="text" id="otp" placeholder="Masukkan OTP">
+<button onclick="verifyOTP()">Verifikasi & Simpan</button>
 
 </div>
 
-<footer>
-  Event khusus member APK Walla  
-  CHASTE DRAGON 2026
-</footer>
+<div class="card">
+<h3>List Member</h3>
+<div id="memberList"></div>
+</div>
+
+<div class="card">
+<h3>Admin Login</h3>
+<input type="password" id="adminPass" placeholder="Password">
+<button onclick="adminLogin()">Login</button>
+</div>
+
+<div class="card admin" id="adminPanel">
+<h3>Admin Panel</h3>
+<div id="adminList"></div>
+</div>
+
+</div>
 
 <script>
-// ================= COUNTDOWN =================
-var eventDate = new Date("March 30, 2026 20:00:00").getTime();
+/* ======== GANTI DENGAN CONFIG FIREBASE ANDA ======== */
 
-var x = setInterval(function(){
-  var now = new Date().getTime();
-  var distance = eventDate - now;
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
+    authDomain: "chastedragon.firebaseapp.com",
+    projectId: "chastedragon",
+    storageBucket: "chastedragon.firebasestorage.app",
+    messagingSenderId: "926861094687",
+    appId: "1:926861094687:web:37df8a6e763e9825e0ca2a",
+    measurementId: "G-X1FY25WW2P"
+  };
+/* =================================================== */
 
-  if(distance < 0){
-    document.getElementById("countdown").innerHTML = "EVENT DIMULAI 🔥";
-    clearInterval(x);
-  } else {
-    var days = Math.floor(distance/(1000*60*60*24));
-    var hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-    var minutes = Math.floor((distance%(1000*60*60))/(1000*60));
-    var seconds = Math.floor((distance%(1000*60))/1000);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    document.getElementById("countdown").innerHTML =
-      days+" Hari "+hours+" Jam "+minutes+" Menit "+seconds+" Detik";
-  }
-},1000);
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+'recaptcha-container',
+{ size: 'normal' }
+);
 
-// ================= SISTEM PESERTA =================
-let peserta = [];
-const KODE_UNIK = "CD2026";
+let confirmationResult;
 
-function joinEvent(){
-  let nickname = document.getElementById("nickname").value;
-  let id = document.getElementById("wallaid").value;
-  let kode = document.getElementById("kodeverifikasi").value;
-
-  if(nickname === "" || id === ""){
-    alert("Isi semua data!");
-    return;
-  }
-
-  let status = "Belum Verifikasi";
-  let badgeClass = "unverified";
-
-  if(kode === KODE_UNIK){
-    status = "Terverifikasi";
-    badgeClass = "verified";
-  }
-
-  peserta.push({
-    nickname:nickname,
-    id:id,
-    status:status,
-    badge:badgeClass
+/* KIRIM OTP */
+function sendOTP(){
+  const phone = document.getElementById("phone").value;
+  auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
+  .then((result)=>{
+    confirmationResult = result;
+    alert("OTP dikirim!");
+  }).catch((error)=>{
+    alert(error.message);
   });
-
-  renderPeserta();
-  document.getElementById("nickname").value="";
-  document.getElementById("wallaid").value="";
-  document.getElementById("kodeverifikasi").value="";
 }
 
-function renderPeserta(){
+/* VERIFIKASI OTP */
+function verifyOTP(){
+  const code = document.getElementById("otp").value;
+  confirmationResult.confirm(code).then((result)=>{
+    saveToDatabase();
+  }).catch(()=>{
+    alert("OTP salah!");
+  });
+}
+
+/* SIMPAN DATA */
+function saveToDatabase(){
+  const akun = document.getElementById("akun").value;
+  const link = document.getElementById("link").value;
+  const nama = document.getElementById("nama").value;
+  const phone = document.getElementById("phone").value;
+
+  db.collection("members").add({
+    akun:akun,
+    link:link,
+    nama:nama,
+    phone:phone,
+    verified:false,
+    created: new Date()
+  });
+
+  alert("Data tersimpan!");
+}
+
+/* REALTIME LIST */
+db.collection("members").orderBy("created","desc")
+.onSnapshot(snapshot=>{
   let html="";
-  peserta.forEach(function(p){
-    html += `
-      <div>
-        ${p.nickname} (ID: ${p.id})
-        <span class="badge ${p.badge}">${p.status}</span>
-      </div>
+  snapshot.forEach(doc=>{
+    let data = doc.data();
+    html+=`
+    <div style="margin:8px 0;">
+      ${data.akun}
+      <span class="badge ${data.verified?'verified':'unverified'}">
+      ${data.verified?'✔ Verified':'Belum Verified'}
+      </span>
+    </div>
     `;
   });
-  document.getElementById("pesertaList").innerHTML = html;
+  document.getElementById("memberList").innerHTML=html;
+});
+
+/* ADMIN */
+const ADMIN_PASS="chaste2026";
+
+function adminLogin(){
+  let pass=document.getElementById("adminPass").value;
+  if(pass===ADMIN_PASS){
+    document.getElementById("adminPanel").style.display="block";
+    loadAdmin();
+  }else{
+    alert("Salah password!");
+  }
+}
+
+function loadAdmin(){
+  db.collection("members").onSnapshot(snapshot=>{
+    let html="";
+    snapshot.forEach(doc=>{
+      let d=doc.data();
+      html+=`
+      <div style="border-bottom:1px solid #333;padding:5px;">
+        <b>${d.akun}</b><br>
+        ${d.nama}<br>
+        ${d.phone}<br>
+        ${d.verified?'✔ Verified':'Belum Verified'}
+        ${!d.verified?`<button onclick="verifyMember('${doc.id}')">Verify</button>`:''}
+      </div>
+      `;
+    });
+    document.getElementById("adminList").innerHTML=html;
+  });
+}
+
+function verifyMember(id){
+  db.collection("members").doc(id).update({
+    verified:true
+  });
 }
 </script>
 
