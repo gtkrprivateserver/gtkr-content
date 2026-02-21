@@ -113,7 +113,7 @@ footer{
 <div class="logo">🐉 CHASTE</div>
 <div class="menu">
 <a href="https://chastedragon.vercel.app">Home</a>
-<a href="#about">About</a>
+<a href="event-receh.html">Event Receh</a>
 <a href="#launching">Launching</a>
 <a href="#events">Events</a>
 </div>
