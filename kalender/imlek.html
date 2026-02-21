@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tahun Baru Imlek - CHASTE DRAGON</title>
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins,sans-serif;
+  text-align:center;
+  padding:40px;
+}
+h1{ color:gold; }
+.card{
+  border:2px solid gold;
+  border-radius:15px;
+  padding:30px;
+  margin-top:30px;
+}
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:20px;
+}
+.box{
+  border:2px solid gold;
+  padding:15px;
+  border-radius:10px;
+}
+.number{ font-size:28px;color:gold;font-weight:bold; }
+a{color:gold;text-decoration:none;}
+</style>
+</head>
+
+<body>
+
+<h1>🧧 Tahun Baru Imlek 2026</h1>
+<h2>CHASTE DRAGON 洁龙</h2>
+
+<div class="card">
+  <h3>Countdown Menuju Imlek</h3>
+  <div class="countdown">
+    <div class="box"><div class="number" id="hari"></div>Hari</div>
+    <div class="box"><div class="number" id="jam"></div>Jam</div>
+    <div class="box"><div class="number" id="menit"></div>Menit</div>
+    <div class="box"><div class="number" id="detik"></div>Detik</div>
+  </div>
+</div>
+
+<br>
+<a href="kalender.html">⬅ Kembali ke Kalender</a>
+
+<script>
+
+const targetDate = new Date("February 17, 2026 00:00:00").getTime();
+
+setInterval(function(){
+  const now = new Date().getTime();
+  const diff = targetDate - now;
+
+  const hari = Math.floor(diff/(1000*60*60*24));
+  const jam = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const menit = Math.floor((diff%(1000*60*60))/(1000*60));
+  const detik = Math.floor((diff%(1000*60))/1000);
+
+  document.getElementById("hari").innerHTML = hari;
+  document.getElementById("jam").innerHTML = jam;
+  document.getElementById("menit").innerHTML = menit;
+  document.getElementById("detik").innerHTML = detik;
+
+},1000);
+
+</script>
+
+</body>
+</html>
