@@ -25,6 +25,40 @@ h1, h2 {
     color:lightgreen;
     font-weight:bold;
 }
+button, input, textarea, select {
+    padding:10px;
+    border-radius:5px;
+    border:none;
+    margin:5px 0;
+}
+button {
+    background:gold;
+    color:black;
+    cursor:pointer;
+    font-weight:bold;
+}
+#popupForm {
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#111;
+    border:2px solid gold;
+    border-radius:10px;
+    padding:20px;
+    z-index:1000;
+    width:90%;
+    max-width:400px;
+}
+#overlay {
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.7);
+    z-index:500;
+}
 </style>
 </head>
 <body>
@@ -32,6 +66,25 @@ h1, h2 {
 <h1>CHASTE DRAGON - Jadwal Event</h1>
 
 <div id="eventsList"></div>
+
+<button onclick="showPopup()">Hubungi Admin</button>
+
+<!-- Overlay -->
+<div id="overlay" onclick="closePopup()"></div>
+
+<!-- Popup Form -->
+<div id="popupForm">
+    <h2 style="color:gold;">Hubungi Admin</h2>
+    <input type="text" id="fullName" placeholder="Nama Lengkap" />
+    <input type="text" id="accountName" placeholder="Nama Akun" />
+    <input type="text" id="roomLink" placeholder="Link Room VR" />
+    <select id="eventSelect">
+        <option value="">Pilih Event</option>
+    </select>
+    <input type="text" id="prize" placeholder="Hadiah" />
+    <button onclick="sendWhatsApp()">Kirim ke Admin</button>
+    <button onclick="closePopup()" style="background:red;color:white;">Tutup</button>
+</div>
 
 <script>
 // Daftar event dengan tanggal dan jam
@@ -48,10 +101,15 @@ const events = [
     { title: "Event Menggambar", date: "2026-05-10T18:30:00" }
 ];
 
-// Fungsi untuk menampilkan event
+// Tampilkan event
 function displayEvents() {
     const container = document.getElementById('eventsList');
     container.innerHTML = '';
+    const eventSelect = document.getElementById('eventSelect');
+    eventSelect.innerHTML = '<option value="">Pilih Event</option>'; // reset select
+
+    const now = new Date().getTime();
+
     events.forEach(ev => {
         const div = document.createElement('div');
         div.className = 'event';
@@ -59,10 +117,18 @@ function displayEvents() {
                          Tanggal & Jam: ${new Date(ev.date).toLocaleString()}<br>
                          <span class="countdown" id="countdown-${ev.title.replace(/\s/g,'')}">Menghitung...</span>`;
         container.appendChild(div);
+
+        // Tambahkan ke dropdown hanya jika event belum lewat
+        if(new Date(ev.date).getTime() > now){
+            const option = document.createElement('option');
+            option.value = ev.title;
+            option.textContent = ev.title;
+            eventSelect.appendChild(option);
+        }
     });
 }
 
-// Fungsi update countdown setiap detik
+// Update countdown
 function updateCountdown() {
     events.forEach(ev => {
         const now = new Date().getTime();
@@ -81,13 +147,51 @@ function updateCountdown() {
     });
 }
 
+// Popup form
+function showPopup(){
+    displayEvents(); // refresh dropdown
+    document.getElementById('popupForm').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+function closePopup(){
+    document.getElementById('popupForm').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+// Kirim ke WhatsApp admin
+function sendWhatsApp(){
+    const fullName = encodeURIComponent(document.getElementById('fullName').value);
+    const accountName = encodeURIComponent(document.getElementById('accountName').value);
+    const roomLink = encodeURIComponent(document.getElementById('roomLink').value);
+    const eventName = document.getElementById('eventSelect').value;
+    const prize = encodeURIComponent(document.getElementById('prize').value);
+
+    if(!fullName || !accountName || !roomLink || !eventName){
+        return alert("Harap isi semua kolom wajib!");
+    }
+
+    // Cek tanggal event
+    const selectedEvent = events.find(ev => ev.title === eventName);
+    if(new Date(selectedEvent.date).getTime() <= new Date().getTime()){
+        return alert("Maaf, event ini sudah lewat. Pilih event lain.");
+    }
+
+    const adminNumber = "6281234567890"; // Ganti nomor WhatsApp admin
+    const message = `Halo Admin, saya ingin mendaftar/menanyakan event:\n\nNama Lengkap: ${fullName}\nNama Akun: ${accountName}\nLink Room VR: ${roomLink}\nNama Event: ${eventName}\nHadiah: ${prize}`;
+
+    const whatsappURL = `https://wa.me/${adminNumber}?text=${message}`;
+    window.open(whatsappURL, "_blank");
+    closePopup();
+}
+
 // Inisialisasi
 displayEvents();
 setInterval(updateCountdown, 1000);
 </script>
-  <div style="text-align:center;color:gold;font-weight:bold;">
-<div style="text-align:center;margin-top:40px;">
+
+<div style="text-align:center;color:gold;font-weight:bold;margin-top:40px;">
   <a href="event.html">⬅ Kembali</a>
 </div>
+
 </body>
 </html>
