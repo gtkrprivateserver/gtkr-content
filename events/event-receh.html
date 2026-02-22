@@ -46,25 +46,27 @@ button{
   background:gold;
   font-weight:bold;
   cursor:pointer;
+  transition:0.3s;
 }
 button:hover{background:orange;}
-.badge{
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:12px;
+.success{
+  background:green !important;
+  color:white;
 }
-.verified{background:green;}
-.unverified{background:red;}
-.admin{display:none;}
-.listItem{
-  margin:8px 0;
-  padding:8px;
-  border-bottom:1px solid #333;
+.closed{
+  background:red !important;
 }
-.counter{
-  font-size:18px;
+.status{
+  font-weight:bold;
   margin-bottom:10px;
+  font-size:18px;
+}
+.openStatus{ color:lime; }
+.closedStatus{ color:red; }
+.idBox{
+  margin-top:10px;
   color:gold;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -72,177 +74,145 @@ button:hover{background:orange;}
 
 <header>
 <h1>CHASTE DRAGON LEADER</h1>
-<p>Event Receh & Verified Badge System</p>
+<p>Event Registration System</p>
 </header>
 
 <div class="container">
 
 <div class="card">
-<h3>Join Event Receh</h3>
+<div id="eventStatus" class="status"></div>
+<div id="savedId" class="idBox"></div>
 
-<input type="text" id="eventAkun" placeholder="Nama Akun Walla">
-<input type="link" id="eventLink" placeholder="Link Akun Walla">
-<input type="text" id="eventNamaAsli" placeholder="Nama Asli">
-<input type="number" id="eventPhone" placeholder="Nomor WhatsApp (+62xxx)">
+<form id="eventForm" onsubmit="joinEvent(event)">
 
-<button id="joinBtn" onclick="joinEvent()">JOIN EVENT</button>
-</div>
+<input type="text" id="eventAkun" placeholder="Nama Akun Walla" required>
+<input type="url" id="eventLink" placeholder="Link Akun Walla (https://...)" required>
+<input type="text" id="eventNamaAsli" placeholder="Nama Asli" required>
+<input type="tel" id="eventPhone" placeholder="Nomor WhatsApp (62xxxx)" 
+required pattern="^62[0-9]{9,13}$">
 
-<div class="card">
-<h3>Peserta Event</h3>
-<div class="counter">Total Peserta: <span id="totalPeserta">0</span></div>
-<div id="eventList"></div>
-</div>
+<button type="submit" id="joinBtn">JOIN EVENT</button>
 
-<div class="card">
-<h3>Admin Login</h3>
-<input type="password" id="adminPass" placeholder="Password Admin">
-<button onclick="adminLogin()">Login</button>
-</div>
-
-<div class="card admin" id="adminPanel">
-<h3>Admin Panel - Verifikasi</h3>
-<div id="adminList"></div>
-</div>
+</form>
 
 </div>
+</div>
 
-<!-- FIREBASE MODULAR V12 -->
-<script type="module">
+<script>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+// ===============================
+// ⚙️ PENGATURAN
+// ===============================
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAx63q_PnqWj34c5zxH9aZcwUjKHWAsaYA",
-  authDomain: "chastedragon.firebaseapp.com",
-  projectId: "chastedragon",
-  storageBucket: "chastedragon.firebasestorage.app",
-  messagingSenderId: "926861094687",
-  appId: "1:926861094687:web:a99c7c0df0365457e0ca2a",
-  measurementId: "G-FNG5JNQ8C7"
-};
+const adminNumber = "6281234567890"; // GANTI NOMOR ADMIN
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-getAnalytics(app);
+const eventStart = new Date("2026-03-01T00:00");
+const eventEnd   = new Date("2026-03-05T23:59");
 
-/* CEK STATUS SAAT LOAD */
-window.addEventListener("load", async ()=>{
-  const phone = localStorage.getItem("eventPhone");
-  if(!phone) return;
+const statusDiv = document.getElementById("eventStatus");
+const joinBtn = document.getElementById("joinBtn");
+const savedIdDiv = document.getElementById("savedId");
 
-  const q = query(collection(db,"eventReceh"), where("phone","==",phone));
-  const snapshot = await getDocs(q);
+// ===============================
+// CEK STATUS EVENT
+// ===============================
 
-  if(!snapshot.empty){
-    const btn = document.getElementById("joinBtn");
-    btn.innerText="✔ SUDAH TERDAFTAR";
-    btn.disabled=true;
-    btn.style.background="green";
-  }
-});
+const now = new Date();
 
-/* JOIN EVENT */
-window.joinEvent = async function(){
+if(now >= eventStart && now <= eventEnd){
+  statusDiv.innerHTML = "🟢 EVENT STATUS: OPEN";
+  statusDiv.classList.add("openStatus");
+}else{
+  statusDiv.innerHTML = "🔴 EVENT STATUS: CLOSED";
+  statusDiv.classList.add("closedStatus");
+  joinBtn.disabled = true;
+  joinBtn.classList.add("closed");
+  joinBtn.innerText = "EVENT CLOSED";
+}
 
-  const akun = document.getElementById("eventAkun").value.trim();
-  const link = document.getElementById("eventLink").value.trim();
-  const namaAsli = document.getElementById("eventNamaAsli").value.trim();
-  const phone = document.getElementById("eventPhone").value.trim();
+// ===============================
+// CEK ID TERSIMPAN
+// ===============================
 
-  if(!akun || !link || !namaAsli || !phone){
-    alert("Lengkapi semua data!");
+const existingId = localStorage.getItem("cd_event_id");
+
+if(existingId){
+  savedIdDiv.innerHTML = "✔ Anda sudah terdaftar<br>ID Anda: " + existingId;
+  joinBtn.disabled = true;
+  joinBtn.classList.add("success");
+  joinBtn.innerText = "SUDAH TERDAFTAR";
+}
+
+// ===============================
+// GENERATE ID
+// ===============================
+
+function generateID(){
+  const random = Math.floor(Math.random()*10000);
+  const time = Date.now().toString().slice(-5);
+  return "CD-" + time + random;
+}
+
+// ===============================
+// JOIN EVENT
+// ===============================
+
+function joinEvent(e){
+  e.preventDefault();
+
+  if(localStorage.getItem("cd_event_id")){
+    alert("Anda sudah terdaftar!");
     return;
   }
 
-  const q = query(collection(db,"eventReceh"), where("phone","==",phone));
-  const snapshot = await getDocs(q);
-
-  if(!snapshot.empty){
-    alert("Nomor sudah terdaftar!");
+  const nowCheck = new Date();
+  if(!(nowCheck >= eventStart && nowCheck <= eventEnd)){
+    alert("Event sudah ditutup!");
     return;
   }
 
-  await addDoc(collection(db,"eventReceh"),{
-    akun,
-    link,
-    namaAsli,
-    phone,
-    verified:false,
-    created: Date.now()
-  });
+  const akun = document.getElementById("eventAkun");
+  const link = document.getElementById("eventLink");
+  const namaAsli = document.getElementById("eventNamaAsli");
+  const phone = document.getElementById("eventPhone");
 
-  localStorage.setItem("eventPhone", phone);
-
-  const btn = document.getElementById("joinBtn");
-  btn.innerText="✔ SUDAH TERDAFTAR";
-  btn.disabled=true;
-  btn.style.background="green";
-
-  alert("Berhasil join event!");
-}
-
-/* REALTIME LIST */
-onSnapshot(collection(db,"eventReceh"), (snapshot)=>{
-  let html="";
-  let total=0;
-
-  snapshot.forEach(docSnap=>{
-    total++;
-    const d = docSnap.data();
-
-    html+=`
-    <div class="listItem">
-      <b>${d.akun}</b>
-      <span class="badge ${d.verified?'verified':'unverified'}">
-      ${d.verified?'✔ Verified':'Belum Verified'}
-      </span>
-    </div>
-    `;
-  });
-
-  document.getElementById("eventList").innerHTML=html;
-  document.getElementById("totalPeserta").innerText=total;
-});
-
-/* ADMIN */
-const ADMIN_PASS="chaste2026";
-
-window.adminLogin = function(){
-  const pass=document.getElementById("adminPass").value;
-  if(pass===ADMIN_PASS){
-    document.getElementById("adminPanel").style.display="block";
-    loadAdmin();
-  }else{
-    alert("Password salah!");
+  if(!akun.checkValidity() ||
+     !link.checkValidity() ||
+     !namaAsli.checkValidity() ||
+     !phone.checkValidity()){
+       
+    alert("Harap isi data dengan benar!");
+    return;
   }
-}
 
-function loadAdmin(){
-  onSnapshot(collection(db,"eventReceh"), (snapshot)=>{
-    let html="";
-    snapshot.forEach(docSnap=>{
-      const d=docSnap.data();
-      html+=`
-      <div style="border-bottom:1px solid #333;padding:8px;">
-        <b>${d.akun}</b><br>
-        ${d.namaAsli}<br>
-        ${d.phone}<br>
-        ${d.verified?'✔ Verified':'Belum Verified'}
-        ${!d.verified?`<button onclick="verifyMember('${docSnap.id}')">Verify</button>`:''}
-      </div>
-      `;
-    });
-    document.getElementById("adminList").innerHTML=html;
-  });
-}
+  const idDaftar = generateID();
 
-window.verifyMember = async function(id){
-  await updateDoc(doc(db,"eventReceh",id),{
-    verified:true
-  });
+  // SIMPAN ID
+  localStorage.setItem("cd_event_id", idDaftar);
+
+  const pesan = 
+`🔥 PENDAFTARAN EVENT CHASTE DRAGON 🔥
+
+ID Pendaftaran: ${idDaftar}
+
+Nama Akun Walla: ${akun.value}
+Link Akun Walla: ${link.value}
+Nama Asli: ${namaAsli.value}
+Nomor WhatsApp: ${phone.value}
+
+Mohon verifikasi 🙏`;
+
+  const encodedMessage = encodeURIComponent(pesan);
+
+  window.open(`https://wa.me/${adminNumber}?text=${encodedMessage}`, "_blank");
+
+  joinBtn.innerText = "✔ TERDAFTAR";
+  joinBtn.classList.add("success");
+  joinBtn.disabled = true;
+
+  savedIdDiv.innerHTML = "✔ ID Anda: " + idDaftar;
+
+  document.getElementById("eventForm").reset();
 }
 
 </script>
