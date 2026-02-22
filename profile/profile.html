@@ -4,80 +4,206 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Profil Leader - CHASTE</title>
-  <style>
-    body{
-      background:black;
-      color:white;
-      font-family:Poppins, sans-serif;
-      padding:40px;
-    }
-    h1,h2{
-      color:gold;
-      text-align:center;
-    }
-    .card{
-      background:#111;
-      border:2px solid gold;
-      border-radius:15px;
-      padding:30px;
-      margin:30px auto;
-      max-width:600px;
-      text-align:center;
-      box-shadow:0 0 20px rgba(255,215,0,0.3);
-    }
-    .card img{
-      width:180px;
-      height:180px;
-      border-radius:50%;
-      border:3px solid gold;
-      object-fit:cover;
-      margin-bottom:20px;
-    }
-    .role{
-      color:gold;
-      font-weight:bold;
-      font-size:18px;
-    }
-    a{
-      color:gold;
-      text-decoration:none;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Profil Official - CHASTE DRAGON</title>
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins, sans-serif;
+  padding:40px;
+}
+
+h1{
+  color:gold;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+h2.section{
+  margin-top:70px;
+  color:gold;
+  border-bottom:2px solid gold;
+  padding-bottom:10px;
+}
+
+.container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  margin-top:30px;
+}
+
+.card{
+  background:#111;
+  border-radius:15px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 0 20px rgba(255,215,0,0.2);
+  border:2px solid gold;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 30px gold;
+}
+
+.card img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:3px solid gold;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+.role{
+  font-weight:bold;
+  margin:10px 0;
+}
+
+/* Badge Style */
+.badge{
+  display:inline-block;
+  padding:6px 14px;
+  font-size:12px;
+  font-weight:bold;
+  border-radius:20px;
+  margin-top:10px;
+  animation:glow 2s infinite alternate;
+}
+
+/* Rank Colors */
+.leader-badge{
+  background:gold;
+  color:black;
+  box-shadow:0 0 15px gold;
+}
+
+.coleader-badge{
+  background:silver;
+  color:black;
+  box-shadow:0 0 15px silver;
+}
+
+.elder-badge{
+  background:#cd7f32;
+  color:white;
+  box-shadow:0 0 15px #cd7f32;
+}
+
+@keyframes glow{
+  from{opacity:0.7;}
+  to{opacity:1;}
+}
+
+a{
+  color:gold;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.footer{
+  text-align:center;
+  margin-top:80px;
+}
+</style>
 </head>
 
 <body>
 
 <h1>PROFIL OFFICIAL</h1>
-<h2>CHASTE DRAGON SQUAD</h2>
+<h1>CHASTE DRAGON SQUAD</h1>
 
-<!-- Leader -->
+<!-- ================= LEADER ================= -->
+<h2 class="section">LEADER (3)</h2>
+<div class="container">
+
 <div class="card">
-  <img src="/asset/file_00000000975871fa94b1ad5043bb1709.png" alt="Foto Leader">
-  <h2>Leader : Levin-Ric-Leon</h2>
-  <p class="role">LEADER</p>
-  <p>
-    Pemimpin utama yang bertanggung jawab atas seluruh kebijakan,
-    keputusan, dan arah perkembangan Squad.
-    Tegas, disiplin, dan berkomitmen menjaga kehormatan CHASTE DRAGON.
-  </p>
+<img src="/asset/leader1.png">
+<h3>Levin</h3>
+<p class="role">LEADER</p>
+<div class="badge leader-badge">✔ VERIFIED LEADER</div>
 </div>
 
-<!-- Co-Leader -->
 <div class="card">
-  <img src="/asset/file_00000000975871fa94b1ad5043bb1709.png" alt="Foto Co-Leader">
-  <h2>Co-Leader : Surya, Sarah, Kayzen, Panda, Ikky</h2>
-  <p class="role">CO-LEADER</p>
-  <p>
-    Pendamping Leader yang membantu koordinasi internal,
-    menjaga stabilitas tim, serta memastikan seluruh member
-    menjalankan aturan dengan disiplin dan loyalitas tinggi.
-  </p>
+<img src="/asset/leader2.png">
+<h3>Ric</h3>
+<p class="role">LEADER</p>
+<div class="badge leader-badge">✔ VERIFIED LEADER</div>
 </div>
 
-<div style="text-align:center;margin-top:40px;">
-  <a href="https://chastedragon.vercel.app">⬅ Kembali</a>
+<div class="card">
+<img src="/asset/leader3.png">
+<h3>Leon</h3>
+<p class="role">LEADER</p>
+<div class="badge leader-badge">✔ VERIFIED LEADER</div>
+</div>
+
+</div>
+
+<!-- ================= CO LEADER ================= -->
+<h2 class="section">CO-LEADER (5)</h2>
+<div class="container">
+
+<div class="card">
+<img src="/asset/co1.png">
+<h3>Surya</h3>
+<p class="role">CO-LEADER</p>
+<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
+</div>
+
+<div class="card">
+<img src="/asset/co2.png">
+<h3>Sarah</h3>
+<p class="role">CO-LEADER</p>
+<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
+</div>
+
+<div class="card">
+<img src="/asset/co3.png">
+<h3>Kayzen</h3>
+<p class="role">CO-LEADER</p>
+<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
+</div>
+
+<div class="card">
+<img src="/asset/co4.png">
+<h3>Panda</h3>
+<p class="role">CO-LEADER</p>
+<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
+</div>
+
+<div class="card">
+<img src="/asset/co5.png">
+<h3>Ikky</h3>
+<p class="role">CO-LEADER</p>
+<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
+</div>
+
+</div>
+
+<!-- ================= ELDER ================= -->
+<h2 class="section">ELDER (10)</h2>
+<div class="container">
+
+<div class="card"><h3>Elder 1</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 2</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 3</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 4</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 5</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 6</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 7</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 8</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 9</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+<div class="card"><h3>Elder 10</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
+
+</div>
+
+<div class="footer">
+<a href="https://chastedragon.vercel.app">⬅ Kembali</a>
 </div>
 
 </body>
