@@ -18,10 +18,9 @@ body{
 h1{
   color:gold;
   text-align:center;
-  margin-bottom:10px;
 }
 
-h2.section{
+.section{
   margin-top:70px;
   color:gold;
   border-bottom:2px solid gold;
@@ -30,84 +29,124 @@ h2.section{
 
 .container{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:25px;
   margin-top:30px;
 }
 
 .card{
   background:#111;
-  border-radius:15px;
-  padding:25px;
-  text-align:center;
-  box-shadow:0 0 20px rgba(255,215,0,0.2);
   border:2px solid gold;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+  cursor:pointer;
   transition:0.3s;
+  position:relative;
 }
 
 .card:hover{
   transform:scale(1.05);
-  box-shadow:0 0 30px gold;
+  box-shadow:0 0 25px gold;
 }
 
 .card img{
-  width:120px;
-  height:120px;
+  width:100px;
+  height:100px;
   border-radius:50%;
   border:3px solid gold;
   object-fit:cover;
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 
 .role{
   font-weight:bold;
-  margin:10px 0;
+  color:gold;
 }
 
-/* Badge Style */
 .badge{
   display:inline-block;
-  padding:6px 14px;
+  padding:5px 12px;
+  border-radius:20px;
   font-size:12px;
   font-weight:bold;
-  border-radius:20px;
   margin-top:10px;
-  animation:glow 2s infinite alternate;
 }
 
-/* Rank Colors */
-.leader-badge{
-  background:gold;
-  color:black;
-  box-shadow:0 0 15px gold;
-}
+.leader-badge{background:gold;color:black;}
+.coleader-badge{background:silver;color:black;}
+.elder-badge{background:#cd7f32;color:white;}
 
-.coleader-badge{
-  background:silver;
-  color:black;
-  box-shadow:0 0 15px silver;
-}
-
-.elder-badge{
-  background:#cd7f32;
-  color:white;
-  box-shadow:0 0 15px #cd7f32;
-}
-
-@keyframes glow{
-  from{opacity:0.7;}
-  to{opacity:1;}
-}
-
-a{
-  color:gold;
-  text-decoration:none;
+.status{
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:11px;
   font-weight:bold;
+  padding:4px 10px;
+  border-radius:15px;
 }
 
-.footer{
+.active{background:green;}
+.inactive{background:red;}
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#111;
+  border:2px solid gold;
+  border-radius:15px;
+  padding:30px;
+  max-width:420px;
   text-align:center;
-  margin-top:80px;
+  box-shadow:0 0 30px gold;
+  position:relative;
+}
+
+.modal-content img{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  border:4px solid gold;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+.close{
+  color:red;
+  cursor:pointer;
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:20px;
+}
+
+.wa-btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:10px 20px;
+  background:green;
+  color:white;
+  text-decoration:none;
+  border-radius:25px;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.wa-btn:hover{background:#00cc66;}
+.wa-disabled{
+  background:gray !important;
+  pointer-events:none;
 }
 </style>
 </head>
@@ -117,94 +156,105 @@ a{
 <h1>PROFIL OFFICIAL</h1>
 <h1>CHASTE DRAGON SQUAD</h1>
 
-<!-- ================= LEADER ================= -->
-<h2 class="section">LEADER (3)</h2>
-<div class="container">
+<div id="profileContainer"></div>
 
-<div class="card">
-<img src="../asset/file_00000000975871fa94b1ad5043bb1709.png">
-<h3>Levin</h3>
-<p class="role">LEADER</p>
-<div class="badge leader-badge">✔ VERIFIED LEADER</div>
+<div class="modal" id="profileModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">✖</span>
+<img id="modalImage">
+<h2 id="modalName"></h2>
+<p><b>Role:</b> <span id="modalRole"></span></p>
+<p><b>ID Official:</b> <span id="modalId"></span></p>
+<p><b>Status:</b> <span id="modalStatus"></span></p>
+<p id="modalDesc"></p>
+<a id="waLink" class="wa-btn" target="_blank">Hubungi Official</a>
+</div>
 </div>
 
-<div class="card">
-<img src="/asset/leader2.png">
-<h3>Ric</h3>
-<p class="role">LEADER</p>
-<div class="badge leader-badge">✔ VERIFIED LEADER</div>
+<script>
+
+const data = [
+
+{section:"LEADER (3)", members:[
+{name:"Levin",role:"LEADER",id:"CD-001",status:"Aktif",phone:"6281111111111",img:"/asset/leader1.png",desc:"Leader utama CHASTE DRAGON"},
+{name:"Ric",role:"LEADER",id:"CD-002",status:"Aktif",phone:"6282222222222",img:"/asset/leader2.png",desc:"Strategi & Koordinator Tim"},
+{name:"Leon",role:"LEADER",id:"CD-003",status:"Nonaktif",phone:"6283333333333",img:"/asset/leader3.png",desc:"Penjaga Disiplin Squad"}
+]},
+
+{section:"CO-LEADER (5)", members:[
+{name:"Surya",role:"CO-LEADER",id:"CD-004",status:"Aktif",phone:"6284444444444",img:"/asset/co1.png",desc:"Koordinator Internal"},
+{name:"Sarah",role:"CO-LEADER",id:"CD-005",status:"Aktif",phone:"6285555555555",img:"/asset/co2.png",desc:"Stabilitas Tim"},
+{name:"Kayzen",role:"CO-LEADER",id:"CD-006",status:"Aktif",phone:"6286666666666",img:"/asset/co3.png",desc:"Support Leader"},
+{name:"Panda",role:"CO-LEADER",id:"CD-007",status:"Nonaktif",phone:"6287777777777",img:"/asset/co4.png",desc:"Team Stability"},
+{name:"Ikky",role:"CO-LEADER",id:"CD-008",status:"Aktif",phone:"6288888888888",img:"/asset/co5.png",desc:"Internal Support"}
+]},
+
+{section:"ELDER (10)", members:Array.from({length:10},(_,i)=>({
+name:"Elder "+(i+1),
+role:"ELDER",
+id:"CD-1"+(i+1),
+status:"Aktif",
+phone:"62899999999"+(i+1),
+img:"/asset/elder.png",
+desc:"Senior Official Member"
+}))}
+
+];
+
+const container = document.getElementById("profileContainer");
+
+data.forEach(group=>{
+container.innerHTML += `<h2 class="section">${group.section}</h2><div class="container">`;
+group.members.forEach(member=>{
+let badgeClass = member.role==="LEADER"?"leader-badge":
+member.role==="CO-LEADER"?"coleader-badge":"elder-badge";
+
+let statusClass = member.status==="Aktif"?"active":"inactive";
+
+container.innerHTML += `
+<div class="card" onclick="openProfile('${member.name}','${member.desc}','${member.id}','${member.role}','${member.status}','${member.phone}','${member.img}')">
+<div class="status ${statusClass}">${member.status.toUpperCase()}</div>
+<img src="${member.img}">
+<h3>${member.name}</h3>
+<p class="role">${member.role}</p>
+<div class="badge ${badgeClass}">✔ VERIFIED</div>
 </div>
+`;
+});
+container.innerHTML += `</div>`;
+});
 
-<div class="card">
-<img src="/asset/leader3.png">
-<h3>Leon</h3>
-<p class="role">LEADER</p>
-<div class="badge leader-badge">✔ VERIFIED LEADER</div>
-</div>
+function openProfile(name, desc, id, role, status, phone, image){
+document.getElementById("modalName").innerText = name;
+document.getElementById("modalDesc").innerText = desc;
+document.getElementById("modalId").innerText = id;
+document.getElementById("modalRole").innerText = role;
+document.getElementById("modalStatus").innerText = status;
+document.getElementById("modalImage").src = image;
 
-</div>
+let waBtn = document.getElementById("waLink");
+waBtn.href = "https://wa.me/"+phone+"?text=Halo%20Official%20CHASTE%20DRAGON";
 
-<!-- ================= CO LEADER ================= -->
-<h2 class="section">CO-LEADER (5)</h2>
-<div class="container">
+if(status==="Nonaktif"){
+waBtn.classList.add("wa-disabled");
+}else{
+waBtn.classList.remove("wa-disabled");
+}
 
-<div class="card">
-<img src="/asset/co1.png">
-<h3>Surya</h3>
-<p class="role">CO-LEADER</p>
-<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
-</div>
+document.getElementById("profileModal").style.display="flex";
+}
 
-<div class="card">
-<img src="/asset/co2.png">
-<h3>Sarah</h3>
-<p class="role">CO-LEADER</p>
-<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
-</div>
+function closeModal(){
+document.getElementById("profileModal").style.display="none";
+}
 
-<div class="card">
-<img src="/asset/co3.png">
-<h3>Kayzen</h3>
-<p class="role">CO-LEADER</p>
-<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
-</div>
+window.onclick=function(e){
+if(e.target==document.getElementById("profileModal")){
+closeModal();
+}
+}
 
-<div class="card">
-<img src="/asset/co4.png">
-<h3>Panda</h3>
-<p class="role">CO-LEADER</p>
-<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
-</div>
-
-<div class="card">
-<img src="/asset/co5.png">
-<h3>Ikky</h3>
-<p class="role">CO-LEADER</p>
-<div class="badge coleader-badge">✔ VERIFIED CO-LEADER</div>
-</div>
-
-</div>
-
-<!-- ================= ELDER ================= -->
-<h2 class="section">ELDER (10)</h2>
-<div class="container">
-
-<div class="card"><h3>Elder 1</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 2</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 3</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 4</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 5</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 6</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 7</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 8</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 9</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-<div class="card"><h3>Elder 10</h3><p class="role">ELDER</p><div class="badge elder-badge">✔ VERIFIED ELDER</div></div>
-
-</div>
-
-<div class="footer">
-<a href="https://chastedragon.vercel.app">⬅ Kembali</a>
-</div>
+</script>
 
 </body>
 </html>
