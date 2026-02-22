@@ -10,6 +10,7 @@ body {
     font-family:Poppins, sans-serif;
     color:white;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
     height:100vh;
@@ -43,9 +44,27 @@ button {
     cursor:pointer;
     transition: transform 0.2s;
     font-size:1em;
+    margin-bottom:20px;
 }
 button:hover {
     transform: scale(1.1);
+}
+.footer {
+    margin-top:20px;
+}
+.footer a {
+    color:gold;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:1em;
+}
+.footer a:hover {
+    text-decoration:underline;
+}
+hr {
+    border:1px solid gold;
+    margin:40px 0;
+    width:80%;
 }
 </style>
 </head>
@@ -55,6 +74,10 @@ button:hover {
     <h1>CHASTE DRAGON</h1>
     <p>Website sedang dalam perbaikan.<br>Mohon bersabar, kami akan segera kembali.</p>
     <button onclick="hubungiAdmin()">Hubungi Admin</button>
+    <hr style="border:1px solid gold;margin:40px 0;">
+    <div class="footer">
+        <a href="event.html">⬅ Back</a>
+    </div>
 </div>
 
 <script>
@@ -65,12 +88,6 @@ function hubungiAdmin(){
     window.open(`https://wa.me/${adminNumber}?text=${message}`, "_blank");
 }
 </script>
-<hr style="border:1px solid gold;margin:40px 0;">
 
-<div class="footer">
-<a href="event.html" style="color:gold;text-decoration:none;">
-⬅ Back
-</a>
-</div>
 </body>
 </html>
