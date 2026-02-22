@@ -2,323 +2,189 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Shop & Seller CHASTE DRAGON</title>
+<title>Shop CHASTE DRAGON - Verified Admin</title>
 <style>
 body{
-  background:black;
-  font-family:Poppins,sans-serif;
-  color:white;
-  text-align:center;
-  padding:30px;
+  background:black; color:white; font-family:Poppins,sans-serif; text-align:center; padding:20px;
 }
-
-h1{ color:gold; }
+h1,h2{ color:gold; }
 .card{
-  background:#111;
-  border:2px solid gold;
-  border-radius:15px;
-  padding:25px;
-  max-width:850px;
-  margin:30px auto;
-  box-shadow:0 0 20px gold;
+  background:#111; border:2px solid gold; border-radius:15px; padding:20px; margin:15px auto; max-width:500px;
+  box-shadow:0 0 15px gold; text-align:left; position:relative;
 }
-.product-img{
-  width:100px;
-  height:100px;
-  object-fit:cover;
-  border-radius:10px;
-  border:2px solid gold;
-  margin-bottom:15px;
-}
-.buy-btn{
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  background:gold;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-.buy-btn:hover{ background:orange; }
-
-/* MODAL */
-.modal{
-  display:none;
-  position:fixed;
-  z-index:999;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  overflow:auto;
-  background:rgba(0,0,0,0.85);
-  animation:fadeIn 0.4s;
-}
-.modal-content{
-  background:#111;
-  margin:100px auto;
-  padding:30px;
-  border:2px solid gold;
-  border-radius:15px;
-  max-width:400px;
-  text-align:center;
-  position:relative;
-  box-shadow:0 0 30px rgba(255,215,0,0.5);
-  transform: scale(0.8);
-  animation:scaleUp 0.4s forwards;
-}
-.modal-content img{
-  width:120px;
-  height:120px;
-  border-radius:10px;
-  object-fit:cover;
-  border:2px solid gold;
-  margin-bottom:15px;
-}
-.close{
-  position:absolute;
-  top:10px;
-  right:15px;
-  font-size:24px;
-  font-weight:bold;
-  color:white;
-  cursor:pointer;
-}
+.card h3{ margin:5px 0; }
+.badge{ background:#1DA1F2; color:white; font-size:12px; padding:4px 10px; border-radius:20px; font-weight:bold; display:inline-block; margin-left:10px; }
+button{ padding:8px 15px; border:none; border-radius:8px; background:gold; color:black; font-weight:bold; margin-top:10px; cursor:pointer; transition:0.3s; }
+button:hover{ background:orange; }
+input, select{ width:95%; padding:8px; margin:6px 0; border-radius:6px; border:none; }
+.modal{ display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.85); overflow:auto; }
+.modal-content{ background:#111; margin:50px auto; padding:20px; border:2px solid gold; border-radius:15px; max-width:400px; text-align:center; }
+.close{ position:absolute; top:10px; right:15px; font-size:24px; font-weight:bold; color:white; cursor:pointer; }
 .close:hover{ color:gold; }
-.modal input, .modal select{
-  width:90%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:8px;
-  border:none;
-  font-size:14px;
-}
-.modal button{
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  background:gold;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-.modal button:hover{ background:orange; }
-
-/* ALERT POPUP */
-.alert-popup{
-  display:none;
-  position:fixed;
-  z-index:1000;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.85);
-  color:white;
-  font-family:Poppins, sans-serif;
-}
-.alert-content{
-  background:#111;
-  border:2px solid gold;
-  border-radius:15px;
-  padding:30px;
-  width:90%;
-  max-width:400px;
-  margin:150px auto;
-  text-align:center;
-}
-.alert-content button{
-  margin-top:15px;
-}
-
-/* TOMBOL HUBUNGI ADMIN FIXED */
-#contactAdminBtn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  padding:12px 20px;
-  background:gold;
-  color:black;
-  font-weight:bold;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  z-index:100;
-  box-shadow:0 0 20px gold;
-  transition:0.3s;
-}
-#contactAdminBtn:hover{ background:orange; }
-
-/* Animasi */
-@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
-@keyframes scaleUp{ from{transform:scale(0.8);opacity:0;} to{transform:scale(1);opacity:1;} }
+.admin-panel{ display:none; background:#111; border:2px solid gold; border-radius:15px; padding:15px; margin:20px auto; max-width:500px; }
 </style>
 </head>
 <body>
 
-<h1>🛒 SHOP & SELLER CHASTE DRAGON</h1>
-<h2>Produk Eksklusif & Daftar Seller</h2>
+<h1>🛒 SHOP CHASTE DRAGON</h1>
+<button onclick="openSellerModal()">Ingin Menjadi Seller?</button>
+<button onclick="openAdminPanel()">Admin Panel</button>
 
-<!-- Tombol hubungi admin tetap di halaman -->
-<button id="contactAdminBtn" onclick="contactAdmin()">Hubungi Admin</button>
-
-<div id="promoList"></div>
-
-<!-- MODAL BUY -->
-<div id="buyModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modalImg">
-    <h3 id="modalName"></h3>
-    <p id="modalSeller"></p>
-    <p id="modalDesc"></p>
-
-    <input type="number" id="inputJumlah" placeholder="Jumlah" min="1" required>
-    <input type="text" id="inputNama" placeholder="Nama Lengkap" required>
-    <input type="text" id="inputKota" placeholder="Asal Kota" required>
-    <select id="inputVia" required>
-      <option value="">Pilih Metode Pembayaran</option>
-      <option value="Bank Transfer">Bank Transfer</option>
-      <option value="GOPAY">GOPAY</option>
-      <option value="OVO">OVO</option>
-      <option value="DANA">DANA</option>
-    </select>
-    <button onclick="submitOrder()">Kirim Order via WhatsApp</button>
-  </div>
-</div>
-
-<!-- ALERT POPUP SELLER -->
-<div id="alertPopup" class="alert-popup">
-  <div class="alert-content">
-    <h3>📢 Mau jualan?</h3>
-    <p>Silahkan hubungi admin WhatsApp atau daftar langsung di form berikut:</p>
-    <button onclick="showSellerForm()">Daftar Seller</button>
-    <button onclick="contactAdmin()">Hubungi Admin</button>
-    <button onclick="closeAlert()">Tutup</button>
-  </div>
-</div>
-
-<!-- MODAL SELLER -->
+<!-- FORM POPUP SELLER -->
 <div id="sellerModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeSellerModal()">&times;</span>
-    <h3>📝 Daftar Seller CHASTE DRAGON</h3>
-    <input type="text" id="sellerNama" placeholder="Nama Lengkap" required>
-    <input type="text" id="sellerWA" placeholder="Nomor WhatsApp" required>
-    <input type="text" id="sellerKota" placeholder="Asal Kota" required>
-    <input type="text" id="sellerProduk" placeholder="Nama Produk / Jasa" required>
-    <button onclick="submitSeller()">Kirim ke Admin via WhatsApp</button>
+    <h2>Daftar Seller</h2>
+    <form id="sellerForm" onsubmit="submitSeller(event)">
+      <input type="text" id="sellerNama" placeholder="Nama Lengkap" required>
+      <input type="number" id="sellerUmur" placeholder="Umur" required>
+      <input type="text" id="sellerKota" placeholder="Asal Kota" required>
+      <select id="sellerGender" required>
+        <option value="">Jenis Kelamin</option>
+        <option value="Laki-laki">Laki-laki</option>
+        <option value="Perempuan">Perempuan</option>
+      </select>
+      <hr>
+      <input type="text" id="tokoNama" placeholder="Nama Toko" required>
+      <input type="text" id="produkNama" placeholder="Nama Barang" required>
+      <input type="number" id="produkHarga" placeholder="Harga" required>
+      <input type="text" id="viaPembayaran" placeholder="Via Pembayaran" required>
+      <br>
+      <button type="submit">Daftar & Kirim ke Admin</button>
+    </form>
   </div>
 </div>
 
-<script>
-// Nomor admin
-const adminNumber = "6285363155850";
-
-// Popup alert
-window.addEventListener("load", ()=>{ document.getElementById("alertPopup").style.display="block"; });
-function closeAlert(){ document.getElementById("alertPopup").style.display="none"; }
-function contactAdmin(){ 
-  window.open(`https://wa.me/${adminNumber}?text=Halo Admin, saya ingin informasi lebih lanjut`, "_blank");
-  closeAlert();
-}
-function showSellerForm(){ 
-  closeAlert();
-  document.getElementById("sellerModal").style.display="block";
-}
-
-// CLOSE MODAL SELLER
-function closeSellerModal(){ document.getElementById("sellerModal").style.display="none"; }
-
-// SUBMIT SELLER
-function submitSeller(){
-  const nama = document.getElementById("sellerNama").value;
-  const wa = document.getElementById("sellerWA").value;
-  const kota = document.getElementById("sellerKota").value;
-  const produk = document.getElementById("sellerProduk").value;
-
-  if(!nama || !wa || !kota || !produk){
-    alert("Harap lengkapi semua data!");
-    return;
-  }
-
-  const pesan = `📢 PENDAFTARAN SELLER CHASTE DRAGON\n\nNama: ${nama}\nWhatsApp: ${wa}\nKota: ${kota}\nProduk/Jasa: ${produk}`;
-  window.open(`https://wa.me/${adminNumber}?text=${encodeURIComponent(pesan)}`, "_blank");
-  closeSellerModal();
-  alert("Data berhasil dikirim ke admin!");
-}
-
-// DATA PRODUK
-let products = [
-  { name:"T-Shirt CHASTE DRAGON", img:"/asset/product1.png", desc:"Kaos eksklusif", stok:50, sellerName:"Levin", sellerPhone:"6285363155850" },
-  { name:"Hoodie CHASTE DRAGON", img:"/asset/product2.png", desc:"Hoodie nyaman", stok:30, sellerName:"Kapol", sellerPhone:"6285363155851" },
-  { name:"Topi CHASTE DRAGON", img:"/asset/product3.png", desc:"Topi limited edition", stok:100, sellerName:"Ric", sellerPhone:"6285363155852" }
-];
-
-let currentProductIndex = null;
-
-function generateProductCard(product, index){
-  return `
-  <div class="card">
-    <img src="${product.img}" class="product-img">
-    <h3 style="color:gold;">${product.name}</h3>
-    <p>Penjual: ${product.sellerName}</p>
-    <p>${product.desc}</p>
-    <div class="status" id="stok-${index}">Stok: ${product.stok}</div>
-    <button class="buy-btn" onclick="openModal(${index})" ${product.stok<=0?'disabled style="background:red;cursor:not-allowed;"':''}>
-      ${product.stok>0?'Beli Sekarang':'Stok Habis'}
-    </button>
-  </div>`;
-}
-
-function updateProducts(){ document.getElementById("promoList").innerHTML = products.map(generateProductCard).join(""); }
-updateProducts();
-
-// MODAL BUY
-function openModal(index){
-  currentProductIndex = index;
-  const product = products[index];
-  document.getElementById("modalName").innerText = product.name;
-  document.getElementById("modalImg").src = product.img;
-  document.getElementById("modalSeller").innerText = "Penjual: " + product.sellerName;
-  document.getElementById("modalDesc").innerText = product.desc;
-  document.getElementById("buyModal").style.display = "block";
-  document.getElementById("inputJumlah").value = 1;
-}
-
-function closeModal(){ document.getElementById("buyModal").style.display = "none"; }
-window.onclick = function(event){
-  if(event.target == document.getElementById("buyModal")) closeModal();
-  if(event.target == document.getElementById("sellerModal")) closeSellerModal();
-}
-
-// SUBMIT ORDER
-function submitOrder(){
-  const jumlah = parseInt(document.getElementById("inputJumlah").value);
-  const nama = document.getElementById("inputNama").value;
-  const kota = document.getElementById("inputKota").value;
-  const via = document.getElementById("inputVia").value;
-  if(!jumlah || !nama || !kota || !via){ alert("Harap lengkapi semua data!"); return; }
-
-  const product = products[currentProductIndex];
-  if(jumlah > product.stok){ alert("Jumlah melebihi stok!"); return; }
-
-  product.stok -= jumlah;
-  document.getElementById(`stok-${currentProductIndex}`).innerText = "Stok: " + product.stok;
-  if(product.stok <= 0) updateProducts();
-
-  const pesan = `🔥 ORDER CHASTE DRAGON 🔥\n\nProduk: ${product.name}\nJumlah: ${jumlah}\nNama: ${nama}\nKota: ${kota}\nVia Pembayaran: ${via}`;
-  window.open(`https://wa.me/${product.sellerPhone}?text=${encodeURIComponent(pesan)}`, "_blank");
-  closeModal();
-}
-</script>
-
-<div class="footer" style="margin-top:50px;">
-<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">⬅ Kembali</a>
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="admin-panel">
+  <h2>Admin Panel - Verifikasi Seller</h2>
+  <div id="adminSellerList"></div>
 </div>
 
+<div id="sellerList"></div>
+
+<script>
+// =======================
+// ADMIN NUMBER
+// =======================
+const adminNumber = "6285363155850"; // ganti sesuai admin
+
+// =======================
+// DATA SELLER (LOCALSTORAGE)
+// =======================
+let sellers = JSON.parse(localStorage.getItem('chaste_sellers') || '[]');
+
+// =======================
+// RENDER SELLERS
+// =======================
+function renderSellers(){
+  const container = document.getElementById("sellerList");
+  container.innerHTML = "";
+  sellers.forEach((s, index)=>{
+    const card = document.createElement("div");
+    card.className="card";
+    card.innerHTML = `
+      <h3>${s.toko} ${s.verified?'<span class="badge">✓ Verified</span>':''}</h3>
+      <p>Seller: ${s.nama}</p>
+      <p>Kota: ${s.kota}</p>
+      <p>Produk: ${s.produk}</p>
+      <p>Harga: Rp${s.harga}</p>
+      <p>Via: ${s.via}</p>
+      <button onclick="hubungi('${s.whatsapp}')">Hubungi Seller</button>
+    `;
+    container.appendChild(card);
+  });
+}
+renderSellers();
+
+// =======================
+// HUBUNGI SELLER
+// =======================
+function hubungi(number){
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent('Halo, saya tertarik dengan produk Anda di CHASTE DRAGON.')}`, "_blank");
+}
+
+// =======================
+// POPUP SELLER
+// =======================
+function openSellerModal(){ document.getElementById("sellerModal").style.display="block"; }
+function closeSellerModal(){ document.getElementById("sellerModal").style.display="none"; }
+
+// =======================
+// SUBMIT SELLER FORM
+// =======================
+function submitSeller(e){
+  e.preventDefault();
+  const nama = document.getElementById("sellerNama").value;
+  const umur = document.getElementById("sellerUmur").value;
+  const kota = document.getElementById("sellerKota").value;
+  const gender = document.getElementById("sellerGender").value;
+  const toko = document.getElementById("tokoNama").value;
+  const produk = document.getElementById("produkNama").value;
+  const harga = document.getElementById("produkHarga").value;
+  const via = document.getElementById("viaPembayaran").value;
+
+  const whatsapp = prompt("Masukkan nomor WhatsApp Anda untuk dihubungi (62xxxx)","");
+  if(!whatsapp) return;
+
+  const newSeller = {nama, umur, kota, gender, toko, produk, harga, via, whatsapp, verified:false};
+  sellers.push(newSeller);
+  localStorage.setItem('chaste_sellers', JSON.stringify(sellers));
+  renderSellers();
+
+  // KIRIM KE ADMIN WHATSAPP
+  const pesan = `
+📦 PENDAFTARAN SELLER CHASTE DRAGON 📦
+Nama: ${nama}
+Umur: ${umur}
+Kota: ${kota}
+Jenis Kelamin: ${gender}
+Nama Toko: ${toko}
+Produk: ${produk}
+Harga: Rp${harga}
+Via: ${via}
+Nomor WA: ${whatsapp}
+Mohon verifikasi.
+`;
+  window.open(`https://wa.me/${adminNumber}?text=${encodeURIComponent(pesan)}`, "_blank");
+
+  alert("Data berhasil dikirim ke admin!");
+  document.getElementById("sellerForm").reset();
+  closeSellerModal();
+}
+
+// =======================
+// ADMIN PANEL
+// =======================
+function openAdminPanel(){
+  const panel = document.getElementById("adminPanel");
+  panel.style.display = panel.style.display==='block'?'none':'block';
+  renderAdminPanel();
+}
+
+function renderAdminPanel(){
+  const container = document.getElementById("adminSellerList");
+  container.innerHTML = "";
+  sellers.forEach((s,index)=>{
+    const div = document.createElement("div");
+    div.className="card";
+    div.innerHTML = `
+      <h3>${s.toko} ${s.verified?'<span class="badge">✓ Verified</span>':''}</h3>
+      <p>Seller: ${s.nama}</p>
+      <p>Produk: ${s.produk}</p>
+      <button onclick="verifySeller(${index})">${s.verified?'Verified':'Verifikasi'}</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function verifySeller(index){
+  sellers[index].verified=true;
+  localStorage.setItem('chaste_sellers', JSON.stringify(sellers));
+  renderSellers();
+  renderAdminPanel();
+}
+
+</script>
 </body>
 </html>
