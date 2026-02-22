@@ -15,23 +15,16 @@ body{
   padding:40px;
 }
 
-h1{
+h1,h2{
   color:gold;
   text-align:center;
 }
 
-.section{
-  margin-top:70px;
-  color:gold;
-  border-bottom:2px solid gold;
-  padding-bottom:10px;
-}
-
 .container{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:25px;
-  margin-top:30px;
+  margin-top:40px;
 }
 
 .card{
@@ -43,110 +36,61 @@ h1{
   cursor:pointer;
   transition:0.3s;
   position:relative;
+  box-shadow:0 0 15px rgba(255,215,0,0.2);
 }
 
 .card:hover{
   transform:scale(1.05);
-  box-shadow:0 0 25px gold;
+  box-shadow:0 0 25px rgba(255,215,0,0.5);
 }
 
 .card img{
-  width:100px;
-  height:100px;
+  width:120px;
+  height:120px;
   border-radius:50%;
   border:3px solid gold;
-  object-fit:cover;
-  margin-bottom:10px;
-}
-
-.role{
-  font-weight:bold;
-  color:gold;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  margin-top:10px;
-}
-
-.leader-badge{background:gold;color:black;}
-.coleader-badge{background:silver;color:black;}
-.elder-badge{background:#cd7f32;color:white;}
-
-.status{
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:11px;
-  font-weight:bold;
-  padding:4px 10px;
-  border-radius:15px;
-}
-
-.active{background:green;}
-.inactive{background:red;}
-
-.modal{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-}
-
-.modal-content{
-  background:#111;
-  border:2px solid gold;
-  border-radius:15px;
-  padding:30px;
-  max-width:420px;
-  text-align:center;
-  box-shadow:0 0 30px gold;
-  position:relative;
-}
-
-.modal-content img{
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  border:4px solid gold;
   object-fit:cover;
   margin-bottom:15px;
 }
 
-.close{
-  color:red;
-  cursor:pointer;
+.role{
+  color:gold;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+/* VERIFIED BADGE BIRU */
+.badge{
   position:absolute;
   top:10px;
-  right:15px;
-  font-size:20px;
-}
-
-.wa-btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:10px 20px;
-  background:green;
+  right:10px;
+  background:#1DA1F2;
   color:white;
-  text-decoration:none;
-  border-radius:25px;
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:20px;
   font-weight:bold;
-  transition:0.3s;
+  box-shadow:0 0 10px rgba(29,161,242,0.6);
 }
 
-.wa-btn:hover{background:#00cc66;}
-.wa-disabled{
-  background:gray !important;
-  pointer-events:none;
+.status{
+  font-size:13px;
+  margin-top:8px;
+  font-weight:bold;
+}
+
+.online{ color:lime; }
+.offline{ color:red; }
+
+.description{
+  font-size:13px;
+  margin-top:10px;
+  opacity:0.85;
+}
+
+a{
+  color:gold;
+  text-decoration:none;
 }
 </style>
 </head>
@@ -154,106 +98,148 @@ h1{
 <body>
 
 <h1>PROFIL OFFICIAL</h1>
-<h1>CHASTE DRAGON SQUAD</h1>
+<h2>CHASTE DRAGON SQUAD</h2>
 
-<div id="profileContainer"></div>
+<div class="container">
 
-<div class="modal" id="profileModal">
-<div class="modal-content">
-<span class="close" onclick="closeModal()">✖</span>
-<img id="modalImage">
-<h2 id="modalName"></h2>
-<p><b>Role:</b> <span id="modalRole"></span></p>
-<p><b>ID Official:</b> <span id="modalId"></span></p>
-<p><b>Status:</b> <span id="modalStatus"></span></p>
-<p id="modalDesc"></p>
-<a id="waLink" class="wa-btn" target="_blank">Hubungi Official</a>
+<!-- ===== LEADER (3) ===== -->
+<div class="card" onclick="openProfile('Levin-Ric-Leon')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/leader1.png">
+  <h3>Levin-Ric-Leon</h3>
+  <div class="role">LEADER</div>
+  <div class="status" id="status1">Checking...</div>
+  <div class="description">
+    Founder & Visioner utama CHASTE DRAGON.
+    Pemegang keputusan tertinggi squad.
+  </div>
 </div>
+
+<div class="card" onclick="openProfile('Jonathan-X')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/leader2.png">
+  <h3>Jonathan-X</h3>
+  <div class="role">LEADER</div>
+  <div class="status" id="status2">Checking...</div>
+  <div class="description">
+    Pengawas disiplin internal dan pengatur strategi besar.
+  </div>
+</div>
+
+<div class="card" onclick="openProfile('Michael-Z')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/leader3.png">
+  <h3>Michael-Z</h3>
+  <div class="role">LEADER</div>
+  <div class="status" id="status3">Checking...</div>
+  <div class="description">
+    Pengembangan event & ekspansi global CHASTE DRAGON.
+  </div>
+</div>
+
+<!-- ===== CO-LEADER (5) ===== -->
+<div class="card" onclick="openProfile('Surya')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/co1.png">
+  <h3>Surya</h3>
+  <div class="role">CO-LEADER</div>
+  <div class="status" id="status4">Checking...</div>
+  <div class="description">
+    Koordinator aktivitas dan penghubung antar tim.
+  </div>
+</div>
+
+<div class="card" onclick="openProfile('Sarah')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/co2.png">
+  <h3>Sarah</h3>
+  <div class="role">CO-LEADER</div>
+  <div class="status" id="status5">Checking...</div>
+  <div class="description">
+    Pengawas aturan dan pelaksana regulasi squad.
+  </div>
+</div>
+
+<div class="card" onclick="openProfile('Kayzen')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/co3.png">
+  <h3>Kayzen</h3>
+  <div class="role">CO-LEADER</div>
+  <div class="status" id="status6">Checking...</div>
+  <div class="description">
+    Event organizer & creative manager.
+  </div>
+</div>
+
+<div class="card" onclick="openProfile('Panda')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/co4.png">
+  <h3>Panda</h3>
+  <div class="role">CO-LEADER</div>
+  <div class="status" id="status7">Checking...</div>
+  <div class="description">
+    Pengatur stabilitas internal dan komunikasi.
+  </div>
+</div>
+
+<div class="card" onclick="openProfile('Ikky')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/co5.png">
+  <h3>Ikky</h3>
+  <div class="role">CO-LEADER</div>
+  <div class="status" id="status8">Checking...</div>
+  <div class="description">
+    Support operasional dan pengelola member.
+  </div>
+</div>
+
+<!-- ===== ELDER (10) ===== -->
+<script>
+const elders = [
+"Elder-1","Elder-2","Elder-3","Elder-4","Elder-5",
+"Elder-6","Elder-7","Elder-8","Elder-9","Elder-10"
+];
+
+document.write(
+elders.map((name,i)=>`
+<div class="card" onclick="openProfile('${name}')">
+  <div class="badge">✓ Verified</div>
+  <img src="/asset/elder${i+1}.png">
+  <h3>${name}</h3>
+  <div class="role">ELDER</div>
+  <div class="status" id="status${i+9}">Checking...</div>
+  <div class="description">
+    Senior terpercaya penjaga kehormatan CHASTE DRAGON.
+  </div>
+</div>
+`).join("")
+);
+</script>
+
+</div>
+
+<div style="text-align:center;margin-top:50px;">
+  <a href="https://chastedragon.vercel.app">⬅ Kembali ke Beranda</a>
 </div>
 
 <script>
-
-const data = [
-
-{section:"LEADER (3)", members:[
-{name:"Levin",role:"LEADER",id:"CD-001",status:"Aktif",phone:"6281111111111",img:"/asset/leader1.png",desc:"Leader utama CHASTE DRAGON"},
-{name:"Ric",role:"LEADER",id:"CD-002",status:"Aktif",phone:"6282222222222",img:"/asset/leader2.png",desc:"Strategi & Koordinator Tim"},
-{name:"Leon",role:"LEADER",id:"CD-003",status:"Nonaktif",phone:"6283333333333",img:"/asset/leader3.png",desc:"Penjaga Disiplin Squad"}
-]},
-
-{section:"CO-LEADER (5)", members:[
-{name:"Surya",role:"CO-LEADER",id:"CD-004",status:"Aktif",phone:"6284444444444",img:"/asset/co1.png",desc:"Koordinator Internal"},
-{name:"Sarah",role:"CO-LEADER",id:"CD-005",status:"Aktif",phone:"6285555555555",img:"/asset/co2.png",desc:"Stabilitas Tim"},
-{name:"Kayzen",role:"CO-LEADER",id:"CD-006",status:"Aktif",phone:"6286666666666",img:"/asset/co3.png",desc:"Support Leader"},
-{name:"Panda",role:"CO-LEADER",id:"CD-007",status:"Nonaktif",phone:"6287777777777",img:"/asset/co4.png",desc:"Team Stability"},
-{name:"Ikky",role:"CO-LEADER",id:"CD-008",status:"Aktif",phone:"6288888888888",img:"/asset/co5.png",desc:"Internal Support"}
-]},
-
-{section:"ELDER (10)", members:Array.from({length:10},(_,i)=>({
-name:"Elder "+(i+1),
-role:"ELDER",
-id:"CD-1"+(i+1),
-status:"Aktif",
-phone:"62899999999"+(i+1),
-img:"/asset/elder.png",
-desc:"Senior Official Member"
-}))}
-
-];
-
-const container = document.getElementById("profileContainer");
-
-data.forEach(group=>{
-container.innerHTML += `<h2 class="section">${group.section}</h2><div class="container">`;
-group.members.forEach(member=>{
-let badgeClass = member.role==="LEADER"?"leader-badge":
-member.role==="CO-LEADER"?"coleader-badge":"elder-badge";
-
-let statusClass = member.status==="Aktif"?"active":"inactive";
-
-container.innerHTML += `
-<div class="card" onclick="openProfile('${member.name}','${member.desc}','${member.id}','${member.role}','${member.status}','${member.phone}','${member.img}')">
-<div class="status ${statusClass}">${member.status.toUpperCase()}</div>
-<img src="${member.img}">
-<h3>${member.name}</h3>
-<p class="role">${member.role}</p>
-<div class="badge ${badgeClass}">✔ VERIFIED</div>
-</div>
-`;
-});
-container.innerHTML += `</div>`;
-});
-
-function openProfile(name, desc, id, role, status, phone, image){
-document.getElementById("modalName").innerText = name;
-document.getElementById("modalDesc").innerText = desc;
-document.getElementById("modalId").innerText = id;
-document.getElementById("modalRole").innerText = role;
-document.getElementById("modalStatus").innerText = status;
-document.getElementById("modalImage").src = image;
-
-let waBtn = document.getElementById("waLink");
-waBtn.href = "https://wa.me/"+phone+"?text=Halo%20Official%20CHASTE%20DRAGON";
-
-if(status==="Nonaktif"){
-waBtn.classList.add("wa-disabled");
-}else{
-waBtn.classList.remove("wa-disabled");
+// Klik buka detail profil
+function openProfile(name){
+  alert("Membuka detail profil: " + name);
 }
 
-document.getElementById("profileModal").style.display="flex";
+// Simulasi status real-time
+function updateStatus(){
+  const total = 18;
+  for(let i=1;i<=total;i++){
+    let el = document.getElementById("status"+i);
+    let online = Math.random() > 0.4;
+    el.innerHTML = online ? "● ONLINE" : "● OFFLINE";
+    el.className = online ? "status online" : "status offline";
+  }
 }
-
-function closeModal(){
-document.getElementById("profileModal").style.display="none";
-}
-
-window.onclick=function(e){
-if(e.target==document.getElementById("profileModal")){
-closeModal();
-}
-}
-
+updateStatus();
+setInterval(updateStatus,5000);
 </script>
 
 </body>
