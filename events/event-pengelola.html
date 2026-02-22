@@ -27,20 +27,12 @@ h1 {
 p {
     color:white;
     font-size:1.5em;
-    margin-bottom:15px;
+    margin-bottom:20px;
 }
 @keyframes glow {
     0% { text-shadow: 0 0 10px gold, 0 0 20px gold; }
     100% { text-shadow: 0 0 20px gold, 0 0 40px gold; }
 }
-/* Countdown */
-#countdown {
-    font-size:2em;
-    color:lightgreen;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-/* Hubungi Admin */
 button {
     background:gold;
     color:black;
@@ -62,30 +54,10 @@ button:hover {
 <div>
     <h1>CHASTE DRAGON</h1>
     <p>Website sedang dalam perbaikan.<br>Mohon bersabar, kami akan segera kembali.</p>
-    <div id="countdown">Estimasi selesai: --d --h --m --s</div>
     <button onclick="hubungiAdmin()">Hubungi Admin</button>
 </div>
 
 <script>
-// Set waktu estimasi selesai (misal 24 jam dari sekarang)
-const maintenanceEnd = new Date();
-maintenanceEnd.setHours(maintenanceEnd.getHours() + 24);
-
-function updateCountdown(){
-    const now = new Date().getTime();
-    const distance = maintenanceEnd - now;
-    if(distance > 0){
-        const days = Math.floor(distance / (1000*60*60*24));
-        const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-        const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-        const seconds = Math.floor((distance % (1000*60)) / 1000);
-        document.getElementById('countdown').textContent = `Estimasi selesai: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-    } else {
-        document.getElementById('countdown').textContent = "Website sudah online!";
-    }
-}
-setInterval(updateCountdown, 1000);
-
 // Hubungi Admin via WhatsApp
 function hubungiAdmin(){
     const adminNumber = "6281234567890"; // ganti nomor admin
