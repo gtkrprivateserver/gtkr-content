@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Shop CHASTE DRAGON</title>
-
 <style>
 body{
   background:black;
@@ -25,60 +24,13 @@ h1{ color:gold; }
   box-shadow:0 0 20px gold;
 }
 
-.progress-container{
-  width:100%;
-  background:#222;
-  border-radius:50px;
-  margin-top:20px;
-  overflow:hidden;
-  height:25px;
-}
-
-.progress-bar{
-  height:100%;
-  background:linear-gradient(90deg,gold,orange);
-  text-align:center;
-  line-height:25px;
-  color:black;
-  font-weight:bold;
-}
-
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin-top:20px;
-  flex-wrap:wrap;
-}
-
-.box{
-  background:black;
-  border:2px solid gold;
-  padding:15px 20px;
-  border-radius:10px;
-  min-width:80px;
-}
-
-.number{
-  font-size:22px;
-  font-weight:bold;
-  color:gold;
-}
-
-.label{ font-size:13px; }
-
-.status{
-  margin-top:15px;
-  font-size:16px;
-  color:gold;
-}
-
 .product-img{
   width:100px;
   height:100px;
   object-fit:cover;
   border-radius:10px;
   border:2px solid gold;
+  margin-bottom:15px;
 }
 
 .buy-btn{
@@ -94,9 +46,83 @@ h1{ color:gold; }
 }
 
 .buy-btn:hover{ background:orange; }
+
+/* ===== MODAL ===== */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  overflow:auto;
+  background:rgba(0,0,0,0.85);
+  animation:fadeIn 0.4s;
+}
+
+.modal-content{
+  background:#111;
+  margin:100px auto;
+  padding:30px;
+  border:2px solid gold;
+  border-radius:15px;
+  max-width:400px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 0 30px rgba(255,215,0,0.5);
+  transform: scale(0.8);
+  animation:scaleUp 0.4s forwards;
+}
+
+.modal-content img{
+  width:120px;
+  height:120px;
+  border-radius:10px;
+  object-fit:cover;
+  border:2px solid gold;
+  margin-bottom:15px;
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:24px;
+  font-weight:bold;
+  color:white;
+  cursor:pointer;
+}
+
+.close:hover{ color:gold; }
+
+.modal input, .modal select{
+  width:90%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:8px;
+  border:none;
+  font-size:14px;
+}
+
+.modal button{
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  background:gold;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.modal button:hover{ background:orange; }
+
+/* Animasi keyframes */
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+@keyframes scaleUp{ from{transform:scale(0.8);opacity:0;} to{transform:scale(1);opacity:1;} }
 </style>
 </head>
-
 <body>
 
 <h1>🛒 SHOP CHASTE DRAGON</h1>
@@ -104,95 +130,112 @@ h1{ color:gold; }
 
 <div id="promoList"></div>
 
+<!-- MODAL FORM -->
+<div id="buyModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImg">
+    <h3 id="modalName"></h3>
+
+    <input type="number" id="inputJumlah" placeholder="Jumlah" min="1" required>
+    <input type="text" id="inputNama" placeholder="Nama Lengkap" required>
+    <input type="text" id="inputKota" placeholder="Asal Kota" required>
+    <select id="inputVia" required>
+      <option value="">Pilih Metode Pembayaran</option>
+      <option value="Bank Transfer">Bank Transfer</option>
+      <option value="GOPAY">GOPAY</option>
+      <option value="OVO">OVO</option>
+      <option value="DANA">DANA</option>
+    </select>
+    <button onclick="submitOrder()">Kirim Order via WhatsApp</button>
+  </div>
+</div>
+
 <script>
+const adminNumber = "6285363155850"; // Nomor admin
 
-/* =========================
-   PENGATURAN NOMOR ADMIN
-========================= */
-const adminNumber = "6285363155850"; // ganti nomor WhatsApp admin
-
-/* =========================
-   DATA PRODUK
-========================= */
-
-const products = [
-  {
-    name: "T-Shirt CHASTE DRAGON",
-    img: "/asset/product1.png",
-    stok: 50,
-    promoEnd: new Date("March 5, 2026 23:59:59").getTime()
-  },
-  {
-    name: "Hoodie CHASTE DRAGON",
-    img: "/asset/product2.png",
-    stok: 30,
-    promoEnd: new Date("March 8, 2026 23:59:59").getTime()
-  },
-  {
-    name: "Topi CHASTE DRAGON",
-    img: "/asset/product3.png",
-    stok: 100,
-    promoEnd: new Date("March 3, 2026 23:59:59").getTime()
-  }
+let products = [
+  { name:"T-Shirt CHASTE DRAGON", img:"/asset/product1.png", stok:50 },
+  { name:"Hoodie CHASTE DRAGON", img:"/asset/product2.png", stok:30 },
+  { name:"Topi CHASTE DRAGON", img:"/asset/product3.png", stok:100 }
 ];
 
-/* =========================
-   GENERATE CARD PRODUK
-========================= */
+let currentProductIndex = null;
 
-function generateProductCard(product){
-  const now = new Date().getTime();
-  const tersisa = Math.max(Math.floor((product.promoEnd - now)/(1000*60*60*24)),0);
-  const persen = Math.min(Math.floor((1 - tersisa/30)*100),100);
-
+function generateProductCard(product, index){
   return `
   <div class="card">
-    <h3 style="color:gold;">${product.name}</h3>
     <img src="${product.img}" class="product-img">
-    <div class="status">Stok: ${product.stok}</div>
-    <div class="progress-container">
-      <div class="progress-bar" style="width:${persen}%">${persen}% Promo</div>
-    </div>
-    <div class="countdown">
-      <div class="box"><div class="number">${tersisa}</div><div class="label">Hari tersisa</div></div>
-    </div>
-    <button class="buy-btn" onclick="buyProduct('${product.name}')">Beli Sekarang</button>
+    <h3 style="color:gold;">${product.name}</h3>
+    <div class="status" id="stok-${index}">Stok: ${product.stok}</div>
+    <button class="buy-btn" onclick="openModal(${index})" ${product.stok<=0?'disabled style="background:red;cursor:not-allowed;"':''}>
+      ${product.stok>0?'Beli Sekarang':'Stok Habis'}
+    </button>
   </div>`;
 }
-
-/* =========================
-   UPDATE DAFTAR PRODUK
-========================= */
 
 function updateProducts(){
   document.getElementById("promoList").innerHTML = products.map(generateProductCard).join("");
 }
 
 updateProducts();
-setInterval(updateProducts,1000);
 
-/* =========================
-   BUY FUNCTION VIA WHATSAPP
-========================= */
+/* ===== MODAL FUNCTIONS ===== */
+function openModal(index){
+  currentProductIndex = index;
+  const product = products[index];
+  document.getElementById("modalName").innerText = product.name;
+  document.getElementById("modalImg").src = product.img;
+  document.getElementById("buyModal").style.display = "block";
+  document.getElementById("inputJumlah").value = 1;
+}
 
-function buyProduct(name){
-  const jumlah = prompt(`Masukkan jumlah ${name} yang ingin dibeli:`, "1");
-  if(!jumlah || isNaN(jumlah) || jumlah <= 0){
-    alert("Jumlah tidak valid!");
+function closeModal(){
+  document.getElementById("buyModal").style.display = "none";
+}
+
+window.onclick = function(event){
+  const modal = document.getElementById("buyModal");
+  if(event.target == modal) modal.style.display = "none";
+}
+
+/* ===== SUBMIT ORDER ===== */
+function submitOrder(){
+  const jumlah = parseInt(document.getElementById("inputJumlah").value);
+  const nama = document.getElementById("inputNama").value;
+  const kota = document.getElementById("inputKota").value;
+  const via = document.getElementById("inputVia").value;
+
+  if(!jumlah || jumlah<1 || !nama || !kota || !via){
+    alert("Harap lengkapi semua data dengan benar!");
     return;
   }
 
-  const pesan = `🔥 ORDER CHASTE DRAGON 🔥%0A%0AProduk: ${name}%0AJumlah: ${jumlah}%0A%0AMohon konfirmasi pembayaran.`;
+  const product = products[currentProductIndex];
 
+  if(jumlah > product.stok){
+    alert("Jumlah melebihi stok tersedia!");
+    return;
+  }
+
+  // Kurangi stok
+  product.stok -= jumlah;
+  document.getElementById(`stok-${currentProductIndex}`).innerText = "Stok: " + product.stok;
+
+  // Disable button jika stok habis
+  if(product.stok <= 0){
+    updateProducts();
+  }
+
+  const pesan = `🔥 ORDER CHASTE DRAGON 🔥%0A%0AProduk: ${product.name}%0AJumlah: ${jumlah}%0ANama: ${nama}%0AKota: ${kota}%0AVia Pembayaran: ${via}%0A%0AMohon konfirmasi pembayaran.`;
   const url = `https://wa.me/${adminNumber}?text=${pesan}`;
   window.open(url, "_blank");
+  closeModal();
 }
 </script>
 
 <div class="footer" style="margin-top:50px;">
-<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">
-⬅ Kembali
-</a>
+<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">⬅ Kembali</a>
 </div>
 
 </body>
