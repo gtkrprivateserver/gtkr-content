@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Shop CHASTE DRAGON</title>
+
+<style>
+body{
+  background:black;
+  font-family:Poppins, sans-serif;
+  color:white;
+  text-align:center;
+  padding:30px;
+}
+
+h1{ color:gold; }
+
+.card{
+  background:#111;
+  border:2px solid gold;
+  border-radius:15px;
+  padding:25px;
+  max-width:850px;
+  margin:30px auto;
+  box-shadow:0 0 20px gold;
+}
+
+.progress-container{
+  width:100%;
+  background:#222;
+  border-radius:50px;
+  margin-top:20px;
+  overflow:hidden;
+  height:25px;
+}
+
+.progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,gold,orange);
+  text-align:center;
+  line-height:25px;
+  color:black;
+  font-weight:bold;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+.box{
+  background:black;
+  border:2px solid gold;
+  padding:15px 20px;
+  border-radius:10px;
+  min-width:80px;
+}
+
+.number{
+  font-size:22px;
+  font-weight:bold;
+  color:gold;
+}
+
+.label{ font-size:13px; }
+
+.status{
+  margin-top:15px;
+  font-size:16px;
+  color:gold;
+}
+
+.product-img{
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  border-radius:10px;
+  border:2px solid gold;
+}
+
+.buy-btn{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  background:gold;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.buy-btn:hover{ background:orange; }
+</style>
+</head>
+
+<body>
+
+<h1>🛒 SHOP CHASTE DRAGON</h1>
+<h2>Produk Eksklusif & Promo Terbatas</h2>
+
+<div id="promoList"></div>
+
+<script>
+
+/* =========================
+   PENGATURAN NOMOR ADMIN
+========================= */
+const adminNumber = "6285363155850"; // ganti nomor WhatsApp admin
+
+/* =========================
+   DATA PRODUK
+========================= */
+
+const products = [
+  {
+    name: "T-Shirt CHASTE DRAGON",
+    img: "/asset/product1.png",
+    stok: 50,
+    promoEnd: new Date("March 5, 2026 23:59:59").getTime()
+  },
+  {
+    name: "Hoodie CHASTE DRAGON",
+    img: "/asset/product2.png",
+    stok: 30,
+    promoEnd: new Date("March 8, 2026 23:59:59").getTime()
+  },
+  {
+    name: "Topi CHASTE DRAGON",
+    img: "/asset/product3.png",
+    stok: 100,
+    promoEnd: new Date("March 3, 2026 23:59:59").getTime()
+  }
+];
+
+/* =========================
+   GENERATE CARD PRODUK
+========================= */
+
+function generateProductCard(product){
+  const now = new Date().getTime();
+  const tersisa = Math.max(Math.floor((product.promoEnd - now)/(1000*60*60*24)),0);
+  const persen = Math.min(Math.floor((1 - tersisa/30)*100),100);
+
+  return `
+  <div class="card">
+    <h3 style="color:gold;">${product.name}</h3>
+    <img src="${product.img}" class="product-img">
+    <div class="status">Stok: ${product.stok}</div>
+    <div class="progress-container">
+      <div class="progress-bar" style="width:${persen}%">${persen}% Promo</div>
+    </div>
+    <div class="countdown">
+      <div class="box"><div class="number">${tersisa}</div><div class="label">Hari tersisa</div></div>
+    </div>
+    <button class="buy-btn" onclick="buyProduct('${product.name}')">Beli Sekarang</button>
+  </div>`;
+}
+
+/* =========================
+   UPDATE DAFTAR PRODUK
+========================= */
+
+function updateProducts(){
+  document.getElementById("promoList").innerHTML = products.map(generateProductCard).join("");
+}
+
+updateProducts();
+setInterval(updateProducts,1000);
+
+/* =========================
+   BUY FUNCTION VIA WHATSAPP
+========================= */
+
+function buyProduct(name){
+  const jumlah = prompt(`Masukkan jumlah ${name} yang ingin dibeli:`, "1");
+  if(!jumlah || isNaN(jumlah) || jumlah <= 0){
+    alert("Jumlah tidak valid!");
+    return;
+  }
+
+  const pesan = `🔥 ORDER CHASTE DRAGON 🔥%0A%0AProduk: ${name}%0AJumlah: ${jumlah}%0A%0AMohon konfirmasi pembayaran.`;
+
+  const url = `https://wa.me/${adminNumber}?text=${pesan}`;
+  window.open(url, "_blank");
+}
+</script>
+
+<div class="footer" style="margin-top:50px;">
+<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">
+⬅ Kembali
+</a>
+</div>
+
+</body>
+</html>
