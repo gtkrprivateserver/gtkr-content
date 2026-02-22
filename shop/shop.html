@@ -118,7 +118,34 @@ h1{ color:gold; }
 
 .modal button:hover{ background:orange; }
 
-/* Animasi keyframes */
+.alert-popup{
+  display:none;
+  position:fixed;
+  z-index:1000;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  color:white;
+  font-family:Poppins, sans-serif;
+}
+
+.alert-content{
+  background:#111;
+  border:2px solid gold;
+  border-radius:15px;
+  padding:30px;
+  width:90%;
+  max-width:400px;
+  margin:150px auto;
+  text-align:center;
+}
+
+.alert-content button{
+  margin-top:15px;
+}
+
 @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
 @keyframes scaleUp{ from{transform:scale(0.8);opacity:0;} to{transform:scale(1);opacity:1;} }
 </style>
@@ -136,6 +163,8 @@ h1{ color:gold; }
     <span class="close" onclick="closeModal()">&times;</span>
     <img id="modalImg">
     <h3 id="modalName"></h3>
+    <p id="modalSeller"></p>
+    <p id="modalDesc"></p>
 
     <input type="number" id="inputJumlah" placeholder="Jumlah" min="1" required>
     <input type="text" id="inputNama" placeholder="Nama Lengkap" required>
@@ -151,13 +180,36 @@ h1{ color:gold; }
   </div>
 </div>
 
-<script>
-const adminNumber = "6285363155850"; // Nomor admin
+<!-- ALERT POPUP -->
+<div id="alertPopup" class="alert-popup">
+  <div class="alert-content">
+    <h3>📢 Mau jualan?</h3>
+    <p>Silahkan hubungi admin WhatsApp untuk daftar seller.</p>
+    <button onclick="contactAdmin()">Hubungi Admin</button>
+    <button onclick="closeAlert()">Tutup</button>
+  </div>
+</div>
 
+<script>
+const adminNumber = "6285363155850"; // Nomor WA admin
+
+// Tampilkan popup alert saat load
+window.addEventListener("load", ()=>{
+  document.getElementById("alertPopup").style.display = "block";
+});
+function closeAlert(){
+  document.getElementById("alertPopup").style.display = "none";
+}
+function contactAdmin(){
+  window.open(`https://wa.me/${adminNumber}?text=Halo Admin, saya ingin daftar jualan di Shop CHASTE DRAGON`, "_blank");
+  closeAlert();
+}
+
+// DATA PRODUK
 let products = [
-  { name:"T-Shirt CHASTE DRAGON", img:"/asset/product1.png", stok:50 },
-  { name:"Hoodie CHASTE DRAGON", img:"/asset/product2.png", stok:30 },
-  { name:"Topi CHASTE DRAGON", img:"/asset/product3.png", stok:100 }
+  { name:"T-Shirt CHASTE DRAGON", img:"/asset/product1.png", desc:"Kaos eksklusif CHASTE DRAGON", stok:50, sellerName:"Levin", sellerPhone:"6285363155850" },
+  { name:"Hoodie CHASTE DRAGON", img:"/asset/product2.png", desc:"Hoodie nyaman & stylish", stok:30, sellerName:"Kapol", sellerPhone:"6285363155851" },
+  { name:"Topi CHASTE DRAGON", img:"/asset/product3.png", desc:"Topi limited edition", stok:100, sellerName:"Ric", sellerPhone:"6285363155852" }
 ];
 
 let currentProductIndex = null;
@@ -167,6 +219,8 @@ function generateProductCard(product, index){
   <div class="card">
     <img src="${product.img}" class="product-img">
     <h3 style="color:gold;">${product.name}</h3>
+    <p>Penjual: ${product.sellerName}</p>
+    <p>${product.desc}</p>
     <div class="status" id="stok-${index}">Stok: ${product.stok}</div>
     <button class="buy-btn" onclick="openModal(${index})" ${product.stok<=0?'disabled style="background:red;cursor:not-allowed;"':''}>
       ${product.stok>0?'Beli Sekarang':'Stok Habis'}
@@ -177,15 +231,16 @@ function generateProductCard(product, index){
 function updateProducts(){
   document.getElementById("promoList").innerHTML = products.map(generateProductCard).join("");
 }
-
 updateProducts();
 
-/* ===== MODAL FUNCTIONS ===== */
+// MODAL BUY
 function openModal(index){
   currentProductIndex = index;
   const product = products[index];
   document.getElementById("modalName").innerText = product.name;
   document.getElementById("modalImg").src = product.img;
+  document.getElementById("modalSeller").innerText = "Penjual: " + product.sellerName;
+  document.getElementById("modalDesc").innerText = product.desc;
   document.getElementById("buyModal").style.display = "block";
   document.getElementById("inputJumlah").value = 1;
 }
@@ -199,7 +254,7 @@ window.onclick = function(event){
   if(event.target == modal) modal.style.display = "none";
 }
 
-/* ===== SUBMIT ORDER ===== */
+// SUBMIT ORDER
 function submitOrder(){
   const jumlah = parseInt(document.getElementById("inputJumlah").value);
   const nama = document.getElementById("inputNama").value;
@@ -218,17 +273,12 @@ function submitOrder(){
     return;
   }
 
-  // Kurangi stok
   product.stok -= jumlah;
   document.getElementById(`stok-${currentProductIndex}`).innerText = "Stok: " + product.stok;
-
-  // Disable button jika stok habis
-  if(product.stok <= 0){
-    updateProducts();
-  }
+  if(product.stok <= 0) updateProducts();
 
   const pesan = `🔥 ORDER CHASTE DRAGON 🔥%0A%0AProduk: ${product.name}%0AJumlah: ${jumlah}%0ANama: ${nama}%0AKota: ${kota}%0AVia Pembayaran: ${via}%0A%0AMohon konfirmasi pembayaran.`;
-  const url = `https://wa.me/${adminNumber}?text=${pesan}`;
+  const url = `https://wa.me/${product.sellerPhone}?text=${pesan}`;
   window.open(url, "_blank");
   closeModal();
 }
