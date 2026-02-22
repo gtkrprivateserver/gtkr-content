@@ -1,292 +1,290 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Shop CHASTE DRAGON</title>
-<style>
-body{
-  background:black;
-  font-family:Poppins, sans-serif;
-  color:white;
-  text-align:center;
-  padding:30px;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHASTE DRAGON</title>
+  <meta name="description" content="CHASTE DRAGON - Golden Dragon Era Squad Website" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
 
-h1{ color:gold; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #3b1f00, #000);
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-.card{
-  background:#111;
-  border:2px solid gold;
-  border-radius:15px;
-  padding:25px;
-  max-width:850px;
-  margin:30px auto;
-  box-shadow:0 0 20px gold;
-}
+    h1, h2, h3 { font-family: 'Cinzel', serif; }
 
-.product-img{
-  width:100px;
-  height:100px;
-  object-fit:cover;
-  border-radius:10px;
-  border:2px solid gold;
-  margin-bottom:15px;
-}
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 260px;
+      background: linear-gradient(180deg, #2b1500, #000);
+      border-right: 1px solid rgba(255, 180, 60, 0.2);
+      padding: 25px 20px;
+      z-index: 1000;
+      transition: 0.4s;
+    }
 
-.buy-btn{
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  background:gold;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      color: gold;
+      text-align: center;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
 
-.buy-btn:hover{ background:orange; }
+    .menu a {
+      display: block;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      color: #ffd27a;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: 0.3s;
+      font-weight: 500;
+    }
 
-/* ===== MODAL ===== */
-.modal{
-  display:none;
-  position:fixed;
-  z-index:999;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  overflow:auto;
-  background:rgba(0,0,0,0.85);
-  animation:fadeIn 0.4s;
-}
+    .menu a:hover {
+      background: linear-gradient(90deg, gold, orange);
+      color: #000;
+      transform: translateX(5px);
+      font-weight: 600;
+    }
 
-.modal-content{
-  background:#111;
-  margin:100px auto;
-  padding:30px;
-  border:2px solid gold;
-  border-radius:15px;
-  max-width:400px;
-  text-align:center;
-  position:relative;
-  box-shadow:0 0 30px rgba(255,215,0,0.5);
-  transform: scale(0.8);
-  animation:scaleUp 0.4s forwards;
-}
+    /* Toggle Button */
+    .toggle-btn {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: gold;
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1100;
+      font-weight: bold;
+    }
 
-.modal-content img{
-  width:120px;
-  height:120px;
-  border-radius:10px;
-  object-fit:cover;
-  border:2px solid gold;
-  margin-bottom:15px;
-}
+    /* ===== MAIN ===== */
+    .main {
+      margin-left: 260px;
+      padding: 30px 25px 60px;
+    }
 
-.close{
-  position:absolute;
-  top:10px;
-  right:15px;
-  font-size:24px;
-  font-weight:bold;
-  color:white;
-  cursor:pointer;
-}
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9)),
+        url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      padding: 100px 25px;
+      text-align: center;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255,200,100,.3);
+      box-shadow: 0 0 60px rgba(255,150,0,.2);
+      animation: glow 3s infinite alternate;
+    }
 
-.close:hover{ color:gold; }
+    @keyframes glow {
+      from { box-shadow: 0 0 40px rgba(255,140,0,.2); }
+      to { box-shadow: 0 0 70px rgba(255,200,0,.4); }
+    }
 
-.modal input, .modal select{
-  width:90%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:8px;
-  border:none;
-  font-size:14px;
-}
+    .hero h1 {
+      font-size: 52px;
+      color: gold;
+      text-shadow: 0 0 20px orange;
+      letter-spacing: 3px;
+    }
 
-.modal button{
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  background:gold;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
+    .hero p {
+      opacity: .9;
+      margin-top: 15px;
+      color: #ffd27a;
+      font-size: 18px;
+    }
 
-.modal button:hover{ background:orange; }
+    /* ===== SECTION ===== */
+    .section {
+      margin-bottom: 45px;
+      padding: 30px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #140900, #000);
+      border: 1px solid rgba(255,180,80,.25);
+      box-shadow: 0 0 25px rgba(255,140,0,.1);
+      animation: fadeIn 1s ease;
+    }
 
-.alert-popup{
-  display:none;
-  position:fixed;
-  z-index:1000;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.85);
-  color:white;
-  font-family:Poppins, sans-serif;
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-.alert-content{
-  background:#111;
-  border:2px solid gold;
-  border-radius:15px;
-  padding:30px;
-  width:90%;
-  max-width:400px;
-  margin:150px auto;
-  text-align:center;
-}
+    .section h2 {
+      color: gold;
+      margin-bottom: 15px;
+      font-size: 28px;
+    }
 
-.alert-content button{
-  margin-top:15px;
-}
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
 
-@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
-@keyframes scaleUp{ from{transform:scale(0.8);opacity:0;} to{transform:scale(1);opacity:1;} }
-</style>
-</head>
-<body>
+    .card {
+      background: linear-gradient(180deg, #1a0d00, #000);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(255,200,100,.15);
+      transition: 0.3s;
+      text-align: center;
+      font-weight: 500;
+    }
 
-<h1>🛒 SHOP CHASTE DRAGON</h1>
-<h2>Produk Eksklusif & Promo Terbatas</h2>
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 25px rgba(255,170,0,.3);
+    }
 
-<div id="promoList"></div>
+    /* ===== JOIN ===== */
+    .join-box {
+      text-align: center;
+      margin-top: 25px;
+    }
 
-<!-- MODAL FORM -->
-<div id="buyModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modalImg">
-    <h3 id="modalName"></h3>
-    <p id="modalSeller"></p>
-    <p id="modalDesc"></p>
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      border-radius: 50px;
+      background: linear-gradient(90deg, gold, orange);
+      color: #000;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(255,170,0,.4);
+      transition: 0.3s;
+    }
 
-    <input type="number" id="inputJumlah" placeholder="Jumlah" min="1" required>
-    <input type="text" id="inputNama" placeholder="Nama Lengkap" required>
-    <input type="text" id="inputKota" placeholder="Asal Kota" required>
-    <select id="inputVia" required>
-      <option value="">Pilih Metode Pembayaran</option>
-      <option value="Bank Transfer">Bank Transfer</option>
-      <option value="GOPAY">GOPAY</option>
-      <option value="OVO">OVO</option>
-      <option value="DANA">DANA</option>
-    </select>
-    <button onclick="submitOrder()">Kirim Order via WhatsApp</button>
+    .wa-btn:hover { transform: scale(1.08); }
+
+    .dragon-icon {
+      width: 24px;
+      height: 24px;
+      background: url('https://cdn-icons-png.flaticon.com/512/616/616554.png') no-repeat center/contain;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      opacity: .7;
+      font-size: 14px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.active { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .toggle-btn { display: block; }
+    }
+  </style></head>
+<body><div class="toggle-btn" onclick="toggleMenu()">☰</div><aside class="sidebar" id="sidebar">
+  <div class="logo">🐉 CHASTE</div>
+  <div class="menu">
+    <a href="/shop/shop.html">Shop Official</a>
+    <a href="/blacklist/member.html">Blacklist Member</a>
+    <a href="/shop/shop.html">Shop Official</a>
+    <a href="/events/event.html">Events</a>
+    <a href="/aturan/rules.html">Rules</a>
+    <a href="/undang-undang/cds.html">Undang-undang</a>
+    <a href="/profile/profile.html">Profile</a>
+    <a href="/donate/donate.html">Open Donate</a>
+    <a href="/kalender/kalender.html">Kalender</a>
+    <a href="/peringatan/teguran.html">Peringatan Teguran</a>
   </div>
-</div>
-
-<!-- ALERT POPUP -->
-<div id="alertPopup" class="alert-popup">
-  <div class="alert-content">
-    <h3>📢 Mau jualan?</h3>
-    <p>Silahkan hubungi admin WhatsApp untuk daftar seller.</p>
-    <button onclick="contactAdmin()">Hubungi Admin</button>
-    <button onclick="closeAlert()">Tutup</button>
+</aside><main class="main"><section class="hero">
+  <h1>CHASTE DRAGON</h1>
+  <p>Golden Power • Loyalty • Elite Brotherhood</p>
+</section><section id="about" class="section">
+  <h2>About</h2>
+  <p>
+    CHASTE DRAGON adalah generasi emas dari CHASTE Squad.
+    Mengusung simbol naga sebagai kekuatan, kepemimpinan, dan kejayaan.
+    Kami adalah komunitas solid, aktif, dan loyal.
+  </p>
+</section><section id="events" class="section">
+  <h2>Events</h2>
+  <div class="cards">
+    <div class="card">🔥 Golden Gathering Night</div>
+    <div class="card">🐉 Dragon Elite Ceremony</div>
+    <div class="card">🎁 Lucky Dragon Event</div>
+    <div class="card">🏆 CHASTE Squad War</div>
   </div>
-</div>
-
-<script>
-const adminNumber = "6285363155850"; // Nomor WA admin
-
-// Tampilkan popup alert saat load
-window.addEventListener("load", ()=>{
-  document.getElementById("alertPopup").style.display = "block";
-});
-function closeAlert(){
-  document.getElementById("alertPopup").style.display = "none";
-}
-function contactAdmin(){
-  window.open(`https://wa.me/${adminNumber}?text=Halo Admin, saya ingin daftar jualan di Shop CHASTE DRAGON`, "_blank");
-  closeAlert();
-}
-
-// DATA PRODUK
-let products = [
-  { name:"T-Shirt CHASTE DRAGON", img:"/asset/product1.png", desc:"Kaos eksklusif CHASTE DRAGON", stok:50, sellerName:"Levin", sellerPhone:"6285363155850" },
-  { name:"Hoodie CHASTE DRAGON", img:"/asset/product2.png", desc:"Hoodie nyaman & stylish", stok:30, sellerName:"Kapol", sellerPhone:"6285363155851" },
-  { name:"Topi CHASTE DRAGON", img:"/asset/product3.png", desc:"Topi limited edition", stok:100, sellerName:"Ric", sellerPhone:"6285363155852" }
-];
-
-let currentProductIndex = null;
-
-function generateProductCard(product, index){
-  return `
-  <div class="card">
-    <img src="${product.img}" class="product-img">
-    <h3 style="color:gold;">${product.name}</h3>
-    <p>Penjual: ${product.sellerName}</p>
-    <p>${product.desc}</p>
-    <div class="status" id="stok-${index}">Stok: ${product.stok}</div>
-    <button class="buy-btn" onclick="openModal(${index})" ${product.stok<=0?'disabled style="background:red;cursor:not-allowed;"':''}>
-      ${product.stok>0?'Beli Sekarang':'Stok Habis'}
+</section><section id="rules" class="section">
+  <h2>Rules</h2>
+  <ul>
+    <li>• Hormati semua member</li>
+    <li>• No toxic & no drama</li>
+    <li>• Loyal dan solid</li>
+    <li>• Wajib aktif event</li>
+    <li>• Dilarang membawa konflik luar</li>
+  </ul>
+</section><section id="join" class="section">
+  <h2>Join CHASTE DRAGON</h2>
+  <p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>  <div class="cards" style="max-width:500px;margin:auto;">
+    <input id="nama" placeholder="Nama" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="umur" placeholder="Umur" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="kota" placeholder="Asal Kota" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="role" placeholder="Role (Top/Bottom/Vers)" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="status" placeholder="Status (Single/Taken)" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+    <input id="walla" placeholder="Account Walla" required style="padding:12px;border-radius:10px;border:none;background:#1a0d00;color:#fff;">
+  </div>  <div class="join-box">
+    <button class="wa-btn" onclick="kirimWA()">
+      <div class="dragon-icon"></div>
+      Kirim Pendaftaran
     </button>
-  </div>`;
-}
+  </div>
+</section><section id="credit" class="section">
+  <h2>Credit</h2>
+  <p>
+    CHASTE Squad Creative Division<br>
+    Golden Dragon Inspired Design 2026
+  </p>
+</section><footer>
+  © 2026 CHASTE DRAGON — All Rights Reserved
+</footer></main><script>
+  function kirimWA() {
+    const nama = document.getElementById('nama').value.trim();
+    const umur = document.getElementById('umur').value.trim();
+    const kota = document.getElementById('kota').value.trim();
+    const role = document.getElementById('role').value.trim();
+    const status = document.getElementById('status').value.trim();
+    const walla = document.getElementById('walla').value.trim();
 
-function updateProducts(){
-  document.getElementById("promoList").innerHTML = products.map(generateProductCard).join("");
-}
-updateProducts();
+    if (!nama || !umur || !kota || !role || !status || !walla) {
+      alert('Semua data wajib diisi terlebih dahulu!');
+      return;
+    }
 
-// MODAL BUY
-function openModal(index){
-  currentProductIndex = index;
-  const product = products[index];
-  document.getElementById("modalName").innerText = product.name;
-  document.getElementById("modalImg").src = product.img;
-  document.getElementById("modalSeller").innerText = "Penjual: " + product.sellerName;
-  document.getElementById("modalDesc").innerText = product.desc;
-  document.getElementById("buyModal").style.display = "block";
-  document.getElementById("inputJumlah").value = 1;
-}
+    const text = `Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0A` +
+                 `Nama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${kota}%0ARole: ${role}%0AStatus: ${status}%0AAccount Walla: ${walla}`;
 
-function closeModal(){
-  document.getElementById("buyModal").style.display = "none";
-}
-
-window.onclick = function(event){
-  const modal = document.getElementById("buyModal");
-  if(event.target == modal) modal.style.display = "none";
-}
-
-// SUBMIT ORDER
-function submitOrder(){
-  const jumlah = parseInt(document.getElementById("inputJumlah").value);
-  const nama = document.getElementById("inputNama").value;
-  const kota = document.getElementById("inputKota").value;
-  const via = document.getElementById("inputVia").value;
-
-  if(!jumlah || jumlah<1 || !nama || !kota || !via){
-    alert("Harap lengkapi semua data dengan benar!");
-    return;
+        window.open(`https://wa.me/6288269017561?text=${text}`, '_blank');
   }
 
-  const product = products[currentProductIndex];
-
-  if(jumlah > product.stok){
-    alert("Jumlah melebihi stok tersedia!");
-    return;
+  function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
   }
-
-  product.stok -= jumlah;
-  document.getElementById(`stok-${currentProductIndex}`).innerText = "Stok: " + product.stok;
-  if(product.stok <= 0) updateProducts();
-
-  const pesan = `🔥 ORDER CHASTE DRAGON 🔥%0A%0AProduk: ${product.name}%0AJumlah: ${jumlah}%0ANama: ${nama}%0AKota: ${kota}%0AVia Pembayaran: ${via}%0A%0AMohon konfirmasi pembayaran.`;
-  const url = `https://wa.me/${product.sellerPhone}?text=${pesan}`;
-  window.open(url, "_blank");
-  closeModal();
-}
-</script>
-
-<div class="footer" style="margin-top:50px;">
-<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">⬅ Kembali</a>
-</div>
-
-</body>
+</script></body>
 </html>
