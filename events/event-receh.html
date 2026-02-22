@@ -68,6 +68,14 @@ button:hover{background:orange;}
   color:gold;
   font-weight:bold;
 }
+#countdown{
+  font-size:18px;
+  color:gold;
+  margin-bottom:10px;
+}
+.footer{
+  margin-bottom:40px;
+}
 </style>
 </head>
 <body>
@@ -80,15 +88,21 @@ button:hover{background:orange;}
 <div class="container">
 
 <div class="card">
+
 <div id="eventStatus" class="status"></div>
+<div id="countdown"></div>
 <div id="savedId" class="idBox"></div>
 
 <form id="eventForm" onsubmit="joinEvent(event)">
 
 <input type="text" id="eventAkun" placeholder="Nama Akun Walla" required>
+
 <input type="url" id="eventLink" placeholder="Link Akun Walla (https://...)" required>
+
 <input type="text" id="eventNamaAsli" placeholder="Nama Asli" required>
-<input type="tel" id="eventPhone" placeholder="Nomor WhatsApp (62xxxx)" 
+
+<input type="tel" id="eventPhone"
+placeholder="Nomor WhatsApp (62xxxx)"
 required pattern="^62[0-9]{9,13}$">
 
 <button type="submit" id="joinBtn">JOIN EVENT</button>
@@ -104,7 +118,7 @@ required pattern="^62[0-9]{9,13}$">
 // ⚙️ PENGATURAN
 // ===============================
 
-const adminNumber = "6285363155850"; // GANTI NOMOR ADMIN
+const adminNumber = "6285363155850";
 
 const eventStart = new Date("2026-02-22T00:00");
 const eventEnd   = new Date("2026-03-03T00:00");
@@ -112,23 +126,55 @@ const eventEnd   = new Date("2026-03-03T00:00");
 const statusDiv = document.getElementById("eventStatus");
 const joinBtn = document.getElementById("joinBtn");
 const savedIdDiv = document.getElementById("savedId");
+const countdownDiv = document.getElementById("countdown");
 
 // ===============================
-// CEK STATUS EVENT
+// STATUS EVENT
 // ===============================
 
-const now = new Date();
+function updateStatus(){
+  const now = new Date();
 
-if(now >= eventStart && now <= eventEnd){
-  statusDiv.innerHTML = "🟢 EVENT STATUS: OPEN";
-  statusDiv.classList.add("openStatus");
-}else{
-  statusDiv.innerHTML = "🔴 EVENT STATUS: CLOSED";
-  statusDiv.classList.add("closedStatus");
-  joinBtn.disabled = true;
-  joinBtn.classList.add("closed");
-  joinBtn.innerText = "EVENT CLOSED";
+  if(now >= eventStart && now <= eventEnd){
+    statusDiv.innerHTML = "🟢 EVENT STATUS: OPEN";
+    statusDiv.classList.add("openStatus");
+  }else{
+    statusDiv.innerHTML = "🔴 EVENT STATUS: CLOSED";
+    statusDiv.classList.add("closedStatus");
+    joinBtn.disabled = true;
+    joinBtn.classList.add("closed");
+    joinBtn.innerText = "EVENT CLOSED";
+  }
 }
+
+updateStatus();
+
+// ===============================
+// COUNTDOWN
+// ===============================
+
+function updateCountdown(){
+
+  const now = new Date().getTime();
+  const distance = eventEnd.getTime() - now;
+
+  if(distance <= 0){
+    countdownDiv.innerHTML = "⏰ Event telah berakhir";
+    updateStatus();
+    return;
+  }
+
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+  countdownDiv.innerHTML =
+    `⏳ Countdown: ${days}H ${hours}J ${minutes}M ${seconds}D`;
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
 
 // ===============================
 // CEK ID TERSIMPAN
@@ -165,8 +211,8 @@ function joinEvent(e){
     return;
   }
 
-  const nowCheck = new Date();
-  if(!(nowCheck >= eventStart && nowCheck <= eventEnd)){
+  const now = new Date();
+  if(!(now >= eventStart && now <= eventEnd)){
     alert("Event sudah ditutup!");
     return;
   }
@@ -180,17 +226,15 @@ function joinEvent(e){
      !link.checkValidity() ||
      !namaAsli.checkValidity() ||
      !phone.checkValidity()){
-       
     alert("Harap isi data dengan benar!");
     return;
   }
 
   const idDaftar = generateID();
 
-  // SIMPAN ID
   localStorage.setItem("cd_event_id", idDaftar);
 
-  const pesan = 
+  const pesan =
 `🔥 PENDAFTARAN EVENT CHASTE DRAGON 🔥
 
 ID Pendaftaran: ${idDaftar}
@@ -216,12 +260,14 @@ Mohon verifikasi 🙏`;
 }
 
 </script>
+
 <hr style="border:1px solid gold;margin:40px 0;">
 
 <div class="footer">
-<a href="kalender.html" style="color:gold;text-decoration:none;">
+<a href="event.html" style="color:gold;text-decoration:none;">
 ⬅ Back
 </a>
 </div>
+
 </body>
 </html>
