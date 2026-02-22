@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>CHASTE DRAGON - Jadwal Event</title>
+<style>
+body {
+    background:black;
+    color:white;
+    font-family:Poppins, sans-serif;
+    padding:40px;
+    line-height:1.8;
+}
+h1, h2 {
+    color:gold;
+}
+.event {
+    background:#111;
+    border:1px solid gold;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+}
+.countdown {
+    color:lightgreen;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<h1>CHASTE DRAGON - Jadwal Event</h1>
+
+<div id="eventsList"></div>
+
+<script>
+// Daftar event dengan tanggal dan jam
+const events = [
+    { title: "Event Receh", date: "2026-03-01T18:00:00" },
+    { title: "Event Ludo", date: "2026-03-02T18:00:00" },
+    { title: "Event Dadu", date: "2026-03-03T18:00:00" },
+    { title: "Event Nyanyi", date: "2026-03-04T18:00:00" },
+    { title: "Event Pantun", date: "2026-03-05T18:00:00" },
+    { title: "Event Teka-Teki", date: "2026-03-06T18:00:00" },
+    { title: "Event Romantis", date: "2026-03-07T18:00:00" },
+    { title: "Event Batu Gunting Kertas", date: "2026-03-08T18:00:00" },
+    { title: "Event Math", date: "2026-03-09T18:00:00" },
+    { title: "Event Menggambar", date: "2026-03-10T18:00:00" }
+];
+
+// Fungsi untuk menampilkan event
+function displayEvents() {
+    const container = document.getElementById('eventsList');
+    container.innerHTML = '';
+    events.forEach(ev => {
+        const div = document.createElement('div');
+        div.className = 'event';
+        div.innerHTML = `<strong>${ev.title}</strong><br>
+                         Tanggal & Jam: ${new Date(ev.date).toLocaleString()}<br>
+                         <span class="countdown" id="countdown-${ev.title.replace(/\s/g,'')}">Menghitung...</span>`;
+        container.appendChild(div);
+    });
+}
+
+// Fungsi update countdown setiap detik
+function updateCountdown() {
+    events.forEach(ev => {
+        const now = new Date().getTime();
+        const eventTime = new Date(ev.date).getTime();
+        const distance = eventTime - now;
+        const countdownEl = document.getElementById(`countdown-${ev.title.replace(/\s/g,'')}`);
+        if(distance > 0){
+            const days = Math.floor(distance / (1000*60*60*24));
+            const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+            const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+            const seconds = Math.floor((distance % (1000*60)) / 1000);
+            countdownEl.textContent = `Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else {
+            countdownEl.textContent = "Event sedang berlangsung / sudah selesai!";
+        }
+    });
+}
+
+// Inisialisasi
+displayEvents();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
