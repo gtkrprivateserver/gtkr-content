@@ -59,7 +59,6 @@ h1,h2{
   margin-bottom:5px;
 }
 
-/* VERIFIED BADGE BIRU */
 .badge{
   position:absolute;
   top:10px;
@@ -70,22 +69,81 @@ h1,h2{
   padding:4px 10px;
   border-radius:20px;
   font-weight:bold;
-  box-shadow:0 0 10px rgba(29,161,242,0.6);
+  box-shadow:0 0 15px rgba(29,161,242,0.8);
+  animation:glow 1.5s infinite alternate;
 }
-
-.status{
-  font-size:13px;
-  margin-top:8px;
-  font-weight:bold;
-}
-
-.online{ color:lime; }
-.offline{ color:red; }
 
 .description{
   font-size:13px;
   margin-top:10px;
   opacity:0.85;
+}
+
+/* ===== MODAL POPUP ===== */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  overflow:auto;
+  background:rgba(0,0,0,0.85);
+  animation:fadeIn 0.4s;
+}
+
+.modal-content{
+  background:#111;
+  margin:100px auto;
+  padding:30px;
+  border:2px solid gold;
+  border-radius:15px;
+  max-width:400px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 0 30px rgba(255,215,0,0.5);
+  transform: scale(0.8);
+  animation:scaleUp 0.4s forwards;
+}
+
+.modal-content img{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  border:3px solid gold;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:24px;
+  font-weight:bold;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.close:hover{ color:gold; }
+
+/* Animasi keyframes */
+@keyframes glow{
+  0%{ box-shadow:0 0 10px rgba(29,161,242,0.6); }
+  50%{ box-shadow:0 0 20px rgba(29,161,242,1); }
+  100%{ box-shadow:0 0 10px rgba(29,161,242,0.6); }
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+@keyframes scaleUp{
+  from{transform:scale(0.8); opacity:0;}
+  to{transform:scale(1); opacity:1;}
 }
 
 a{
@@ -103,93 +161,84 @@ a{
 <div class="container">
 
 <!-- ===== LEADER (3) ===== -->
-<div class="card" onclick="openProfile('Levin-Ric-Leon')">
+<div class="card" onclick="openProfile('洁龙_Levin','LEADER','Founder & Visioner utama CHASTE DRAGON','/asset/leader1.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/leader1.png">
   <h3>Levin-Ric-Leon</h3>
   <div class="role">LEADER</div>
-  <div class="status" id="status1">Checking...</div>
   <div class="description">
     Founder & Visioner utama CHASTE DRAGON.
-    Pemegang keputusan tertinggi squad.
   </div>
 </div>
 
-<div class="card" onclick="openProfile('Jonathan-X')">
+<div class="card" onclick="openProfile('洁龙_Kapol','LEADER','Pengawas disiplin internal dan pengatur strategi','/asset/leader2.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/leader2.png">
   <h3>Jonathan-X</h3>
   <div class="role">LEADER</div>
-  <div class="status" id="status2">Checking...</div>
   <div class="description">
-    Pengawas disiplin internal dan pengatur strategi besar.
+    Pengawas disiplin internal.
   </div>
 </div>
 
-<div class="card" onclick="openProfile('Michael-Z')">
+<div class="card" onclick="openProfile('洁龙_Ric','LEADER','Pengembangan event & ekspansi global','/asset/leader3.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/leader3.png">
   <h3>Michael-Z</h3>
   <div class="role">LEADER</div>
-  <div class="status" id="status3">Checking...</div>
   <div class="description">
-    Pengembangan event & ekspansi global CHASTE DRAGON.
+    Pengembangan event & ekspansi global.
   </div>
 </div>
 
 <!-- ===== CO-LEADER (5) ===== -->
-<div class="card" onclick="openProfile('Surya')">
+<div class="card" onclick="openProfile('洁龙_Surya','CO-LEADER','Koordinator aktivitas & penghubung antar tim','/asset/co1.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/co1.png">
   <h3>Surya</h3>
   <div class="role">CO-LEADER</div>
-  <div class="status" id="status4">Checking...</div>
   <div class="description">
-    Koordinator aktivitas dan penghubung antar tim.
+    Koordinator aktivitas.
   </div>
 </div>
 
-<div class="card" onclick="openProfile('Sarah')">
+<div class="card" onclick="openProfile('洁龙_Sarah','CO-LEADER','Pengawas aturan & pelaksana regulasi','/asset/co2.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/co2.png">
   <h3>Sarah</h3>
   <div class="role">CO-LEADER</div>
-  <div class="status" id="status5">Checking...</div>
   <div class="description">
-    Pengawas aturan dan pelaksana regulasi squad.
+    Pengawas aturan & regulasi.
   </div>
 </div>
 
-<div class="card" onclick="openProfile('Kayzen')">
+<div class="card" onclick="openProfile('洁龙_Kayzen','CO-LEADER','Event organizer & creative manager','/asset/co3.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/co3.png">
   <h3>Kayzen</h3>
   <div class="role">CO-LEADER</div>
-  <div class="status" id="status6">Checking...</div>
   <div class="description">
     Event organizer & creative manager.
   </div>
 </div>
 
-<div class="card" onclick="openProfile('Panda')">
+<div class="card" onclick="openProfile('洁龙_Panda','CO-LEADER','Pengatur stabilitas internal & komunikasi','/asset/co4.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/co4.png">
   <h3>Panda</h3>
   <div class="role">CO-LEADER</div>
-  <div class="status" id="status7">Checking...</div>
   <div class="description">
-    Pengatur stabilitas internal dan komunikasi.
+    Stabilitas internal & komunikasi.
   </div>
 </div>
 
-<div class="card" onclick="openProfile('Ikky')">
+<div class="card" onclick="openProfile('洁龙_Ikky','CO-LEADER','Support operasional & pengelola member','/asset/co5.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/co5.png">
   <h3>Ikky</h3>
   <div class="role">CO-LEADER</div>
-  <div class="status" id="status8">Checking...</div>
   <div class="description">
-    Support operasional dan pengelola member.
+    Support operasional.
   </div>
 </div>
 
@@ -202,14 +251,13 @@ const elders = [
 
 document.write(
 elders.map((name,i)=>`
-<div class="card" onclick="openProfile('${name}')">
+<div class="card" onclick="openProfile('${name}','ELDER','Senior terpercaya penjaga kehormatan CHASTE DRAGON','/asset/elder${i+1}.png')">
   <div class="badge">✓ Verified</div>
   <img src="/asset/elder${i+1}.png">
   <h3>${name}</h3>
   <div class="role">ELDER</div>
-  <div class="status" id="status${i+9}">Checking...</div>
   <div class="description">
-    Senior terpercaya penjaga kehormatan CHASTE DRAGON.
+    Senior terpercaya.
   </div>
 </div>
 `).join("")
@@ -218,28 +266,44 @@ elders.map((name,i)=>`
 
 </div>
 
+<!-- ===== MODAL ===== -->
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="modalBadge" class="badge">✓ Verified</div>
+    <img id="modalImg">
+    <h2 id="modalName"></h2>
+    <div class="role" id="modalRole"></div>
+    <p class="description" id="modalDesc"></p>
+  </div>
+</div>
+
 <div style="text-align:center;margin-top:50px;">
   <a href="https://chastedragon.vercel.app">⬅ Kembali ke Beranda</a>
 </div>
 
 <script>
-// Klik buka detail profil
-function openProfile(name){
-  alert("Membuka detail profil: " + name);
+// Buka popup modal
+function openProfile(name, role, desc, img){
+  document.getElementById('modalName').innerText = name;
+  document.getElementById('modalRole').innerText = role;
+  document.getElementById('modalDesc').innerText = desc;
+  document.getElementById('modalImg').src = img;
+  document.getElementById('profileModal').style.display = 'block';
 }
 
-// Simulasi status real-time
-function updateStatus(){
-  const total = 18;
-  for(let i=1;i<=total;i++){
-    let el = document.getElementById("status"+i);
-    let online = Math.random() > 0.4;
-    el.innerHTML = online ? "● ONLINE" : "● OFFLINE";
-    el.className = online ? "status online" : "status offline";
+// Tutup modal
+function closeModal(){
+  document.getElementById('profileModal').style.display = 'none';
+}
+
+// Tutup modal jika klik luar
+window.onclick = function(event){
+  let modal = document.getElementById('profileModal');
+  if(event.target == modal){
+    modal.style.display = 'none';
   }
 }
-updateStatus();
-setInterval(updateStatus,5000);
 </script>
 
 </body>
