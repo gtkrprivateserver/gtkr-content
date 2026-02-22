@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Shop CHASTE DRAGON - Verified Admin</title>
+<title>Shop CHASTE DRAGON - Admin Login</title>
 <style>
 body{
   background:black; color:white; font-family:Poppins,sans-serif; text-align:center; padding:20px;
@@ -12,7 +12,6 @@ h1,h2{ color:gold; }
   background:#111; border:2px solid gold; border-radius:15px; padding:20px; margin:15px auto; max-width:500px;
   box-shadow:0 0 15px gold; text-align:left; position:relative;
 }
-.card h3{ margin:5px 0; }
 .badge{ background:#1DA1F2; color:white; font-size:12px; padding:4px 10px; border-radius:20px; font-weight:bold; display:inline-block; margin-left:10px; }
 button{ padding:8px 15px; border:none; border-radius:8px; background:gold; color:black; font-weight:bold; margin-top:10px; cursor:pointer; transition:0.3s; }
 button:hover{ background:orange; }
@@ -28,7 +27,7 @@ input, select{ width:95%; padding:8px; margin:6px 0; border-radius:6px; border:n
 
 <h1>🛒 SHOP CHASTE DRAGON</h1>
 <button onclick="openSellerModal()">Ingin Menjadi Seller?</button>
-<button onclick="openAdminPanel()">Admin Panel</button>
+<button onclick="openAdminLogin()">Admin Panel</button>
 
 <!-- FORM POPUP SELLER -->
 <div id="sellerModal" class="modal">
@@ -55,6 +54,18 @@ input, select{ width:95%; padding:8px; margin:6px 0; border-radius:6px; border:n
   </div>
 </div>
 
+<!-- ADMIN LOGIN POPUP -->
+<div id="adminLoginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeAdminLogin()">&times;</span>
+    <h2>Admin Login</h2>
+    <input type="text" id="adminUser" placeholder="Username" required>
+    <input type="password" id="adminPass" placeholder="Password" required>
+    <br>
+    <button onclick="loginAdmin()">Login</button>
+  </div>
+</div>
+
 <!-- ADMIN PANEL -->
 <div id="adminPanel" class="admin-panel">
   <h2>Admin Panel - Verifikasi Seller</h2>
@@ -67,7 +78,13 @@ input, select{ width:95%; padding:8px; margin:6px 0; border-radius:6px; border:n
 // =======================
 // ADMIN NUMBER
 // =======================
-const adminNumber = "6285363155850"; // ganti sesuai admin
+const adminNumber = "6285363155850";
+
+// =======================
+// ADMIN CREDENTIALS
+// =======================
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "chaste2026";
 
 // =======================
 // DATA SELLER (LOCALSTORAGE)
@@ -151,6 +168,24 @@ Mohon verifikasi.
   alert("Data berhasil dikirim ke admin!");
   document.getElementById("sellerForm").reset();
   closeSellerModal();
+}
+
+// =======================
+// ADMIN LOGIN POPUP
+// =======================
+function openAdminLogin(){ document.getElementById("adminLoginModal").style.display="block"; }
+function closeAdminLogin(){ document.getElementById("adminLoginModal").style.display="none"; }
+
+function loginAdmin(){
+  const user = document.getElementById("adminUser").value;
+  const pass = document.getElementById("adminPass").value;
+  if(user===ADMIN_USER && pass===ADMIN_PASS){
+    alert("Login berhasil!");
+    closeAdminLogin();
+    openAdminPanel();
+  } else {
+    alert("Username atau password salah!");
+  }
 }
 
 // =======================
