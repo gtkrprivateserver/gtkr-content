@@ -176,7 +176,7 @@ function sendWhatsApp(){
         return alert("Maaf, event ini sudah lewat. Pilih event lain.");
     }
 
-    const adminNumber = "6281234567890"; // Ganti nomor WhatsApp admin
+    const adminNumber = "6285363155850"; // Ganti nomor WhatsApp admin
     const message = `Halo Admin, saya ingin mendaftar/menanyakan event:\n\nNama Lengkap: ${fullName}\nNama Akun: ${accountName}\nLink Room VR: ${roomLink}\nNama Event: ${eventName}\nHadiah: ${prize}`;
 
     const whatsappURL = `https://wa.me/${adminNumber}?text=${message}`;
@@ -189,8 +189,12 @@ displayEvents();
 setInterval(updateCountdown, 1000);
 </script>
 
-<div style="text-align:center;color:gold;font-weight:bold;margin-top:40px;">
-  <a href="event.html">⬅ Kembali</a>
+<hr style="border:1px solid gold;margin:40px 0;">
+
+<div class="footer">
+<a href="event.html" style="color:gold;text-decoration:none;">
+⬅ Back
+</a>
 </div>
 
 </body>
