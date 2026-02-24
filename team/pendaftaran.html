@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>CHASTE DRAGON - Recruitment</title>
+<title>CHASTE DRAGON - Recruitment System</title>
 
 <style>
 body{
@@ -49,7 +49,7 @@ button{
 button:hover{ background:orange; }
 
 .badge{
-  padding:5px 12px;
+  padding:6px 14px;
   border-radius:20px;
   font-size:12px;
   font-weight:bold;
@@ -101,8 +101,8 @@ button:hover{ background:orange; }
 
 <script>
 
-const nomorAdmin = "6285363155850";
-const passwordAdmin = "CHASTE2026";
+const nomorAdmin = "628XXXXXXXXXX"; // GANTI
+const passwordAdmin = "CHASTE2026"; // GANTI
 
 let data = JSON.parse(localStorage.getItem("pendaftaranTeam"));
 
@@ -119,7 +119,11 @@ if(data.status.includes("Ditolak")) badgeClass="ditolak";
 document.getElementById("notif").innerHTML=`
 <br>
 Nama: ${data.nama}<br>
+Umur: ${data.umur}<br>
+Asal Kota: ${data.kota}<br>
 Role: ${data.role}<br>
+Link Walla: ${data.walla}<br>
+<br>
 Status:
 <span class="badge ${badgeClass}">${data.status}</span>
 `;
@@ -147,21 +151,23 @@ status:"Pending 🟠"
 
 localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
 
-// WA ke Admin
+// WA ke Admin saat daftar
 kirimWA(nomorAdmin,`PENDAFTARAN TEAM CHASTE DRAGON
 
 Nama: ${data.nama}
+Umur: ${data.umur}
+Kota: ${data.kota}
 Role: ${data.role}
-WA: ${data.waUser}
+WA User: ${data.waUser}
 Status: ${data.status}`);
 
 tampilkanData();
 });
 
-// ================= ADMIN =================
+// ================= ADMIN LOGIN =================
 
 function adminLogin(){
-let pass=prompt("Password Admin:");
+let pass=prompt("Masukkan Password Admin:");
 if(pass===passwordAdmin){
 panelAdmin();
 }else{
@@ -169,16 +175,22 @@ alert("Password salah!");
 }
 }
 
+// ================= ADMIN PANEL =================
+
 function panelAdmin(){
 
-if(!data){ alert("Belum ada pendaftaran."); return; }
+if(!data){
+alert("Belum ada pendaftaran.");
+return;
+}
 
-let pilihan=prompt("1 = Verify\n2 = Tolak");
+let pilihan=prompt(
+"ADMIN PANEL\n\n1 = Verify\n2 = Tolak\n3 = Reset Device"
+);
 
 if(pilihan==="1"){
 data.status="Verified ✅";
 
-// WA ke Pendaftar
 kirimWA(data.waUser,`SELAMAT 🐉
 
 Halo ${data.nama},
@@ -189,28 +201,50 @@ telah di VERIFIKASI ✅
 Selamat bergabung di CHASTE DRAGON 🔥`);
 
 }
+
 else if(pilihan==="2"){
 data.status="Ditolak ❌";
 
-// WA ke Pendaftar
 kirimWA(data.waUser,`Halo ${data.nama},
 
 Mohon maaf pendaftaran kamu sebagai ${data.role}
 belum dapat kami terima.
 
 Tetap semangat 🐉`);
-
 }
+
+else if(pilihan==="3"){
+
+let konfirmasi=confirm("Yakin ingin RESET device ini?");
+
+if(konfirmasi){
+
+kirimWA(nomorAdmin,`RESET DEVICE
+
+Data atas nama:
+${data.nama}
+Role: ${data.role}
+
+Telah dihapus oleh Admin.`);
+
+localStorage.removeItem("pendaftaranTeam");
+location.reload();
+}
+
+return;
+}
+
 else{
-alert("Pilihan salah");
+alert("Pilihan tidak valid");
 return;
 }
 
 localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
 tampilkanData();
+alert("Status berhasil diupdate!");
 }
 
-// ================= FUNCTION WA =================
+// ================= FUNCTION WHATSAPP =================
 
 function kirimWA(nomor,pesan){
 window.open(
@@ -221,11 +255,5 @@ window.open(
 
 </script>
 
-</body><hr style="border:1px solid gold;margin:40px 0;">
-
-<div class="footer">
-<a href="https://chastedragon.vercel.app" style="color:gold;text-decoration:none;">
-⬅ Back
-</a>
-</div>
+</body>
 </html>
