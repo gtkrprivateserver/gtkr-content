@@ -66,6 +66,9 @@ button:hover{ background:orange; }
   background:red;
   color:white;
 }
+
+#statusBox{ margin:15px 0;font-size:18px; }
+#countdown{ font-size:22px;font-weight:bold;color:gold; }
 </style>
 </head>
 
@@ -73,6 +76,9 @@ button:hover{ background:orange; }
 
 <h1>🐉 OPEN RECRUITMENT</h1>
 <h2>CO-LEADER & ELDER</h2>
+
+<div id="statusBox"></div>
+<div id="countdown"></div>
 
 <div class="card">
 
@@ -101,12 +107,20 @@ button:hover{ background:orange; }
 
 <script>
 
-const nomorAdmin = "6285363155850"; // GANTI
-const passwordAdmin = "CHASTE2026"; // GANTI
+// ================== CONFIG ==================
+
+const nomorAdmin = "6285363155850";
+const passwordAdmin = "CHASTE2026";
+
+const openDate  = new Date("2026-02-25T00:00:00");
+const closeDate = new Date("2026-02-28T23:59:59");
+
+// ============================================
 
 let data = JSON.parse(localStorage.getItem("pendaftaranTeam"));
-
 if(data){ tampilkanData(); }
+
+// ================= TAMPIL DATA =================
 
 function tampilkanData(){
 
@@ -151,7 +165,6 @@ status:"Pending 🟠"
 
 localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
 
-// WA ke Admin saat daftar
 kirimWA(nomorAdmin,`PENDAFTARAN TEAM CHASTE DRAGON
 
 Nama: ${data.nama}
@@ -164,7 +177,7 @@ Status: ${data.status}`);
 tampilkanData();
 });
 
-// ================= ADMIN LOGIN =================
+// ================= ADMIN =================
 
 function adminLogin(){
 let pass=prompt("Masukkan Password Admin:");
@@ -175,8 +188,6 @@ alert("Password salah!");
 }
 }
 
-// ================= ADMIN PANEL =================
-
 function panelAdmin(){
 
 if(!data){
@@ -184,12 +195,21 @@ alert("Belum ada pendaftaran.");
 return;
 }
 
-let pilihan=prompt(
-"ADMIN PANEL\n\n1 = Verify\n2 = Tolak\n3 = Reset Device"
-);
+document.getElementById("notif").innerHTML += `
+<br><br>
+<button onclick="verifikasiUser()">✅ Kirim Verifikasi</button>
+<button onclick="tolakUser()">❌ Kirim Penolakan</button>
+<button onclick="resetDevice()">♻ Reset Device</button>
+`;
 
-if(pilihan==="1"){
+}
+
+// ================= ACTION =================
+
+function verifikasiUser(){
+
 data.status="Verified ✅";
+localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
 
 kirimWA(data.waUser,`SELAMAT 🐉
 
@@ -200,51 +220,31 @@ telah di VERIFIKASI ✅
 
 Selamat bergabung di CHASTE DRAGON 🔥`);
 
+tampilkanData();
+alert("Verifikasi berhasil dikirim!");
 }
 
-else if(pilihan==="2"){
+function tolakUser(){
+
 data.status="Ditolak ❌";
+localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
 
 kirimWA(data.waUser,`Halo ${data.nama},
 
 Mohon maaf pendaftaran kamu sebagai ${data.role}
-belum dapat kami terima.
+belum dapat kami terima.`);
 
-Tetap semangat 🐉`);
+tampilkanData();
+alert("Penolakan berhasil dikirim!");
 }
 
-else if(pilihan==="3"){
-
-let konfirmasi=confirm("Yakin ingin RESET device ini?");
-
-if(konfirmasi){
-
-kirimWA(nomorAdmin,`RESET DEVICE
-
-Data atas nama:
-${data.nama}
-Role: ${data.role}
-
-Telah dihapus oleh Admin.`);
-
+function resetDevice(){
+if(!confirm("Yakin reset device ini?")) return;
 localStorage.removeItem("pendaftaranTeam");
 location.reload();
 }
 
-return;
-}
-
-else{
-alert("Pilihan tidak valid");
-return;
-}
-
-localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
-tampilkanData();
-alert("Status berhasil diupdate!");
-}
-
-// ================= FUNCTION WHATSAPP =================
+// ================= WHATSAPP =================
 
 function kirimWA(nomor,pesan){
 window.open(
@@ -252,6 +252,52 @@ window.open(
 "_blank"
 );
 }
+
+// ================= OPEN/CLOSE =================
+
+const statusBox = document.getElementById("statusBox");
+const countdownEl = document.getElementById("countdown");
+
+function updateCountdown(){
+
+let now = new Date();
+
+if(now < openDate){
+let diff = openDate - now;
+statusBox.innerHTML = "<span style='color:orange;'>COMING SOON 🟡</span>";
+disableForm(true);
+renderTime(diff,"Menuju OPEN");
+}
+else if(now >= openDate && now <= closeDate){
+let diff = closeDate - now;
+statusBox.innerHTML = "<span style='color:lime;'>OPEN 🟢</span>";
+disableForm(false);
+renderTime(diff,"Menuju CLOSED");
+}
+else{
+statusBox.innerHTML = "<span style='color:red;'>CLOSED 🔴</span>";
+countdownEl.innerHTML = "Pendaftaran telah ditutup.";
+disableForm(true);
+}
+}
+
+function renderTime(diff,label){
+let days = Math.floor(diff/(1000*60*60*24));
+let hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+let minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+let seconds = Math.floor((diff%(1000*60))/1000);
+
+countdownEl.innerHTML =
+`${label}: ${days}H ${hours}J ${minutes}M ${seconds}D`;
+}
+
+function disableForm(state){
+document.querySelectorAll("#formTeam input, #formTeam select, #formTeam button")
+.forEach(el => el.disabled = state);
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
 
 </script>
 
