@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>CHASTE DRAGON - Recruitment</title>
+
+<style>
+body{
+  background:black;
+  font-family:Poppins, sans-serif;
+  color:white;
+  text-align:center;
+  padding:30px;
+}
+
+h1{ color:gold; }
+
+.card{
+  background:#111;
+  border:2px solid gold;
+  border-radius:15px;
+  padding:30px;
+  max-width:750px;
+  margin:40px auto;
+  box-shadow:0 0 30px gold;
+}
+
+input, select{
+  width:90%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid gold;
+  background:black;
+  color:white;
+}
+
+button{
+  background:gold;
+  color:black;
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:8px;
+}
+
+button:hover{ background:orange; }
+
+.status{ margin-top:15px; font-weight:bold; }
+
+.badge{
+  display:inline-block;
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.pending{ background:orange; color:black; }
+.verified{ background:lime; color:black; }
+.ditolak{ background:red; color:white; }
+
+.admin-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:red;
+  color:white;
+}
+
+.popup{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-box{
+  background:#111;
+  border:2px solid gold;
+  padding:30px;
+  border-radius:15px;
+  width:300px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🐉 OPEN RECRUITMENT</h1>
+<h2>CO-LEADER & ELDER</h2>
+
+<div class="card">
+
+<form id="formTeam">
+<input type="text" id="nama" placeholder="Nama Lengkap" required><br>
+<input type="number" id="umur" placeholder="Umur" required><br>
+<input type="text" id="kota" placeholder="Asal Kota" required><br>
+
+<select id="role" required>
+<option value="">Pilih Role</option>
+<option>Co-Leader</option>
+<option>Elder</option>
+</select><br>
+
+<input type="url" id="walla" placeholder="Link Account Walla" required><br>
+
+<button type="submit">Daftar Sekarang</button>
+</form>
+
+<div id="notif"></div>
+
+</div>
+
+<button class="admin-btn" onclick="bukaAdmin()">ADMIN</button>
+
+<!-- POPUP ADMIN -->
+<div class="popup" id="popupAdmin">
+  <div class="popup-box">
+    <h3 style="color:gold;">Admin Login</h3>
+    <input type="password" id="adminPass" placeholder="Password"><br>
+    <button onclick="loginAdmin()">Login</button>
+    <button onclick="tutupAdmin()">Close</button>
+  </div>
+</div>
+
+<script>
+
+const nomorAdmin = "6285363155850"; // GANTI NOMOR
+const passwordAdmin = "CHASTE2026"; // GANTI PASSWORD
+
+let data = JSON.parse(localStorage.getItem("pendaftaranTeam"));
+
+// ================= TAMPILKAN DATA =================
+
+if(data){ tampilkanData(); }
+
+function tampilkanData(){
+
+document.getElementById("formTeam").style.display="none";
+
+let badgeClass = "pending";
+if(data.status.includes("Verified")) badgeClass="verified";
+if(data.status.includes("Ditolak")) badgeClass="ditolak";
+
+document.getElementById("notif").innerHTML=`
+<br>
+Nama: ${data.nama}<br>
+Umur: ${data.umur}<br>
+Asal Kota: ${data.kota}<br>
+Role: ${data.role}<br>
+Link Walla: ${data.walla}<br><br>
+Status:
+<span class="badge ${badgeClass}">${data.status}</span>
+`;
+}
+
+// ================= DAFTAR =================
+
+document.getElementById("formTeam").addEventListener("submit",function(e){
+e.preventDefault();
+
+if(localStorage.getItem("pendaftaranTeam")){
+alert("Device ini sudah pernah mendaftar!");
+return;
+}
+
+data={
+nama: nama.value,
+umur: umur.value,
+kota: kota.value,
+role: role.value,
+walla: walla.value,
+status:"Pending 🟠"
+};
+
+localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
+
+// AUTO WA SAAT DAFTAR
+kirimWA(`PENDAFTARAN TEAM CHASTE DRAGON
+
+Nama: ${data.nama}
+Umur: ${data.umur}
+Kota: ${data.kota}
+Role: ${data.role}
+Link: ${data.walla}
+Status: ${data.status}`);
+
+tampilkanData();
+});
+
+// ================= ADMIN =================
+
+function bukaAdmin(){
+document.getElementById("popupAdmin").style.display="flex";
+}
+
+function tutupAdmin(){
+document.getElementById("popupAdmin").style.display="none";
+}
+
+function loginAdmin(){
+if(document.getElementById("adminPass").value===passwordAdmin){
+tutupAdmin();
+panelAdmin();
+}else{
+alert("Password Salah!");
+}
+}
+
+function panelAdmin(){
+
+if(!data){ alert("Belum ada pendaftaran."); return; }
+
+let pilihan=prompt("1 = Verify\n2 = Tolak\n3 = Reset Device");
+
+if(pilihan==="1"){
+data.status="Verified ✅";
+}
+else if(pilihan==="2"){
+data.status="Ditolak ❌";
+}
+else if(pilihan==="3"){
+localStorage.removeItem("pendaftaranTeam");
+location.reload();
+return;
+}
+else{
+alert("Pilihan salah");
+return;
+}
+
+localStorage.setItem("pendaftaranTeam",JSON.stringify(data));
+
+// AUTO WA SAAT UPDATE
+kirimWA(`UPDATE STATUS TEAM CHASTE DRAGON
+
+Nama: ${data.nama}
+Role: ${data.role}
+Status Baru: ${data.status}`);
+
+tampilkanData();
+alert("Status berhasil diupdate!");
+}
+
+// ================= WHATSAPP FUNCTION =================
+
+function kirimWA(pesan){
+window.open(
+`https://wa.me/${nomorAdmin}?text=${encodeURIComponent(pesan)}`,
+"_blank"
+);
+}
+
+</script>
+
+</body>
+</html>
