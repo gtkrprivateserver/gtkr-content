@@ -1,0 +1,224 @@
+<!-- ========================= -->
+<!-- CHASTE DRAGON ELITE REPORT SYSTEM -->
+<!-- ========================= -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Elite Emergency Report System - CHASTE DRAGON</title>
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins, sans-serif;
+  padding:40px;
+  text-align:center;
+}
+
+h1{
+  color:red;
+  letter-spacing:3px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  background:#111;
+  padding:30px;
+  border-radius:15px;
+  border:2px solid red;
+  box-shadow:0 0 30px rgba(255,0,0,0.5);
+}
+
+input, textarea, select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+  background:#222;
+  color:white;
+}
+
+textarea{
+  height:120px;
+  resize:none;
+}
+
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.btn-normal{
+  background:gold;
+}
+
+.btn-normal:hover{
+  background:#ffcc00;
+}
+
+.btn-urgent{
+  background:red;
+  color:white;
+  box-shadow:0 0 15px red;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%{opacity:1;}
+  50%{opacity:0.6;}
+  100%{opacity:1;}
+}
+
+.history{
+  margin-top:40px;
+  text-align:left;
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.report-item{
+  background:#111;
+  border:1px solid gold;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.footer{
+  margin-top:40px;
+  color:gold;
+  font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🚨 ELITE REPORT SYSTEM 🚨</h1>
+<h2>CHASTE DRAGON</h2>
+
+<div class="container">
+
+  <input type="text" id="nama" placeholder="Nama Pelapor (boleh anonim)">
+
+  <select id="kategori">
+    <option value="Penipuan Identitas">Penipuan / Identitas Palsu</option>
+    <option value="Video Call 18+">Video Call Berbau 18+</option>
+    <option value="Pelanggaran Etika">Pelanggaran Etika</option>
+    <option value="Ancaman Darurat">Ancaman / Darurat</option>
+  </select>
+
+  <textarea id="deskripsi" placeholder="Jelaskan laporan secara detail..."></textarea>
+
+  <input type="file" id="bukti">
+
+  <button class="btn-normal" onclick="kirimLaporan(false)">
+    Kirim Laporan Normal
+  </button>
+
+  <button class="btn-urgent" onclick="kirimLaporan(true)">
+    🚨 URGENT REPORT 🚨
+  </button>
+
+</div>
+
+<div class="history">
+  <h3 style="color:gold;">Riwayat Laporan</h3>
+  <div id="historyList"></div>
+</div>
+
+<div class="footer">
+OFFICIAL ELITE SECURITY SYSTEM 2026<br>
+© CHASTE DRAGON
+</div>
+
+<script>
+
+const ADMIN_NUMBER = "6285363155850"; // GANTI NOMOR ADMIN
+let reports = JSON.parse(localStorage.getItem("cdReports")) || [];
+
+function kirimLaporan(isUrgent){
+
+  const nama = document.getElementById("nama").value || "Anonim";
+  const kategori = document.getElementById("kategori").value;
+  const deskripsi = document.getElementById("deskripsi").value;
+  const buktiFile = document.getElementById("bukti").files[0];
+
+  if(deskripsi.trim() === ""){
+    alert("Deskripsi wajib diisi!");
+    return;
+  }
+
+  const waktu = new Date().toLocaleString();
+  const buktiNama = buktiFile ? buktiFile.name : "Tidak ada";
+
+  const laporan = {
+    nama,
+    kategori,
+    deskripsi,
+    waktu,
+    bukti: buktiNama,
+    urgent: isUrgent
+  };
+
+  reports.push(laporan);
+  localStorage.setItem("cdReports", JSON.stringify(reports));
+  tampilkanRiwayat();
+
+  if(isUrgent){
+    playAlarm();
+  }
+
+  const pesan = `
+${isUrgent ? "🚨🚨 URGENT REPORT 🚨🚨" : "📢 LAPORAN RESMI"}
+
+👤 Nama: ${nama}
+📂 Kategori: ${kategori}
+⏰ Waktu: ${waktu}
+📎 Bukti: ${buktiNama}
+
+📝 Deskripsi:
+${deskripsi}
+`;
+
+  window.open(`https://wa.me/${ADMIN_NUMBER}?text=${encodeURIComponent(pesan)}`, "_blank");
+}
+
+function tampilkanRiwayat(){
+  const container = document.getElementById("historyList");
+  container.innerHTML = "";
+
+  reports.slice().reverse().forEach(r=>{
+    const div = document.createElement("div");
+    div.className = "report-item";
+    div.innerHTML = `
+      <strong>${r.urgent ? "🚨 URGENT" : "Normal"}</strong><br>
+      Nama: ${r.nama}<br>
+      Kategori: ${r.kategori}<br>
+      Waktu: ${r.waktu}<br>
+      Bukti: ${r.bukti}
+    `;
+    container.appendChild(div);
+  });
+}
+
+function playAlarm(){
+  const audio = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
+  audio.play();
+}
+
+tampilkanRiwayat();
+
+</script>
+
+</body>
+</html>
