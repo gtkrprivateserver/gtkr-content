@@ -1,248 +1,81 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHASTE DRAGON</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth;}
-
-body{
-  font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,#3b1f00,#000);
-  color:#fff;
-  overflow-x:hidden;
-}
-
+body{font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#3b1f00,#000);color:#fff;overflow-x:hidden;}
 h1,h2,h3{font-family:'Cinzel',serif;}
 
-/* ===== SIDEBAR ===== */
-.sidebar{
-  position:fixed;
-  left:0;
-  top:0;
-  height:100vh;
-  width:260px;
-  background:linear-gradient(180deg,#2b1500,#000);
-  border-right:1px solid rgba(255,180,60,.2);
-  padding:25px 20px;
-  z-index:1000;
-  transition:.4s;
-  overflow-y:auto;
-}
+/* LOADING */
+#loader{position:fixed;width:100%;height:100vh;background:radial-gradient(circle at center,#3b1f00,#000);display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:9999;transition:.6s;}
+.loader-content{text-align:center;}
+.dragon-loader{font-size:60px;animation:spin 3s linear infinite;}
+@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+.loading-bar{width:250px;height:8px;background:#1a0d00;border-radius:20px;overflow:hidden;margin:15px auto;}
+.loading-progress{width:0;height:100%;background:linear-gradient(90deg,gold,orange);animation:loadProgress 2.5s forwards;}
+@keyframes loadProgress{to{width:100%;}}
+#loader.hide{opacity:0;visibility:hidden;}
 
-.logo{
-  font-size:22px;
-  font-weight:900;
-  color:gold;
-  text-align:center;
-  margin-bottom:30px;
-  letter-spacing:2px;
-}
-
-/* ===== DROPDOWN MENU ===== */
+/* SIDEBAR */
+.sidebar{position:fixed;left:0;top:0;height:100vh;width:260px;background:linear-gradient(180deg,#2b1500,#000);padding:25px 20px;overflow-y:auto;transition:.4s;border-right:1px solid rgba(255,180,60,.2);}
+.logo{font-size:22px;font-weight:900;color:gold;text-align:center;margin-bottom:30px;}
 .menu-category{margin-bottom:10px;}
-
-.menu-btn{
-  width:100%;
-  background:none;
-  border:none;
-  color:#ffd27a;
-  padding:12px 14px;
-  text-align:left;
-  font-weight:600;
-  border-radius:10px;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  transition:.3s;
-}
-
-.menu-btn:hover{
-  background:linear-gradient(90deg,gold,orange);
-  color:#000;
-}
-
+.menu-btn{width:100%;background:none;border:none;color:#ffd27a;padding:12px;text-align:left;font-weight:600;border-radius:10px;cursor:pointer;display:flex;justify-content:space-between;}
+.menu-btn:hover{background:linear-gradient(90deg,gold,orange);color:#000;}
 .arrow{transition:.3s;}
+.menu-category.active .arrow{transform:rotate(90deg);}
+.submenu{max-height:0;overflow:hidden;transition:.4s;padding-left:10px;}
+.submenu a{display:block;padding:8px 12px;margin-bottom:6px;font-size:14px;color:#ffd27a;text-decoration:none;border-radius:8px;transition:.3s;}
+.submenu a:hover{background:linear-gradient(90deg,gold,orange);color:#000;transform:translateX(5px);}
+.menu-category.active .submenu{max-height:500px;}
+.toggle-btn{display:none;position:fixed;top:15px;left:15px;background:gold;color:#000;padding:8px 12px;border-radius:8px;cursor:pointer;z-index:1100;}
 
-.menu-category.active .arrow{
-  transform:rotate(90deg);
-}
+/* MAIN */
+.main{margin-left:260px;padding:30px;}
+.hero{background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200&auto=format&fit=crop');background-size:cover;border-radius:20px;padding:100px 25px;text-align:center;margin-bottom:40px;border:1px solid rgba(255,200,100,.3);}
+.hero h1{font-size:52px;color:gold;text-shadow:0 0 20px orange;}
+.hero p{margin-top:15px;color:#ffd27a;}
 
-.submenu{
-  max-height:0;
-  overflow:hidden;
-  transition:max-height .4s ease;
-  padding-left:10px;
-}
+.section{margin-bottom:45px;padding:30px;border-radius:18px;background:linear-gradient(145deg,#140900,#000);border:1px solid rgba(255,180,80,.25);}
+.section h2{color:gold;margin-bottom:15px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.card{background:#1a0d00;padding:20px;border-radius:15px;text-align:center;transition:.3s;}
+.card:hover{transform:translateY(-8px);}
 
-.submenu a{
-  display:block;
-  padding:8px 12px;
-  margin-bottom:6px;
-  font-size:14px;
-  color:#ffd27a;
-  text-decoration:none;
-  border-radius:8px;
-  transition:.3s;
-}
+/* JOIN */
+.join-box{text-align:center;margin-top:20px;}
+.join-box input{padding:12px;border-radius:10px;border:none;margin-bottom:10px;width:100%;}
+#nama{background:#1a0d00;color:#fff;}
+#umur{background:#140900;color:#ffd27a;}
+#kota{background:#1a0d00;color:#fff;}
+#status{background:#140900;color:#ffd27a;}
+#role{background:#1a0d00;color:#fff;}
+#walla{background:#140900;color:#ffd27a;}
+.wa-btn{padding:15px 25px;border-radius:50px;background:linear-gradient(90deg,gold,orange);color:#000;font-weight:700;border:none;cursor:pointer;transition:.3s;}
+.wa-btn:hover{transform:scale(1.05);}
 
-.submenu a:hover{
-  background:linear-gradient(90deg,gold,orange);
-  color:#000;
-  transform:translateX(5px);
-}
+/* FOOTER */
+footer{text-align:center;margin-top:50px;opacity:.7;}
 
-.menu-category.active .submenu{
-  max-height:500px;
-}
-
-/* Toggle Button */
-.toggle-btn{
-  display:none;
-  position:fixed;
-  top:15px;
-  left:15px;
-  background:gold;
-  color:#000;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
-  z-index:1100;
-  font-weight:bold;
-}
-
-/* ===== MAIN ===== */
-.main{
-  margin-left:260px;
-  padding:30px 25px 60px;
-}
-
-/* ===== HERO ===== */
-.hero{
-  background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),
-  url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200&auto=format&fit=crop');
-  background-size:cover;
-  background-position:center;
-  border-radius:20px;
-  padding:100px 25px;
-  text-align:center;
-  margin-bottom:40px;
-  border:1px solid rgba(255,200,100,.3);
-  box-shadow:0 0 60px rgba(255,150,0,.2);
-  animation:glow 3s infinite alternate;
-}
-
-@keyframes glow{
-  from{box-shadow:0 0 40px rgba(255,140,0,.2);}
-  to{box-shadow:0 0 70px rgba(255,200,0,.4);}
-}
-
-.hero h1{
-  font-size:52px;
-  color:gold;
-  text-shadow:0 0 20px orange;
-  letter-spacing:3px;
-}
-
-.hero p{
-  opacity:.9;
-  margin-top:15px;
-  color:#ffd27a;
-  font-size:18px;
-}
-
-/* ===== SECTION ===== */
-.section{
-  margin-bottom:45px;
-  padding:30px;
-  border-radius:18px;
-  background:linear-gradient(145deg,#140900,#000);
-  border:1px solid rgba(255,180,80,.25);
-  box-shadow:0 0 25px rgba(255,140,0,.1);
-  animation:fadeIn 1s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
-}
-
-.section h2{
-  color:gold;
-  margin-bottom:15px;
-  font-size:28px;
-}
-
-/* ===== CARDS ===== */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:linear-gradient(180deg,#1a0d00,#000);
-  border-radius:15px;
-  padding:20px;
-  border:1px solid rgba(255,200,100,.15);
-  transition:.3s;
-  text-align:center;
-  font-weight:500;
-}
-
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 25px rgba(255,170,0,.3);
-}
-
-/* ===== JOIN ===== */
-.join-box{text-align:center;margin-top:25px;}
-
-.wa-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  padding:16px 24px;
-  border-radius:50px;
-  background:linear-gradient(90deg,gold,orange);
-  color:#000;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 0 30px rgba(255,170,0,.4);
-  transition:.3s;
-}
-
-.wa-btn:hover{transform:scale(1.08);}
-
-.dragon-icon{
-  width:24px;
-  height:24px;
-  background:url('https://cdn-icons-png.flaticon.com/512/616/616554.png') no-repeat center/contain;
-}
-
-footer{
-  text-align:center;
-  margin-top:50px;
-  opacity:.7;
-  font-size:14px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:900px){
-  .sidebar{transform:translateX(-100%);}
-  .sidebar.active{transform:translateX(0);}
-  .main{margin-left:0;}
-  .toggle-btn{display:block;}
-}
+/* RESPONSIVE */
+@media(max-width:900px){.sidebar{transform:translateX(-100%);}.sidebar.active{transform:translateX(0);}.main{margin-left:0;}.toggle-btn{display:block;}}
 </style>
 </head>
-
 <body>
+
+<!-- LOADING -->
+<div id="loader">
+  <div class="loader-content">
+    <div class="dragon-loader">🐉</div>
+    <h1 style="color:gold;">CHASTE DRAGON</h1>
+    <div class="loading-bar"><div class="loading-progress"></div></div>
+    <p>Entering Golden Era...</p>
+  </div>
+</div>
 
 <div class="toggle-btn" onclick="toggleMenu()">☰</div>
 
@@ -250,81 +83,123 @@ footer{
 <div class="logo">🐉 CHASTE DRAGON</div>
 
 <div class="menu">
-
-<div class="menu-category">
-<button class="menu-btn" onclick="toggleDropdown(this)">
-MAIN <span class="arrow">▸</span>
-</button>
-<div class="submenu">
-<a href="/profile/profile.html">Profile</a>
-<a href="/events/event.html">Events</a>
-<a href="/kalender/kalender.html">Kalender</a>
-</div>
-</div>
-
-<div class="menu-category">
-<button class="menu-btn" onclick="toggleDropdown(this)">
-ORGANISASI <span class="arrow">▸</span>
-</button>
-<div class="submenu">
-<a href="/team/pendaftaran.html">Team Recruitment</a>
-<a href="/aturan/rules.html">Rules</a>
-<a href="/undang-undang/cds.html">Undang-Undang</a>
-<a href="/peringatan/teguran.html">Peringatan & Teguran</a>
-<a href="/blacklist/member.html">Blacklist Member</a>
-</div>
-</div>
-
-<div class="menu-category">
-<button class="menu-btn" onclick="toggleDropdown(this)">
-SISTEM <span class="arrow">▸</span>
-</button>
-<div class="submenu">
-<a href="/report/laporan.html">Report</a>
-<a href="/reward/reward-prize.html">Reward Prize</a>
-</div>
-</div>
-
-<div class="menu-category">
-<button class="menu-btn" onclick="toggleDropdown(this)">
-OFFICIAL <span class="arrow">▸</span>
-</button>
-<div class="submenu">
-<a href="/shop/shop.html">Shop Official</a>
-<a href="/donate/donate.html">Open Donate</a>
-</div>
-</div>
-
+  <div class="menu-category">
+    <button class="menu-btn" onclick="toggleDropdown(this)">MAIN <span class="arrow">▸</span></button>
+    <div class="submenu">
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#rules">Rules</a>
+      <a href="#join">Join</a>
+    </div>
+  </div>
+  <div class="menu-category">
+    <button class="menu-btn" onclick="toggleDropdown(this)">ORGANISASI <span class="arrow">▸</span></button>
+    <div class="submenu">
+      <a href="/team/pendaftaran.html">Team Recruitment</a>
+      <a href="/aturan/rules.html">Rules</a>
+      <a href="/undang-undang/cds.html">Undang-Undang</a>
+      <a href="/peringatan/teguran.html">Peringatan & Teguran</a>
+      <a href="/blacklist/member.html">Blacklist Member</a>
+    </div>
+  </div>
+  <div class="menu-category">
+    <button class="menu-btn" onclick="toggleDropdown(this)">SISTEM <span class="arrow">▸</span></button>
+    <div class="submenu">
+      <a href="/report/laporan.html">Report</a>
+      <a href="/reward/reward-prize.html">Reward Prize</a>
+    </div>
+  </div>
+  <div class="menu-category">
+    <button class="menu-btn" onclick="toggleDropdown(this)">OFFICIAL <span class="arrow">▸</span></button>
+    <div class="submenu">
+      <a href="/shop/shop.html">Shop Official</a>
+      <a href="/donate/donate.html">Open Donate</a>
+    </div>
+  </div>
 </div>
 </aside>
 
 <main class="main">
-
 <section class="hero">
 <h1>CHASTE DRAGON</h1>
 <p>Golden Power • Loyalty • Elite Brotherhood</p>
 </section>
 
-<footer>
-© 2026 CHASTE DRAGON — All Rights Reserved
-</footer>
+<section id="about" class="section">
+<h2>About</h2>
+<p>Komunitas elite dengan simbol naga sebagai kekuatan dan kejayaan.</p>
+</section>
 
+<section id="events" class="section">
+<h2>Events</h2>
+<div class="cards">
+<div class="card">🔥 Golden Gathering</div>
+<div class="card">🐉 Dragon Ceremony</div>
+<div class="card">🏆 Squad War</div>
+</div>
+</section>
+
+<section id="rules" class="section">
+<h2>Rules</h2>
+<ul>
+<li>• Hormati semua member</li>
+<li>• No toxic & drama</li>
+<li>• Loyal & aktif</li>
+<li>• Wajib ikut semua event</li>
+<li>• Jangan bawa konflik luar</li>
+</ul>
+</section>
+
+<section id="join" class="section">
+<h2>Join CHASTE DRAGON</h2>
+<p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>
+<div class="cards" style="max-width:500px;margin:auto;">
+<input id="nama" placeholder="Nama" required>
+<input id="umur" placeholder="Umur" required>
+<input id="kota" placeholder="Asal Kota" required>
+<input id="status" placeholder="Status (Single/Taken)" required>
+<input id="role" placeholder="Role (Top/Bottom/Vers)" required>
+<input id="walla" placeholder="Link Account Walla (https://...)" required>
+</div>
+<div class="join-box">
+<button class="wa-btn" onclick="kirimWA()">Kirim Pendaftaran</button>
+</div>
+</section>
+
+<section id="credit" class="section">
+<h2>Credit</h2>
+<p>CHASTE Squad Creative Division<br>Golden Dragon Inspired Design 2026</p>
+</section>
+
+<footer>© 2026 CHASTE DRAGON — All Rights Reserved</footer>
 </main>
 
 <script>
-function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("active");
+function toggleMenu(){document.getElementById("sidebar").classList.toggle("active");}
+function toggleDropdown(button){
+const all=document.querySelectorAll(".menu-category");
+all.forEach(m=>{if(m!==button.parentElement){m.classList.remove("active");}});
+button.parentElement.classList.toggle("active");
 }
 
-function toggleDropdown(button){
-  const allMenus=document.querySelectorAll(".menu-category");
-  allMenus.forEach(menu=>{
-    if(menu!==button.parentElement){
-      menu.classList.remove("active");
-    }
-  });
-  button.parentElement.classList.toggle("active");
+function kirimWA(){
+const nama=document.getElementById('nama').value.trim();
+const umur=document.getElementById('umur').value.trim();
+const kota=document.getElementById('kota').value.trim();
+const status=document.getElementById('status').value.trim();
+const role=document.getElementById('role').value.trim();
+const walla=document.getElementById('walla').value.trim();
+
+if(!nama||!umur||!kota||!status||!role||!walla){alert("Semua data wajib diisi!");return;}
+if(isNaN(umur)||parseInt(umur)<=0){alert("Umur harus angka valid!");return;}
+if(!/^https?:\/\/.+/.test(walla)){alert("Link Walla harus valid (https://...)");return;}
+
+const text=`Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0ANama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${kota}%0AStatus: ${status}%0ARole: ${role}%0AAccount Walla: ${walla}`;
+window.open(`https://wa.me/6288269017561?text=${text}`,'_blank');
 }
+
+// LOADING SCREEN
+window.addEventListener("load",()=>{setTimeout(()=>{document.getElementById("loader").classList.add("hide");},2500);});
 </script>
 
 </body>
