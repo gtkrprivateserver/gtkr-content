@@ -11,7 +11,7 @@
 body{font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#3b1f00,#000);color:#fff;overflow-x:hidden;}
 h1,h2,h3{font-family:'Cinzel',serif;}
 
-/* LOADING */
+/* LOADING SCREEN */
 #loader{position:fixed;width:100%;height:100vh;background:radial-gradient(circle at center,#3b1f00,#000);display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:9999;transition:.6s;}
 .loader-content{text-align:center;}
 .dragon-loader{font-size:60px;animation:spin 3s linear infinite;}
@@ -22,22 +22,42 @@ h1,h2,h3{font-family:'Cinzel',serif;}
 #loader.hide{opacity:0;visibility:hidden;}
 
 /* SIDEBAR */
-.sidebar{position:fixed;left:0;top:0;height:100vh;width:260px;background:linear-gradient(180deg,#2b1500,#000);padding:25px 20px;overflow-y:auto;transition:.4s;border-right:1px solid rgba(255,180,60,.2);}
+.sidebar{
+  position:fixed;left:0;top:0;height:100vh;width:260px;
+  background:linear-gradient(180deg,#2b1500,#000);
+  border-right:1px solid rgba(255,180,60,.2);
+  padding:25px 20px;overflow-y:auto;transition:.4s;z-index:1000;
+}
 .logo{font-size:22px;font-weight:900;color:gold;text-align:center;margin-bottom:30px;}
-.menu-category{margin-bottom:10px;}
+
+.menu-category{position:relative;margin-bottom:10px;}
 .menu-btn{width:100%;background:none;border:none;color:#ffd27a;padding:12px;text-align:left;font-weight:600;border-radius:10px;cursor:pointer;display:flex;justify-content:space-between;}
 .menu-btn:hover{background:linear-gradient(90deg,gold,orange);color:#000;}
 .arrow{transition:.3s;}
 .menu-category.active .arrow{transform:rotate(90deg);}
-.submenu{max-height:0;overflow:hidden;transition:.4s;padding-left:10px;}
+
+.submenu{
+  max-height:0;
+  overflow:hidden;
+  transition:.4s;
+  padding-left:10px;
+  z-index:2000;
+  position:relative; /* pastikan muncul di atas hero */
+}
 .submenu a{display:block;padding:8px 12px;margin-bottom:6px;font-size:14px;color:#ffd27a;text-decoration:none;border-radius:8px;transition:.3s;}
 .submenu a:hover{background:linear-gradient(90deg,gold,orange);color:#000;transform:translateX(5px);}
-.menu-category.active .submenu{max-height:500px;}
+
+/* TOGGLE */
 .toggle-btn{display:none;position:fixed;top:15px;left:15px;background:gold;color:#000;padding:8px 12px;border-radius:8px;cursor:pointer;z-index:1100;}
 
 /* MAIN */
 .main{margin-left:260px;padding:30px;}
-.hero{background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200&auto=format&fit=crop');background-size:cover;border-radius:20px;padding:100px 25px;text-align:center;margin-bottom:40px;border:1px solid rgba(255,200,100,.3);box-shadow:0 0 60px rgba(255,150,0,.2);}
+.hero{
+  background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),url('https://images.unsplash.com/photo-1608889175123-8ee36263e44a?q=80&w=1200&auto=format&fit=crop');
+  background-size:cover;border-radius:20px;padding:100px 25px;text-align:center;margin-bottom:40px;border:1px solid rgba(255,200,100,.3);
+  box-shadow:0 0 60px rgba(255,150,0,.2);
+  position:relative; z-index:1; /* agar dropdown muncul di atas */
+}
 .hero h1{font-size:50px;color:gold;text-shadow:0 0 20px orange;}
 .hero p{opacity:.9;margin-top:15px;color:#ffd27a;font-size:18px;}
 
@@ -52,13 +72,15 @@ h1,h2,h3{font-family:'Cinzel',serif;}
 
 footer{text-align:center;margin-top:50px;opacity:.7;font-size:14px;}
 
-@media(max-width:900px){.sidebar{transform:translateX(-100%);}.sidebar.active{transform:translateX(0);}.main{margin-left:0;}.toggle-btn{display:block;}}
+@media(max-width:900px){.sidebar{transform:translateX(-100%);}
+.sidebar.active{transform:translateX(0);}
+.main{margin-left:0;}
+.toggle-btn{display:block;}}
 </style>
 </head>
-
 <body>
 
-<!-- LOADING -->
+<!-- LOADING SCREEN -->
 <div id="loader">
   <div class="loader-content">
     <div class="dragon-loader">🐉</div>
