@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Pendaftaran Ulang CHASTE DRAGON - Hubungi Admin</title>
-
   <style>
     body{
       background:black;
@@ -20,7 +19,6 @@
     }
 
     .container{
-      position:relative;
       max-width:950px;
       margin:auto;
       background:#111;
@@ -46,35 +44,32 @@
       text-align:center;
     }
 
-    .admins a{
+    .admins button{
       display:inline-block;
       padding:12px 25px;
-      background:linear-gradient(90deg,gold,orange);
-      color:#000;
       font-weight:bold;
       border-radius:50px;
-      text-decoration:none;
+      cursor:pointer;
+      border:none;
       transition:.3s;
     }
 
-    .admins a:hover{
+    .admins .aktif{
+      background:linear-gradient(90deg,gold,orange);
+      color:#000;
+    }
+
+    .admins .aktif:hover{
       transform:scale(1.05);
     }
 
-    .stamp{
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform:translate(-50%, -50%) rotate(-18deg);
-      font-size:65px;
-      color:rgba(255,0,0,0.08);
-      border:8px solid rgba(255,0,0,0.15);
-      padding:35px 70px;
-      font-weight:bold;
-      letter-spacing:6px;
-      text-align:center;
-      pointer-events:none;
-      text-transform:uppercase;
+    .admins .tidak-aktif{
+      background:gray;
+      color:#fff;
+    }
+
+    .admins .tidak-aktif:hover{
+      transform:scale(1.05);
     }
 
     .footer{
@@ -101,21 +96,20 @@
 
 <div class="container">
 
-  <!-- Watermark -->
-  <div class="stamp">
-    CHASTE<br>
-    SQUAD
-  </div>
-
   <div class="notice">
     Mau daftar ulang menjadi member CHASTE DRAGON Squad?<br>
-    Silahkan hubungi salah satu dari 3 admin berikut:
+    Silahkan hubungi salah satu admin berikut:
   </div>
 
   <div class="admins">
-    <a href="https://wa.me/6285191295022" target="_blank">Admin Jessica (WhatsApp)</a>
-    <a href="https://wa.me/6288269017561" target="_blank">Admin Cimoy (WhatsApp)</a>
-    <a href="https://wa.me/628134301761" target="_blank">Admin Ifan | Tidak Tersedia (WhatsApp)</a>
+    <!-- Admin Aktif -->
+    <button class="aktif" onclick="window.open('https://wa.me/6285191295022','_blank')">Admin Jessica (Aktif)</button>
+
+    <!-- Admin Aktif -->
+    <button class="aktif" onclick="window.open('https://wa.me/6288269017561','_blank')">Admin Cimoy (Aktif)</button>
+
+    <!-- Admin Tidak Aktif -->
+    <button class="tidak-aktif" onclick="alert('Maaf, Admin Ifan sedang tidak aktif.')">Admin Ifan (Tidak Aktif)</button>
   </div>
 
   <div class="footer">
