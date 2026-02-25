@@ -1,0 +1,223 @@
+<!-- ========================= -->
+<!-- File: pendaftaran-walla-heesay.html -->
+<!-- ========================= -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>PENDAFTARAN CHASTE DRAGON - WALLA / HEESAY</title>
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins, sans-serif;
+  padding:40px;
+  line-height:1.6;
+}
+
+h1,h2{
+  color:gold;
+  text-align:center;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  background:#111;
+  padding:40px;
+  border-radius:15px;
+  border:2px solid gold;
+  box-shadow:0 0 30px rgba(255,215,0,0.4);
+}
+
+.description{
+  background:#000;
+  border:1px solid gold;
+  padding:20px;
+  border-radius:10px;
+  margin-bottom:20px;
+  color:gold;
+  font-weight:bold;
+  text-align:center;
+}
+
+.rules-button{
+  display:block;
+  text-align:center;
+  padding:12px;
+  background:transparent;
+  border:1px solid gold;
+  color:gold;
+  border-radius:30px;
+  text-decoration:none;
+  margin-bottom:30px;
+  transition:0.3s;
+}
+
+.rules-button:hover{
+  background:gold;
+  color:black;
+}
+
+input, select{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  margin-bottom:20px;
+  border-radius:8px;
+  border:1px solid gold;
+  background:black;
+  color:white;
+}
+
+label{
+  font-weight:bold;
+  color:gold;
+}
+
+.checkbox-area{
+  margin:20px 0;
+  background:#000;
+  padding:15px;
+  border-radius:10px;
+  border:1px solid gold;
+}
+
+.checkbox-area input{
+  width:auto;
+  margin-right:10px;
+}
+
+.button-wa{
+  display:inline-block;
+  padding:14px 30px;
+  background:linear-gradient(90deg,gold,orange);
+  color:black;
+  font-weight:bold;
+  border-radius:40px;
+  border:none;
+  cursor:pointer;
+  transition:0.3s;
+  width:100%;
+}
+
+.button-wa:hover{
+  transform:scale(1.05);
+}
+
+.footer{
+  margin-top:40px;
+  text-align:center;
+  color:gold;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>PENDAFTARAN OFFICIAL</h1>
+<h2>CHASTE DRAGON SQUAD</h2>
+<h2>WALLA / HEESAY DIVISION</h2>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<div class="description">
+MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN CHASTE DRAGON SEBELUM MENDAFTAR.
+Dengan mendaftar berarti Anda siap mengikuti seluruh aturan dan disiplin squad.
+</div>
+
+<a href="aturan.html" class="rules-button">
+📜 BACA PERATURAN CHASTE DRAGON
+</a>
+
+<form id="formWalla">
+
+<label>Full Name – Nama Lengkap</label>
+<input type="text" id="nama" required>
+
+<label>Age – Umur</label>
+<input type="number" id="umur" required>
+
+<label>From – Asal Kota</label>
+<input type="text" id="asal" required>
+
+<label>Status (Single / Taken)</label>
+<select id="status" required>
+  <option value="">-- Pilih Status --</option>
+  <option>Single</option>
+  <option>Taken</option>
+</select>
+
+<label>Role (Host / Co-Host / Member)</label>
+<select id="role" required>
+  <option value="">-- Pilih Role --</option>
+  <option>Host</option>
+  <option>Co-Host</option>
+  <option>Member</option>
+</select>
+
+<label>Link Account Walla / Heesay</label>
+<input type="text" id="link" required>
+
+<div class="checkbox-area">
+  <input type="checkbox" id="setuju">
+  <label for="setuju">
+  Saya menyatakan sudah membaca dan menyetujui seluruh peraturan CHASTE DRAGON.
+  </label>
+</div>
+
+<button type="submit" class="button-wa">
+KIRIM PENDAFTARAN VIA WHATSAPP
+</button>
+
+</form>
+
+<div class="footer">
+OFFICIAL WALLA / HEESAY DIVISION 2026<br>
+© CHASTE DRAGON
+</div>
+
+</div>
+
+<script>
+document.getElementById("formWalla").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  if(!document.getElementById("setuju").checked){
+    alert("Anda harus menyetujui peraturan terlebih dahulu!");
+    return;
+  }
+
+  let nama = document.getElementById("nama").value;
+  let umur = document.getElementById("umur").value;
+  let asal = document.getElementById("asal").value;
+  let status = document.getElementById("status").value;
+  let role = document.getElementById("role").value;
+  let link = document.getElementById("link").value;
+
+  let pesan = `Halo Admin CHASTE DRAGON, saya ingin mendaftar WALLA / HEESAY DIVISION.
+
+Saya menyatakan sudah membaca dan menyetujui seluruh peraturan CHASTE DRAGON.
+
+Full Name - Nama Lengkap: ${nama}
+Age - Umur: ${umur}
+From - Asal Kota: ${asal}
+Status: ${status}
+Role: ${role}
+Link Account: ${link}`;
+
+  let url = "https://wa.me/6288269017561?text=" + encodeURIComponent(pesan);
+
+  window.open(url, "_blank");
+});
+</script>
+
+<br><br>
+<a href="member.html" style="color:gold;">⬅ Kembali</a>
+
+</body>
+</html>
