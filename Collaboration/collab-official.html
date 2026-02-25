@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Official Collaboration - CHASTE DRAGON</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins, sans-serif;
+  background:black;
+  color:white;
+}
+
+/* ================= HEADER ================= */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 25px;
+  background:#000;
+  border-bottom:2px solid gold;
+  position:fixed;
+  width:100%;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  color:gold;
+  font-weight:bold;
+  font-size:20px;
+}
+
+.toggle-btn{
+  font-size:22px;
+  cursor:pointer;
+  color:gold;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-250px;
+  width:250px;
+  height:100%;
+  background:#111;
+  padding-top:80px;
+  transition:0.3s;
+  border-right:2px solid gold;
+  z-index:999;
+}
+
+.sidebar a{
+  display:block;
+  padding:15px 25px;
+  color:white;
+  text-decoration:none;
+  border-bottom:1px solid #222;
+}
+
+.sidebar a:hover{
+  background:gold;
+  color:black;
+}
+
+.sidebar.active{
+  left:0;
+}
+
+/* ================= CONTENT ================= */
+.content{
+  margin-top:100px;
+  padding:30px;
+  text-align:center;
+}
+
+.title{
+  color:gold;
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+.description{
+  max-width:700px;
+  margin:auto;
+  line-height:1.6;
+  margin-bottom:40px;
+}
+
+/* ================= PARTNER SECTION ================= */
+.partner-section{
+  margin-top:30px;
+  padding:30px;
+  border:2px solid gold;
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(255,215,0,0.4);
+}
+
+.partner-title{
+  color:gold;
+  font-size:22px;
+  margin-bottom:25px;
+}
+
+.partner-container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+}
+
+.partner-card{
+  background:#111;
+  border:1px solid gold;
+  border-radius:15px;
+  padding:20px;
+  width:220px;
+  transition:0.3s;
+}
+
+.partner-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px gold;
+}
+
+.partner-card img{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  border:2px solid gold;
+}
+
+.partner-name{
+  margin-top:15px;
+  font-weight:bold;
+  color:gold;
+}
+
+.badge{
+  margin-top:10px;
+  display:inline-block;
+  background:gold;
+  color:black;
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+  margin-top:60px;
+  padding:20px;
+  border-top:2px solid gold;
+  text-align:center;
+  color:gray;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">🐉 CHASTE DRAGON</div>
+  <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <a href="#">Home</a>
+  <a href="#">Pendaftaran</a>
+  <a href="#">Peraturan</a>
+  <a href="#">Kolaborasi</a>
+  <a href="#">Contact</a>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="title">🤝 KOLABORASI RESMI</div>
+
+  <div class="description">
+    CHASTE DRAGON membuka kolaborasi resmi dengan squad, komunitas, brand,
+    maupun organisasi game lainnya.  
+    Kolaborasi ini bertujuan untuk memperluas jaringan,
+    meningkatkan kualitas event, serta membangun relasi yang profesional
+    dan terpercaya.
+  </div>
+
+  <!-- PARTNER SECTION -->
+  <div class="partner-section">
+
+    <div class="partner-title">🏆 OFFICIAL PARTNER</div>
+
+    <div class="partner-container">
+
+      <div class="partner-card">
+        <img src="https://via.placeholder.com/100">
+        <div class="partner-name">Nama Squad 1</div>
+        <div class="badge">OFFICIAL PARTNER</div>
+      </div>
+
+      <div class="partner-card">
+        <img src="https://via.placeholder.com/100">
+        <div class="partner-name">Nama Brand 2</div>
+        <div class="badge">OFFICIAL PARTNER</div>
+      </div>
+
+      <div class="partner-card">
+        <img src="https://via.placeholder.com/100">
+        <div class="partner-name">Nama Community 3</div>
+        <div class="badge">OFFICIAL PARTNER</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+© 2026 CHASTE DRAGON Squad - Official Website
+</div>
+
+<script>
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
