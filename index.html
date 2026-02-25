@@ -153,52 +153,76 @@ footer{text-align:center;margin-top:50px;opacity:.7;}
 </section>
 
 <section id="join" class="section">
-<h2>Join CHASTE DRAGON</h2>
-<p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>
-<div class="cards" style="max-width:500px;margin:auto;">
-<input id="nama" placeholder="Nama" required>
-<input id="umur" placeholder="Umur" required>
-<input id="kota" placeholder="Asal Kota" required>
-<input id="status" placeholder="Status (Single/Taken)" required>
-<input id="role" placeholder="Role (Top/Bottom/Vers)" required>
-<input id="walla" placeholder="Link Account Walla (https://...)" required>
-</div>
-<div class="join-box">
-<button class="wa-btn" onclick="kirimWA()">Kirim Pendaftaran</button>
-</div>
+  <h2>Join CHASTE DRAGON</h2>
+  <p>Isi data di bawah lalu kirim langsung ke WhatsApp admin.</p>
+  <div class="cards" style="max-width:500px;margin:auto;">
+    <input id="nama" placeholder="Nama" required>
+    <input id="umur" placeholder="Umur" required>
+    <input id="kota" placeholder="Asal Kota" required>
+    <input id="status" placeholder="Status (Single/Taken)" required>
+    <input id="role" placeholder="Role (Top/Bottom/Vers)" required>
+    <input id="walla" placeholder="Link Account Walla (https://...)" required>
+  </div>
+  <div class="join-box">
+    <button class="wa-btn" onclick="kirimWA()">Kirim Pendaftaran</button>
+  </div>
 </section>
 
 <section id="credit" class="section">
-<h2>Credit</h2>
-<p>CHASTE Squad Creative Division<br>Golden Dragon Inspired Design 2026</p>
+  <h2>Credit</h2>
+  <p>CHASTE Squad Creative Division<br>Golden Dragon Inspired Design 2026</p>
 </section>
 
 <footer>© 2026 CHASTE DRAGON — All Rights Reserved</footer>
-</main>
 
 <script>
-function toggleMenu(){document.getElementById("sidebar").classList.toggle("active");}
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
 function toggleDropdown(button){
-const all=document.querySelectorAll(".menu-category");
-all.forEach(m=>{if(m!==button.parentElement){m.classList.remove("active");}});
-button.parentElement.classList.toggle("active");
+  const all=document.querySelectorAll(".menu-category");
+  all.forEach(m=>{if(m!==button.parentElement){m.classList.remove("active");}});
+  button.parentElement.classList.toggle("active");
 }
 
 function kirimWA(){
-const nama=document.getElementById('nama').value.trim();
-const umur=document.getElementById('umur').value.trim();
-const kota=document.getElementById('kota').value.trim();
-const status=document.getElementById('status').value.trim();
-const role=document.getElementById('role').value.trim();
-const walla=document.getElementById('walla').value.trim();
+  const nama=document.getElementById('nama').value.trim();
+  const umur=document.getElementById('umur').value.trim();
+  const kota=document.getElementById('kota').value.trim();
+  const status=document.getElementById('status').value.trim();
+  const role=document.getElementById('role').value.trim();
+  const walla=document.getElementById('walla').value.trim();
 
-if(!nama||!umur||!kota||!status||!role||!walla){alert("Semua data wajib diisi!");return;}
-if(isNaN(umur)||parseInt(umur)<=0){alert("Umur harus angka valid!");return;}
-if(!/^https?:\/\/.+/.test(walla)){alert("Link Walla harus valid (https://...)");return;}
+  if(!nama||!umur||!kota||!status||!role||!walla){
+    alert("Semua data wajib diisi!");
+    return;
+  }
+  if(isNaN(umur)||parseInt(umur)<=0){
+    alert("Umur harus angka valid!");
+    return;
+  }
+  if(!/^https?:\/\/.+/.test(walla)){
+    alert("Link Walla harus valid (https://...)");
+    return;
+  }
 
-const text=`Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0ANama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${kota}%0AStatus: ${status}%0ARole: ${role}%0AAccount Walla: ${walla}`;
-window.open(`https://wa.me/6288269017561?text=${text}`,'_blank');
+  // Daftar 3 admin
+  const admins = [
+    "6288269017561", // Admin Cimoy
+    "6285191295022", // Admin Jessica
+    "6288291996193"  // Admin Panda
+  ];
+
+  // Pilih admin
+  const adminIndex = prompt("Pilih admin untuk daftar:\n1. Admin 1\n2. Admin 2\n3. Admin 3", "1");
+  const adminNumber = admins[(parseInt(adminIndex) || 1) - 1];
+
+  // Pesan WA
+  const text=`Halo Admin CHASTE DRAGON,%0A%0ASaya ingin daftar:%0ANama: ${nama}%0AUmur: ${umur}%0AAsal Kota: ${kota}%0AStatus: ${status}%0ARole: ${role}%0AAccount Walla: ${walla}`;
+  window.open(`https://wa.me/${adminNumber}?text=${text}`, '_blank');
 }
+</script>
 
 // LOADING SCREEN
 window.addEventListener("load",()=>{setTimeout(()=>{document.getElementById("loader").classList.add("hide");},2500);});
