@@ -130,11 +130,19 @@ MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN CHASTE DRAGON SEBELUM MENDAFTAR.
 Dengan mendaftar berarti Anda siap mengikuti seluruh aturan dan disiplin squad.
 </div>
 
-<a href="rules.html" class="rules-button">
+<a href="aturan.html" class="rules-button">
 📜 BACA PERATURAN CHASTE DRAGON
 </a>
 
 <form id="formWalla">
+
+<label>Pilih Admin</label>
+<select id="admin" required>
+  <option value="">-- Pilih Admin --</option>
+  <option value="6288269017561">Admin CIMOY</option>
+  <option value="6285191295022">Admin Jessica</option>
+  <option value="6288291996193">Admin Panda</option>
+</select>
 
 <label>Full Name – Nama Lengkap</label>
 <input type="text" id="nama" required>
@@ -152,12 +160,13 @@ Dengan mendaftar berarti Anda siap mengikuti seluruh aturan dan disiplin squad.
   <option>Taken</option>
 </select>
 
-<label>Role (Host / Co-Host / Member)</label>
+<label>Role (Top / Bottom / Versi / Straight)</label>
 <select id="role" required>
   <option value="">-- Pilih Role --</option>
-  <option>Host</option>
-  <option>Co-Host</option>
-  <option>Member</option>
+  <option>Top</option>
+  <option>Bottom</option>
+  <option>Vers</option>
+  <option>Straight</option>
 </select>
 
 <label>Link Account Walla / Heesay</label>
@@ -192,6 +201,7 @@ document.getElementById("formWalla").addEventListener("submit", function(e){
     return;
   }
 
+  let admin = document.getElementById("admin").value;
   let nama = document.getElementById("nama").value;
   let umur = document.getElementById("umur").value;
   let asal = document.getElementById("asal").value;
@@ -210,14 +220,14 @@ Status: ${status}
 Role: ${role}
 Link Account: ${link}`;
 
-  let url = "https://wa.me/6288269017561?text=" + encodeURIComponent(pesan);
+  let url = "https://wa.me/" + admin + "?text=" + encodeURIComponent(pesan);
 
   window.open(url, "_blank");
 });
 </script>
 
 <br><br>
-<a href="member.html" style="color:gold;">⬅ Kembali</a>
+<a href="https://chastedragon.vercel.app" style="color:gold;">⬅ Kembali</a>
 
 </body>
 </html>
