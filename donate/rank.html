@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Donasi CHASTE DRAGON</title>
+</head>
+
+<body style="background:black;color:white;font-family:Poppins;padding:40px;">
+
+<h1 style="color:gold;">SISTEM DONASI</h1>
+<h2 style="color:gold;">CHASTE DRAGON SQUAD</h2>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<!-- LOGIN ADMIN -->
+<div id="loginBox" style="background:#111;padding:20px;border:1px solid gold;max-width:600px;margin:auto;">
+  <h3 style="color:gold;">Login Admin</h3>
+  <input id="adminPassword" type="password" placeholder="Masukkan Password Admin"
+    style="width:100%;padding:10px;margin:10px 0;background:black;color:white;border:1px solid gold;">
+  <button onclick="loginAdmin()" 
+    style="padding:10px 20px;background:gold;color:black;border:none;font-weight:bold;cursor:pointer;">
+    Login
+  </button>
+</div>
+
+<!-- FORM INPUT (HANYA ADMIN) -->
+<div id="formBox" style="display:none;background:#111;padding:20px;border:1px solid gold;max-width:800px;margin:30px auto;">
+  <h3 style="color:gold;">Input Donasi (Admin)</h3>
+  
+  <input id="nama" placeholder="Nama"
+    style="width:100%;padding:10px;margin:5px 0;background:black;color:white;border:1px solid gold;">
+  
+  <input id="nickname" placeholder="Nickname"
+    style="width:100%;padding:10px;margin:5px 0;background:black;color:white;border:1px solid gold;">
+  
+  <input id="jumlah" type="number" placeholder="Jumlah Donasi"
+    style="width:100%;padding:10px;margin:5px 0;background:black;color:white;border:1px solid gold;">
+  
+  <button onclick="tambahDonasi()" 
+    style="margin-top:10px;padding:10px 20px;background:gold;color:black;border:none;font-weight:bold;cursor:pointer;">
+    Tambah Donasi
+  </button>
+</div>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<!-- TABEL -->
+<table style="width:100%; max-width:900px; margin:auto; border-collapse:collapse; color:white;">
+  <thead>
+    <tr style="background:gold;color:black;">
+      <th style="padding:10px;">Rank</th>
+      <th style="padding:10px;">Nama</th>
+      <th style="padding:10px;">Nickname</th>
+      <th style="padding:10px;">Jumlah (Rp)</th>
+      <th style="padding:10px;">Tanggal</th>
+    </tr>
+  </thead>
+  <tbody id="donationBody"></tbody>
+</table>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<h2 style="color:gold;text-align:center;">
+TOTAL DONASI: Rp <span id="totalDonation">0</span>
+</h2>
+
+<script>
+const ADMIN_PASSWORD = "dragon123";
+let donations = JSON.parse(localStorage.getItem("donations")) || [];
+
+// LOGIN ADMIN
+function loginAdmin() {
+  const pass = document.getElementById("adminPassword").value;
+  if (pass === ADMIN_PASSWORD) {
+    document.getElementById("formBox").style.display = "block";
+    document.getElementById("loginBox").style.display = "none";
+  } else {
+    alert("Password salah!");
+  }
+}
+
+function formatRupiah(number) {
+  return number.toLocaleString('id-ID');
+}
+
+function tambahDonasi() {
+  const nama = document.getElementById("nama").value;
+  const nickname = document.getElementById("nickname").value;
+  const jumlah = parseInt(document.getElementById("jumlah").value);
+
+  if (!nama || !nickname || !jumlah) {
+    alert("Semua field harus diisi!");
+    return;
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+
+  donations.push({
+    nama,
+    nickname,
+    jumlah,
+    tanggal: today
+  });
+
+  localStorage.setItem("donations", JSON.stringify(donations));
+
+  document.getElementById("nama").value = "";
+  document.getElementById("nickname").value = "";
+  document.getElementById("jumlah").value = "";
+
+  renderTable();
+}
+
+function renderTable() {
+  donations.sort((a,b) => b.jumlah - a.jumlah);
+
+  const tbody = document.getElementById("donationBody");
+  tbody.innerHTML = "";
+
+  let total = 0;
+
+  donations.forEach((donasi,index) => {
+    total += donasi.jumlah;
+
+    tbody.innerHTML += `
+      <tr style="background:#111;border-bottom:1px solid gold;">
+        <td style="padding:10px;">${index+1}</td>
+        <td style="padding:10px;">${donasi.nama}</td>
+        <td style="padding:10px;">${donasi.nickname}</td>
+        <td style="padding:10px;">${formatRupiah(donasi.jumlah)}</td>
+        <td style="padding:10px;">${donasi.tanggal}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("totalDonation").innerText = formatRupiah(total);
+}
+
+// LOAD DATA SAAT HALAMAN DIBUKA
+renderTable();
+</script>
+
+</body>
+</html>
