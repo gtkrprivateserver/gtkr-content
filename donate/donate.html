@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Open Donasi - CHASTE DRAGON</title>
+
 <style>
 body{
   background:black;
@@ -17,9 +18,8 @@ body{
   line-height:1.8;
 }
 
-h1, h2{
+h1,h2{
   color:gold;
-  margin-bottom:10px;
 }
 
 hr{
@@ -52,28 +52,27 @@ button{
 button:hover{ background:orange; }
 button:disabled{ background:gray; cursor:not-allowed; color:white; }
 
+.box{
+  display:none;
+  margin-top:15px;
+  border:2px solid gold;
+  padding:15px;
+  border-radius:10px;
+}
+
 #countdown{
   color:gold;
   font-weight:bold;
-  font-size:1rem;
-  margin-bottom:15px;
 }
 
 #statusTutup{
   color:red;
   font-weight:bold;
-  font-size:1rem;
-  margin-top:10px;
-}
-
-#qrContainer{
-  display:none;
   margin-top:10px;
 }
 
 #qrContainer img{
   width:120px;
-  height:auto;
   border:2px solid gold;
   border-radius:8px;
 }
@@ -92,11 +91,29 @@ button:disabled{ background:gray; cursor:not-allowed; color:white; }
 
 <div>
   <button id="btnWhatsApp" onclick="kirimDonasi()">KIRIM VIA WHATSAPP</button>
-  <button id="btnQR" onclick="tampilkanQR()">TAMPILKAN QR DONASI</button>
+  <button id="btnQR" onclick="toggleBox('qrContainer')">QR DONASI</button>
+  <button id="btnBank" onclick="toggleBox('bankContainer')">TRANSFER BANK</button>
+  <button id="btnEwallet" onclick="toggleBox('ewalletContainer')">TRANSFER E-WALLET</button>
 </div>
 
-<div id="qrContainer">
-  <img src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg" alt="QR Donasi CHASTE DRAGON">
+<!-- QR -->
+<div id="qrContainer" class="box">
+  <h3 style="color:gold;">QR Donasi</h3>
+  <img src="../asset/qr_ID1024361924490_18.02.26_177136344_1771363449464.jpeg">
+</div>
+
+<!-- BANK -->
+<div id="bankContainer" class="box">
+  <h3 style="color:gold;">Transfer Bank - SeaBank</h3>
+  <p>No. Rekening: <b id="rekBank">535901285188250</b></p>
+  <button onclick="copyText('rekBank')">COPY REKENING</button>
+</div>
+
+<!-- EWALLET -->
+<div id="ewalletContainer" class="box">
+  <h3 style="color:gold;">Transfer E-Wallet - SeaBank</h3>
+  <p>No. E-Wallet: <b id="rekEwallet">901285188250</b></p>
+  <button onclick="copyText('rekEwallet')">COPY E-WALLET</button>
 </div>
 
 <div id="statusTutup"></div>
@@ -104,12 +121,13 @@ button:disabled{ background:gray; cursor:not-allowed; color:white; }
 <script>
 const btnWhatsApp = document.getElementById("btnWhatsApp");
 const btnQR = document.getElementById("btnQR");
+const btnBank = document.getElementById("btnBank");
+const btnEwallet = document.getElementById("btnEwallet");
 const countdownEl = document.getElementById("countdown");
 const statusTutup = document.getElementById("statusTutup");
 
-// ===== Waktu penutupan donasi =====
-// Format: new Date(tahun, bulan-1, tanggal, jam, menit, detik)
-const tutupDonasi = new Date(2026, 2, 5, 23, 59, 59).getTime(); // 2 Maret 2026 23:59:59
+// ===== WAKTU PENUTUPAN =====
+const tutupDonasi = new Date(2026, 2, 5, 23, 59, 59).getTime();
 
 function updateCountdown(){
   const now = new Date().getTime();
@@ -119,7 +137,8 @@ function updateCountdown(){
     countdownEl.innerText = "⛔ Donasi telah ditutup";
     btnWhatsApp.disabled = true;
     btnQR.disabled = true;
-    document.getElementById("qrContainer").style.display = "none";
+    btnBank.disabled = true;
+    btnEwallet.disabled = true;
     statusTutup.innerText = "Donasi resmi telah ditutup.";
     return;
   }
@@ -129,37 +148,47 @@ function updateCountdown(){
   const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
   const seconds = Math.floor((distance % (1000*60)) / 1000);
 
-  countdownEl.innerText = `Sisa waktu donasi: ${days}H ${hours}J ${minutes}M ${seconds}D`;
+  countdownEl.innerText = 
+    `Sisa waktu donasi: ${days}H ${hours}J ${minutes}M ${seconds}D`;
 }
 
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown,1000);
 updateCountdown();
 
+// WhatsApp
 function kirimDonasi(){
   const nama = document.getElementById("nama").value.trim();
   const jumlah = document.getElementById("jumlah").value.trim();
 
   if(!nama || !jumlah){
-    alert("⚠️ Nama dan Jumlah Donasi wajib diisi!");
+    alert("⚠️ Nama dan Jumlah wajib diisi!");
     return;
   }
 
   const nomorAdmin = "6282246142678";
 
-  const url = "https://wa.me/" + nomorAdmin + "?text=" 
-    + encodeURIComponent(
+  const url = "https://wa.me/" + nomorAdmin + "?text=" +
+    encodeURIComponent(
       "💛 DONASI CHASTE DRAGON SQUAD\n\n" +
       "Nama: " + nama + "\n" +
-      "Jumlah Donasi: Rp" + jumlah + "\n\n" +
+      "Jumlah: Rp" + jumlah + "\n\n" +
       "Terima kasih atas dukunganmu!"
     );
 
   window.open(url, "_blank");
 }
 
-function tampilkanQR(){
-  const qrC = document.getElementById("qrContainer");
-  qrC.style.display = (qrC.style.display === "none") ? "block" : "none";
+// Toggle Box
+function toggleBox(id){
+  const box = document.getElementById(id);
+  box.style.display = (box.style.display === "none" || box.style.display === "") ? "block" : "none";
+}
+
+// Copy
+function copyText(id){
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text);
+  alert("✅ Berhasil disalin: " + text);
 }
 </script>
 
