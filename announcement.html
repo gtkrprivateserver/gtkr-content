@@ -35,7 +35,7 @@ Disahkan pada: <span id="tanggalOtomatis"></span>
 
 <hr style="border:1px solid gold;margin:40px 0;">
 
-<!-- FOTO + NAMA -->
+<!-- FOTO + NAMA PARA KETUA -->
 <div style="display:flex;justify-content:center;gap:120px;flex-wrap:wrap;align-items:center;">
 
   <!-- Ketua 1 -->
@@ -60,6 +60,17 @@ Disahkan pada: <span id="tanggalOtomatis"></span>
     </div>
   </div>
 
+  <!-- Ketua 3 -->
+  <div style="text-align:center;">
+    <img src="/asset/file_00000000dc2872088f95a79ac7bc068c.png" alt="Ketua 3"
+         style="width:160px;height:160px;border-radius:50%;border:4px solid gold;object-fit:cover;">
+    
+    <div style="margin-top:15px;">
+      <strong id="namaKetua3" style="color:gold;font-size:20px;"></strong><br>
+      <span style="font-size:14px;opacity:0.8;">Ketua 3</span>
+    </div>
+  </div>
+
 </div>
 
 <hr style="border:1px solid gold;margin:40px 0;">
@@ -68,10 +79,12 @@ Disahkan pada: <span id="tanggalOtomatis"></span>
 
 <script>
   const ketua1 = "洁龙_Levin";
-  const ketua2 = "洁龙_RIC";
+  const ketua2 = "洁龙_Ric";
+  const ketua3 = "洁龙_Kapol";
 
   document.getElementById("namaKetua1").innerText = ketua1;
   document.getElementById("namaKetua2").innerText = ketua2;
+  document.getElementById("namaKetua3").innerText = ketua3;
 
   const today = new Date();
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
