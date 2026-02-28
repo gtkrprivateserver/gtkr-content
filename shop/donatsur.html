@@ -16,9 +16,7 @@ body{
   padding:40px;
 }
 
-h1,h2,h3{
-  color:gold;
-}
+h1,h2,h3{color:gold;}
 
 .varian-grid{
   display:grid;
@@ -118,6 +116,9 @@ h1,h2,h3{
 
 <input type="text" id="promoInput" placeholder="Kode Promo" onkeyup="hitungTotal()">
 
+<!-- NOMOR PESANAN -->
+<input type="text" id="orderID" readonly placeholder="Nomor Pesanan">
+
 <hr style="border:1px solid gold;margin:15px 0;">
 
 <input type="text" id="subtotalBox" readonly placeholder="Subtotal">
@@ -147,9 +148,9 @@ h1,h2,h3{
 </div>
 
 <script>
-const hargaSatuan = 8000;
+const hargaSatuan = 12000;
 const phoneNumber = "628XXXXXXXXXX";
-const adminPassword = "dragon123";
+const adminPassword = "DonatSurSpecial2026";
 
 const promoList = {
   "DRAGON5":0.05,
@@ -235,6 +236,16 @@ function hitungTotal(){
   document.getElementById("totalBox").value="Total Bayar: Rp "+total.toLocaleString("id-ID");
 }
 
+function generateOrderID(){
+  const now=new Date();
+  const tanggal=
+    now.getFullYear().toString().slice(-2)+
+    String(now.getMonth()+1).padStart(2,"0")+
+    String(now.getDate()).padStart(2,"0");
+  const random=Math.floor(1000+Math.random()*9000);
+  return "DS-"+tanggal+"-"+random;
+}
+
 function pesanSekarang(){
   if(!shopOpen){
     alert("Shop sedang tutup!");
@@ -258,6 +269,9 @@ function pesanSekarang(){
     return;
   }
 
+  const orderID=generateOrderID();
+  document.getElementById("orderID").value="Order ID: "+orderID;
+
   let detail="";
   for(let rasa in cart){
     if(cart[rasa]>0){
@@ -266,11 +280,13 @@ function pesanSekarang(){
   }
 
   const pesan=`Halo Admin DonatSur 🍩%0A
+Nomor Pesanan: ${orderID}%0A
+%0ADATA PEMESAN:%0A
 Nama: ${nama}%0A
 Kota: ${kota}%0A
 Alamat: ${alamat}%0A
 Pembayaran: ${bayar}%0A
-%0APesanan:%0A${detail}
+%0APESANAN:%0A${detail}
 ${total}`;
 
   window.open(`https://wa.me/${phoneNumber}?text=${pesan}`,"_blank");
