@@ -5,9 +5,7 @@
 <title>Shop DonatSur - CHASTE DRAGON</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
   background:black;
@@ -17,6 +15,20 @@ body{
 }
 
 h1,h2,h3{color:gold;}
+
+a{
+  color:gold;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
 
 .varian-grid{
   display:grid;
@@ -48,6 +60,7 @@ h1,h2,h3{color:gold;}
   border:2px solid gold;
   padding:20px;
   margin-top:30px;
+  max-width:600px;
 }
 
 .form-box input,
@@ -78,6 +91,13 @@ h1,h2,h3{color:gold;}
 
 <body>
 
+<div class="top-bar">
+  <a href="https://chastedragon.vercel.app">⬅ Kembali ke Website Utama</a>
+  <a href="https://instagram.com/donatsur_" target="_blank">
+    📸 Instagram DonatSur
+  </a>
+</div>
+
 <h1>🍩 SHOP DONATSUR</h1>
 <h2>CHASTE DRAGON SQUAD</h2>
 
@@ -89,8 +109,6 @@ h1,h2,h3{color:gold;}
 
 <h3>Pilih Donat</h3>
 <div class="varian-grid" id="varianContainer"></div>
-
-<!-- ================= FORM PEMBELI ================= -->
 
 <div class="form-box">
 
@@ -116,7 +134,6 @@ h1,h2,h3{color:gold;}
 
 <input type="text" id="promoInput" placeholder="Kode Promo" onkeyup="hitungTotal()">
 
-<!-- NOMOR PESANAN -->
 <input type="text" id="orderID" readonly placeholder="Nomor Pesanan">
 
 <hr style="border:1px solid gold;margin:15px 0;">
@@ -130,8 +147,6 @@ h1,h2,h3{color:gold;}
 </div>
 
 </div>
-
-<!-- ================= ADMIN PANEL ================= -->
 
 <div class="admin-panel">
 <h3 style="color:red;">🔐 ADMIN PANEL</h3>
