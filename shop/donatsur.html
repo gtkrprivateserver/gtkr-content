@@ -5,6 +5,10 @@
 <title>Shop DonatSur - CHASTE DRAGON</title>
 
 <style>
+*{
+  box-sizing:border-box;
+}
+
 body{
   background:black;
   color:white;
@@ -12,7 +16,9 @@ body{
   padding:40px;
 }
 
-h1,h2,h3{color:gold;}
+h1,h2,h3{
+  color:gold;
+}
 
 .varian-grid{
   display:grid;
@@ -46,7 +52,8 @@ h1,h2,h3{color:gold;}
   margin-top:30px;
 }
 
-.form-box input, .form-box select{
+.form-box input,
+.form-box select{
   width:100%;
   padding:10px;
   margin:8px 0;
@@ -82,14 +89,6 @@ h1,h2,h3{color:gold;}
 
 <div id="shopContent">
 
-<h3>Pilih Paket</h3>
-<select id="paket" onchange="resetSemua()" style="padding:10px;">
-  <option value="3">Box Isi 3 (Diskon 5%)</option>
-  <option value="6">Box Isi 6 (Diskon 10%)</option>
-</select>
-
-<br><br>
-
 <h3>Pilih Donat</h3>
 <div class="varian-grid" id="varianContainer"></div>
 
@@ -98,6 +97,12 @@ h1,h2,h3{color:gold;}
 <div class="form-box">
 
 <h3>📦 Data Pemesan</h3>
+
+<label>Pilih Paket</label>
+<select id="paket" onchange="resetSemua()">
+  <option value="3">Box Isi 3 (Diskon 5%)</option>
+  <option value="6">Box Isi 6 (Diskon 10%)</option>
+</select>
 
 <input type="text" id="nama" placeholder="Nama Lengkap">
 <input type="text" id="kota" placeholder="Asal Kota">
@@ -147,8 +152,8 @@ const phoneNumber = "628XXXXXXXXXX";
 const adminPassword = "dragon123";
 
 const promoList = {
-"DRAGON5":0.05,
-"DONAT10":0.10
+  "DRAGON5":0.05,
+  "DONAT10":0.10
 };
 
 let cart = {};
