@@ -16,7 +16,7 @@ h1,h2,h3{color:gold;}
 
 .varian-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   gap:15px;
 }
 
@@ -24,28 +24,28 @@ h1,h2,h3{color:gold;}
   border:2px solid gold;
   padding:10px;
   text-align:center;
-  cursor:pointer;
-  transition:0.3s;
 }
 
 .varian-item img{
   width:100%;
-  height:120px;
+  height:130px;
   object-fit:cover;
 }
 
-.varian-item.selected{
-  background:gold;
-  color:black;
+.qty-box{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-top:5px;
 }
 
-.varian-item.disabled{
-  opacity:0.4;
-  pointer-events:none;
+button{
+  cursor:pointer;
 }
 </style>
-
 </head>
+
 <body>
 
 <h1>🍩 SHOP DONATSUR</h1>
@@ -54,14 +54,14 @@ h1,h2,h3{color:gold;}
 <hr style="border:1px solid gold;margin:30px 0;">
 
 <h3>Pilih Paket</h3>
-<select id="paket" onchange="generatePilihan()" style="padding:10px;">
+<select id="paket" onchange="resetSemua()" style="padding:10px;">
   <option value="3">Box Isi 3 (Diskon 5%)</option>
   <option value="6">Box Isi 6 (Diskon 10%)</option>
 </select>
 
 <br><br>
 
-<h3>Pilih Varian (Klik Gambar)</h3>
+<h3>Pilih Donat</h3>
 <div class="varian-grid" id="varianContainer"></div>
 
 <br>
@@ -73,13 +73,13 @@ h1,h2,h3{color:gold;}
 <h2>Total: <span id="totalHarga">Rp 0</span></h2>
 
 <button onclick="pesanSekarang()" 
-style="padding:15px 30px;background:gold;color:black;font-weight:bold;border:none;cursor:pointer;">
+style="padding:15px 30px;background:gold;color:black;font-weight:bold;border:none;">
 Pesan Sekarang
 </button>
 
 <script>
 const hargaSatuan = 8000;
-const phoneNumber = "628XXXXXXXXXX"; // GANTI NOMOR
+const phoneNumber = "628XXXXXXXXXX"; // GANTI NOMOR ADMIN
 
 let stokVarian = {
 "Coklat": {stok:10, image:"https://i.imgur.com/6X4KQ5b.jpg"},
@@ -98,49 +98,75 @@ const promoList = {
 "DONAT10":0.10
 };
 
-let selected = [];
+let cart = {};
 
-function generatePilihan(){
-  selected = [];
+function generateMenu(){
   const container = document.getElementById("varianContainer");
   container.innerHTML = "";
 
   for(let rasa in stokVarian){
-    const data = stokVarian[rasa];
 
-    const div = document.createElement("div");
-    div.className = "varian-item";
-    if(data.stok <= 0){
-      div.classList.add("disabled");
-    }
+    cart[rasa] = 0;
 
-    div.innerHTML = `
-      <img src="${data.image}">
+    const item = document.createElement("div");
+    item.className = "varian-item";
+
+    item.innerHTML = `
+      <img src="${stokVarian[rasa].image}">
       <p><strong>${rasa}</strong></p>
-      <p>Stok: ${data.stok}</p>
+      <p style="color:gold;">Rp ${hargaSatuan.toLocaleString("id-ID")}</p>
+      <p>Stok: ${stokVarian[rasa].stok}</p>
+      <div class="qty-box">
+        <button onclick="kurang('${rasa}')">-</button>
+        <span id="qty-${rasa}">0</span>
+        <button onclick="tambah('${rasa}')">+</button>
+      </div>
     `;
 
-    div.onclick = function(){
-      const max = parseInt(document.getElementById("paket").value);
-      if(selected.length < max){
-        selected.push(rasa);
-        div.classList.add("selected");
-        hitungTotal();
-      }else{
-        alert("Jumlah donat sudah sesuai paket!");
-      }
-    };
-
-    container.appendChild(div);
+    container.appendChild(item);
   }
 
   hitungTotal();
 }
 
+function totalItemDipilih(){
+  return Object.values(cart).reduce((a,b)=>a+b,0);
+}
+
+function tambah(rasa){
+  const paket = parseInt(document.getElementById("paket").value);
+
+  if(totalItemDipilih() >= paket){
+    alert("Jumlah donat sudah sesuai paket!");
+    return;
+  }
+
+  if(cart[rasa] >= stokVarian[rasa].stok){
+    alert("Stok tidak cukup!");
+    return;
+  }
+
+  cart[rasa]++;
+  document.getElementById("qty-"+rasa).innerText = cart[rasa];
+  hitungTotal();
+}
+
+function kurang(rasa){
+  if(cart[rasa] > 0){
+    cart[rasa]--;
+    document.getElementById("qty-"+rasa).innerText = cart[rasa];
+    hitungTotal();
+  }
+}
+
 function hitungTotal(){
   const paket = parseInt(document.getElementById("paket").value);
-  let subtotal = paket * hargaSatuan;
-  let diskon = paket===3 ? subtotal*0.05 : subtotal*0.10;
+  let subtotal = totalItemDipilih() * hargaSatuan;
+
+  let diskon = 0;
+  if(paket === 3) diskon = subtotal * 0.05;
+  if(paket === 6) diskon = subtotal * 0.10;
+
   let total = subtotal - diskon;
 
   const kode = document.getElementById("promoInput").value.toUpperCase();
@@ -155,41 +181,36 @@ function hitungTotal(){
 function pesanSekarang(){
   const paket = parseInt(document.getElementById("paket").value);
 
-  if(selected.length !== paket){
-    alert("Pilih varian sesuai jumlah paket!");
+  if(totalItemDipilih() !== paket){
+    alert("Jumlah donat harus sesuai paket!");
     return;
   }
 
-  selected.forEach(rasa=>{
-    stokVarian[rasa].stok -= 1;
-  });
-
   let detail = "";
-  selected.forEach((r,i)=>{
-    detail += `Donat ${i+1}: ${r}%0A`;
-  });
-
-  let subtotal = paket * hargaSatuan;
-  let diskon = paket===3 ? subtotal*0.05 : subtotal*0.10;
-  let total = subtotal - diskon;
-
-  const kode = document.getElementById("promoInput").value.toUpperCase();
-  if(promoList[kode]){
-    total -= total * promoList[kode];
+  for(let rasa in cart){
+    if(cart[rasa] > 0){
+      stokVarian[rasa].stok -= cart[rasa];
+      detail += `${rasa} x${cart[rasa]}%0A`;
+    }
   }
 
+  const total = document.getElementById("totalHarga").innerText;
+
   const pesan = `Halo Admin DonatSur 🍩%0A
-Box Isi ${paket}%0A
-${detail}
-Total Bayar: Rp ${total.toLocaleString("id-ID")}%0A
+Pesanan:%0A${detail}
+${total}%0A
 Terima kasih 🙏`;
 
   window.open(`https://wa.me/${phoneNumber}?text=${pesan}`,"_blank");
 
-  generatePilihan();
+  resetSemua();
 }
 
-generatePilihan();
+function resetSemua(){
+  generateMenu();
+}
+
+generateMenu();
 </script>
 
 </body>
