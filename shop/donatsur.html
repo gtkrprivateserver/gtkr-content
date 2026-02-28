@@ -14,6 +14,12 @@ body{
 
 h1,h2,h3{color:gold;}
 
+input, textarea, select{
+  padding:8px;
+  width:100%;
+  margin-bottom:10px;
+}
+
 .varian-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
@@ -59,8 +65,31 @@ h1,h2,h3{color:gold;}
 
 <div id="shopContent">
 
+<!-- ================= FORM PEMBELI ================= -->
+
+<h3>📋 Data Pembeli</h3>
+
+<input type="text" id="nama" placeholder="Nama Lengkap">
+<input type="text" id="kota" placeholder="Asal Kota">
+<textarea id="alamat" placeholder="Alamat Rumah / Lokasi"></textarea>
+
+<select id="pembayaran">
+<option value="">-- Pilih Via Pembayaran --</option>
+<option>Transfer Bank</option>
+<option>QRIS</option>
+<option>COD</option>
+<option>E-Wallet</option>
+</select>
+
+<h3 style="color:gold;">💰 Total Pembayaran</h3>
+<input type="text" id="totalForm" readonly style="font-weight:bold;color:gold;">
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<!-- ================= PAKET ================= -->
+
 <h3>Pilih Paket</h3>
-<select id="paket" onchange="resetSemua()" style="padding:10px;">
+<select id="paket" onchange="resetSemua()">
   <option value="3">Box Isi 3 (Diskon 5%)</option>
   <option value="6">Box Isi 6 (Diskon 10%)</option>
 </select>
@@ -73,10 +102,8 @@ h1,h2,h3{color:gold;}
 <br>
 
 <h3>Promo Code</h3>
-<input type="text" id="promoInput" placeholder="Kode Promo" style="padding:8px;">
+<input type="text" id="promoInput" placeholder="Kode Promo">
 <button onclick="hitungTotal()">Gunakan</button>
-
-<h2>Total: <span id="totalHarga">Rp 0</span></h2>
 
 <button onclick="pesanSekarang()" 
 style="padding:15px 30px;background:gold;color:black;font-weight:bold;border:none;">
@@ -103,7 +130,7 @@ Pesan Sekarang
 
 <script>
 const hargaSatuan = 8000;
-const phoneNumber = "628XXXXXXXXXX"; // GANTI NOMOR
+const phoneNumber = "628XXXXXXXXXX";
 const adminPassword = "dragon123";
 
 const promoList = {
@@ -115,29 +142,23 @@ let cart = {};
 let shopOpen = true;
 
 const varianList = [
-"Coklat",
-"Regal Matcha",
-"Tiramisu Biscoff",
-"Keju",
-"Custard Milk",
-"Sugar Dust",
-"Buttery Glazed",
-"Triple Choco",
-"Double Choco"
+"Coklat","Regal Matcha","Tiramisu Biscoff","Keju",
+"Custard Milk","Sugar Dust","Buttery Glazed",
+"Triple Choco","Double Choco"
 ];
 
 function generateMenu(){
   const container = document.getElementById("varianContainer");
-  container.innerHTML = "";
-  cart = {};
+  container.innerHTML="";
+  cart={};
 
   varianList.forEach(rasa=>{
-    cart[rasa] = 0;
+    cart[rasa]=0;
 
-    const item = document.createElement("div");
-    item.className = "varian-item";
+    const item=document.createElement("div");
+    item.className="varian-item";
 
-    item.innerHTML = `
+    item.innerHTML=`
       <img src="https://via.placeholder.com/150">
       <p><strong>${rasa}</strong></p>
       <p style="color:gold;">Rp ${hargaSatuan.toLocaleString("id-ID")}</p>
@@ -159,38 +180,38 @@ function totalItem(){
 }
 
 function tambah(rasa){
-  const paket = parseInt(document.getElementById("paket").value);
-  if(totalItem() >= paket){
+  const paket=parseInt(document.getElementById("paket").value);
+  if(totalItem()>=paket){
     alert("Jumlah sesuai paket!");
     return;
   }
   cart[rasa]++;
-  document.getElementById("qty-"+rasa).innerText = cart[rasa];
+  document.getElementById("qty-"+rasa).innerText=cart[rasa];
   hitungTotal();
 }
 
 function kurang(rasa){
-  if(cart[rasa] > 0){
+  if(cart[rasa]>0){
     cart[rasa]--;
-    document.getElementById("qty-"+rasa).innerText = cart[rasa];
+    document.getElementById("qty-"+rasa).innerText=cart[rasa];
     hitungTotal();
   }
 }
 
 function hitungTotal(){
-  const paket = parseInt(document.getElementById("paket").value);
-  let subtotal = totalItem() * hargaSatuan;
+  const paket=parseInt(document.getElementById("paket").value);
+  let subtotal=totalItem()*hargaSatuan;
 
-  let diskon = paket===3 ? subtotal*0.05 : subtotal*0.10;
-  let total = subtotal - diskon;
+  let diskon=paket===3?subtotal*0.05:subtotal*0.10;
+  let total=subtotal-diskon;
 
-  const kode = document.getElementById("promoInput").value.toUpperCase();
+  const kode=document.getElementById("promoInput").value.toUpperCase();
   if(promoList[kode]){
-    total -= total * promoList[kode];
+    total-=total*promoList[kode];
   }
 
-  document.getElementById("totalHarga").innerText =
-    "Rp " + total.toLocaleString("id-ID");
+  document.getElementById("totalForm").value=
+    "Rp "+total.toLocaleString("id-ID");
 }
 
 function pesanSekarang(){
@@ -199,9 +220,18 @@ function pesanSekarang(){
     return;
   }
 
-  const paket = parseInt(document.getElementById("paket").value);
+  const nama=document.getElementById("nama").value;
+  const kota=document.getElementById("kota").value;
+  const alamat=document.getElementById("alamat").value;
+  const bayar=document.getElementById("pembayaran").value;
 
-  if(totalItem() !== paket){
+  if(!nama||!kota||!alamat||!bayar){
+    alert("Lengkapi data pembeli!");
+    return;
+  }
+
+  const paket=parseInt(document.getElementById("paket").value);
+  if(totalItem()!==paket){
     alert("Jumlah harus sesuai paket!");
     return;
   }
@@ -209,27 +239,28 @@ function pesanSekarang(){
   let detail="";
   for(let rasa in cart){
     if(cart[rasa]>0){
-      detail += `${rasa} x${cart[rasa]}%0A`;
+      detail+=`${rasa} x${cart[rasa]}%0A`;
     }
   }
 
-  const total = document.getElementById("totalHarga").innerText;
+  const total=document.getElementById("totalForm").value;
 
-  const pesan = `Halo Admin DonatSur 🍩%0A
-Pesanan:%0A${detail}
-${total}`;
+  const pesan=`Halo Admin DonatSur 🍩%0A
+Nama: ${nama}%0A
+Kota: ${kota}%0A
+Alamat: ${alamat}%0A
+Pembayaran: ${bayar}%0A
+%0APesanan:%0A${detail}
+Total: ${total}`;
 
   window.open(`https://wa.me/${phoneNumber}?text=${pesan}`,"_blank");
 }
 
 function loginAdmin(){
-  const pass = document.getElementById("adminPass").value;
-  if(pass === adminPassword){
+  if(document.getElementById("adminPass").value===adminPassword){
     document.getElementById("loginArea").style.display="none";
     document.getElementById("adminControls").style.display="block";
-  }else{
-    alert("Password salah!");
-  }
+  }else alert("Password salah!");
 }
 
 function logoutAdmin(){
@@ -238,8 +269,7 @@ function logoutAdmin(){
 }
 
 function toggleShop(){
-  shopOpen = !shopOpen;
-
+  shopOpen=!shopOpen;
   if(shopOpen){
     document.getElementById("shopStatus").innerText="SHOP SEDANG BUKA";
     document.getElementById("shopStatus").style.color="lime";
