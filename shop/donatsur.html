@@ -3,105 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <title>Shop DonatSur - CHASTE DRAGON</title>
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins;
+  padding:40px;
+}
+
+h1,h2,h3{color:gold;}
+
+.varian-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:15px;
+}
+
+.varian-item{
+  border:2px solid gold;
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.varian-item img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+
+.varian-item.selected{
+  background:gold;
+  color:black;
+}
+
+.varian-item.disabled{
+  opacity:0.4;
+  pointer-events:none;
+}
+</style>
+
 </head>
+<body>
 
-<body style="background:black;color:white;font-family:Poppins;padding:40px;line-height:1.6;">
-
-<h1 style="color:gold;">🍩 SHOP DONATSUR</h1>
-<h2 style="color:gold;">CHASTE DRAGON SQUAD</h2>
+<h1>🍩 SHOP DONATSUR</h1>
+<h2>CHASTE DRAGON SQUAD</h2>
 
 <hr style="border:1px solid gold;margin:30px 0;">
 
-<h3 style="color:gold;">Pilih Paket Box</h3>
-
-<select id="paket" onchange="updateHarga()" style="padding:10px;">
+<h3>Pilih Paket</h3>
+<select id="paket" onchange="generatePilihan()" style="padding:10px;">
   <option value="3">Box Isi 3 (Diskon 5%)</option>
   <option value="6">Box Isi 6 (Diskon 10%)</option>
 </select>
 
 <br><br>
 
-<h3 style="color:gold;">Pilih Varian Rasa</h3>
-<div id="varianContainer"></div>
+<h3>Pilih Varian (Klik Gambar)</h3>
+<div class="varian-grid" id="varianContainer"></div>
 
 <br>
 
-<h3 style="color:gold;">Promo Code</h3>
-<input type="text" id="promoInput" placeholder="Masukkan kode promo"
-style="padding:8px;font-size:14px;">
-<button onclick="updateHarga()" style="padding:8px;">Gunakan</button>
+<h3>Promo Code</h3>
+<input type="text" id="promoInput" placeholder="Kode Promo" style="padding:8px;">
+<button onclick="hitungTotal()">Gunakan</button>
 
-<br><br>
-
-<h3>Total Harga:</h3>
-<h2 id="totalHarga" style="color:gold;">Rp 0</h2>
+<h2>Total: <span id="totalHarga">Rp 0</span></h2>
 
 <button onclick="pesanSekarang()" 
-style="padding:15px 30px;background:gold;color:black;font-weight:bold;border:none;cursor:pointer;font-size:16px;">
+style="padding:15px 30px;background:gold;color:black;font-weight:bold;border:none;cursor:pointer;">
 Pesan Sekarang
 </button>
 
-<hr style="border:1px solid gold;margin:40px 0;">
-
 <script>
 const hargaSatuan = 8000;
-const phoneNumber = "628XXXXXXXXXX"; // GANTI NOMOR ADMIN
+const phoneNumber = "628XXXXXXXXXX"; // GANTI NOMOR
 
-// STOK VARIAN
 let stokVarian = {
-"Coklat": 10,
-"Regal Matcha": 8,
-"Tiramisu Biscoff": 5,
-"Keju": 12,
-"Custard Milk": 6,
-"Sugar Dust": 15,
-"Buttery Glazed": 7,
-"Triple Choco": 4,
-"Double Choco": 9
+"Coklat": {stok:10, image:"https://i.imgur.com/6X4KQ5b.jpg"},
+"Regal Matcha": {stok:8, image:"https://i.imgur.com/8Km9tLL.jpg"},
+"Tiramisu Biscoff": {stok:5, image:"https://i.imgur.com/U9WbG4F.jpg"},
+"Keju": {stok:12, image:"https://i.imgur.com/W5kY6aJ.jpg"},
+"Custard Milk": {stok:6, image:"https://i.imgur.com/yP4X5gT.jpg"},
+"Sugar Dust": {stok:15, image:"https://i.imgur.com/V9kZx3H.jpg"},
+"Buttery Glazed": {stok:7, image:"https://i.imgur.com/Bn6qT4E.jpg"},
+"Triple Choco": {stok:4, image:"https://i.imgur.com/F3hY8Kq.jpg"},
+"Double Choco": {stok:9, image:"https://i.imgur.com/J7lMn2R.jpg"}
 };
 
-// PROMO CODE
 const promoList = {
-"DRAGON5": 0.05,
-"DONAT10": 0.10
+"DRAGON5":0.05,
+"DONAT10":0.10
 };
 
-function generateVarianInput(jumlah){
+let selected = [];
+
+function generatePilihan(){
+  selected = [];
   const container = document.getElementById("varianContainer");
   container.innerHTML = "";
 
-  for(let i=1;i<=jumlah;i++){
-    const select = document.createElement("select");
-    select.id = "rasa"+i;
-    select.style = "padding:8px;margin:5px;";
+  for(let rasa in stokVarian){
+    const data = stokVarian[rasa];
 
-    for(let rasa in stokVarian){
-      const option = document.createElement("option");
-      option.value = rasa;
-      option.text = `${rasa} (Stok: ${stokVarian[rasa]})`;
-      if(stokVarian[rasa] <= 0){
-        option.disabled = true;
-      }
-      select.appendChild(option);
+    const div = document.createElement("div");
+    div.className = "varian-item";
+    if(data.stok <= 0){
+      div.classList.add("disabled");
     }
 
-    container.appendChild(select);
+    div.innerHTML = `
+      <img src="${data.image}">
+      <p><strong>${rasa}</strong></p>
+      <p>Stok: ${data.stok}</p>
+    `;
+
+    div.onclick = function(){
+      const max = parseInt(document.getElementById("paket").value);
+      if(selected.length < max){
+        selected.push(rasa);
+        div.classList.add("selected");
+        hitungTotal();
+      }else{
+        alert("Jumlah donat sudah sesuai paket!");
+      }
+    };
+
+    container.appendChild(div);
   }
+
+  hitungTotal();
 }
 
-function updateHarga(){
+function hitungTotal(){
   const paket = parseInt(document.getElementById("paket").value);
-  generateVarianInput(paket);
-
   let subtotal = paket * hargaSatuan;
-  let diskonPaket = 0;
+  let diskon = paket===3 ? subtotal*0.05 : subtotal*0.10;
+  let total = subtotal - diskon;
 
-  if(paket === 3) diskonPaket = subtotal * 0.05;
-  if(paket === 6) diskonPaket = subtotal * 0.10;
-
-  let total = subtotal - diskonPaket;
-
-  // Promo Code
   const kode = document.getElementById("promoInput").value.toUpperCase();
   if(promoList[kode]){
     total -= total * promoList[kode];
@@ -113,35 +154,24 @@ function updateHarga(){
 
 function pesanSekarang(){
   const paket = parseInt(document.getElementById("paket").value);
-  let rasaDipilih = "";
-  let pilihan = [];
 
-  for(let i=1;i<=paket;i++){
-    const rasa = document.getElementById("rasa"+i).value;
-
-    if(stokVarian[rasa] <= 0){
-      alert("Stok " + rasa + " habis!");
-      return;
-    }
-
-    pilihan.push(rasa);
-    rasaDipilih += "Donat " + i + ": " + rasa + "%0A";
+  if(selected.length !== paket){
+    alert("Pilih varian sesuai jumlah paket!");
+    return;
   }
 
-  // Kurangi stok
-  pilihan.forEach(rasa=>{
-    stokVarian[rasa] -= 1;
+  selected.forEach(rasa=>{
+    stokVarian[rasa].stok -= 1;
   });
 
-  updateHarga();
+  let detail = "";
+  selected.forEach((r,i)=>{
+    detail += `Donat ${i+1}: ${r}%0A`;
+  });
 
   let subtotal = paket * hargaSatuan;
-  let diskonPaket = 0;
-
-  if(paket === 3) diskonPaket = subtotal * 0.05;
-  if(paket === 6) diskonPaket = subtotal * 0.10;
-
-  let total = subtotal - diskonPaket;
+  let diskon = paket===3 ? subtotal*0.05 : subtotal*0.10;
+  let total = subtotal - diskon;
 
   const kode = document.getElementById("promoInput").value.toUpperCase();
   if(promoList[kode]){
@@ -149,17 +179,17 @@ function pesanSekarang(){
   }
 
   const pesan = `Halo Admin DonatSur 🍩%0A
-Saya ingin memesan:%0A
 Box Isi ${paket}%0A
-${rasaDipilih}
+${detail}
 Total Bayar: Rp ${total.toLocaleString("id-ID")}%0A
 Terima kasih 🙏`;
 
-  const url = `https://wa.me/${phoneNumber}?text=${pesan}`;
-  window.open(url,"_blank");
+  window.open(`https://wa.me/${phoneNumber}?text=${pesan}`,"_blank");
+
+  generatePilihan();
 }
 
-updateHarga();
+generatePilihan();
 </script>
 
 </body>
