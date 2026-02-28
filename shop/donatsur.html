@@ -14,12 +14,6 @@ body{
 
 h1,h2,h3{color:gold;}
 
-input, textarea, select{
-  padding:8px;
-  width:100%;
-  margin-bottom:10px;
-}
-
 .varian-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
@@ -46,6 +40,29 @@ input, textarea, select{
   margin-top:5px;
 }
 
+.form-box{
+  border:2px solid gold;
+  padding:20px;
+  margin-top:30px;
+}
+
+.form-box input, .form-box select{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
+
+.form-box button{
+  width:100%;
+  padding:15px;
+  background:gold;
+  color:black;
+  font-weight:bold;
+  border:none;
+  margin-top:15px;
+  cursor:pointer;
+}
+
 .admin-panel{
   border:2px solid red;
   padding:20px;
@@ -65,31 +82,8 @@ input, textarea, select{
 
 <div id="shopContent">
 
-<!-- ================= FORM PEMBELI ================= -->
-
-<h3>📋 Data Pembeli</h3>
-
-<input type="text" id="nama" placeholder="Nama Lengkap">
-<input type="text" id="kota" placeholder="Asal Kota">
-<textarea id="alamat" placeholder="Alamat Rumah / Lokasi"></textarea>
-
-<select id="pembayaran">
-<option value="">-- Pilih Via Pembayaran --</option>
-<option>Transfer Bank</option>
-<option>QRIS</option>
-<option>COD</option>
-<option>E-Wallet</option>
-</select>
-
-<h3 style="color:gold;">💰 Total Pembayaran</h3>
-<input type="text" id="totalForm" readonly style="font-weight:bold;color:gold;">
-
-<hr style="border:1px solid gold;margin:30px 0;">
-
-<!-- ================= PAKET ================= -->
-
 <h3>Pilih Paket</h3>
-<select id="paket" onchange="resetSemua()">
+<select id="paket" onchange="resetSemua()" style="padding:10px;">
   <option value="3">Box Isi 3 (Diskon 5%)</option>
   <option value="6">Box Isi 6 (Diskon 10%)</option>
 </select>
@@ -99,16 +93,35 @@ input, textarea, select{
 <h3>Pilih Donat</h3>
 <div class="varian-grid" id="varianContainer"></div>
 
-<br>
+<!-- ================= FORM PEMBELI ================= -->
 
-<h3>Promo Code</h3>
-<input type="text" id="promoInput" placeholder="Kode Promo">
-<button onclick="hitungTotal()">Gunakan</button>
+<div class="form-box">
 
-<button onclick="pesanSekarang()" 
-style="padding:15px 30px;background:gold;color:black;font-weight:bold;border:none;">
-Pesan Sekarang
-</button>
+<h3>📦 Data Pemesan</h3>
+
+<input type="text" id="nama" placeholder="Nama Lengkap">
+<input type="text" id="kota" placeholder="Asal Kota">
+<input type="text" id="alamat" placeholder="Alamat Rumah / Lokasi">
+
+<select id="pembayaran">
+  <option value="">Pilih Pembayaran</option>
+  <option>Transfer Bank</option>
+  <option>DANA</option>
+  <option>OVO</option>
+  <option>COD</option>
+</select>
+
+<input type="text" id="promoInput" placeholder="Kode Promo" onkeyup="hitungTotal()">
+
+<hr style="border:1px solid gold;margin:15px 0;">
+
+<input type="text" id="subtotalBox" readonly placeholder="Subtotal">
+<input type="text" id="diskonBox" readonly placeholder="Total Diskon">
+<input type="text" id="totalBox" readonly placeholder="Total Bayar" style="font-weight:bold;color:gold;">
+
+<button onclick="pesanSekarang()">🍩 Pesan Sekarang</button>
+
+</div>
 
 </div>
 
@@ -142,13 +155,13 @@ let cart = {};
 let shopOpen = true;
 
 const varianList = [
-"Coklat","Regal Matcha","Tiramisu Biscoff","Keju",
-"Custard Milk","Sugar Dust","Buttery Glazed",
-"Triple Choco","Double Choco"
+"Coklat","Regal Matcha","Tiramisu Biscoff",
+"Keju","Custard Milk","Sugar Dust",
+"Buttery Glazed","Triple Choco","Double Choco"
 ];
 
 function generateMenu(){
-  const container = document.getElementById("varianContainer");
+  const container=document.getElementById("varianContainer");
   container.innerHTML="";
   cart={};
 
@@ -207,11 +220,14 @@ function hitungTotal(){
 
   const kode=document.getElementById("promoInput").value.toUpperCase();
   if(promoList[kode]){
-    total-=total*promoList[kode];
+    let diskonPromo=total*promoList[kode];
+    diskon+=diskonPromo;
+    total-=diskonPromo;
   }
 
-  document.getElementById("totalForm").value=
-    "Rp "+total.toLocaleString("id-ID");
+  document.getElementById("subtotalBox").value="Subtotal: Rp "+subtotal.toLocaleString("id-ID");
+  document.getElementById("diskonBox").value="Diskon: Rp "+diskon.toLocaleString("id-ID");
+  document.getElementById("totalBox").value="Total Bayar: Rp "+total.toLocaleString("id-ID");
 }
 
 function pesanSekarang(){
@@ -220,19 +236,20 @@ function pesanSekarang(){
     return;
   }
 
+  const paket=parseInt(document.getElementById("paket").value);
+  if(totalItem()!==paket){
+    alert("Jumlah harus sesuai paket!");
+    return;
+  }
+
   const nama=document.getElementById("nama").value;
   const kota=document.getElementById("kota").value;
   const alamat=document.getElementById("alamat").value;
   const bayar=document.getElementById("pembayaran").value;
+  const total=document.getElementById("totalBox").value;
 
   if(!nama||!kota||!alamat||!bayar){
-    alert("Lengkapi data pembeli!");
-    return;
-  }
-
-  const paket=parseInt(document.getElementById("paket").value);
-  if(totalItem()!==paket){
-    alert("Jumlah harus sesuai paket!");
+    alert("Lengkapi data dulu!");
     return;
   }
 
@@ -243,15 +260,13 @@ function pesanSekarang(){
     }
   }
 
-  const total=document.getElementById("totalForm").value;
-
   const pesan=`Halo Admin DonatSur 🍩%0A
 Nama: ${nama}%0A
 Kota: ${kota}%0A
 Alamat: ${alamat}%0A
 Pembayaran: ${bayar}%0A
 %0APesanan:%0A${detail}
-Total: ${total}`;
+${total}`;
 
   window.open(`https://wa.me/${phoneNumber}?text=${pesan}`,"_blank");
 }
@@ -279,6 +294,10 @@ function toggleShop(){
     document.getElementById("shopStatus").style.color="red";
     document.getElementById("shopContent").style.display="none";
   }
+}
+
+function resetSemua(){
+  generateMenu();
 }
 
 generateMenu();
