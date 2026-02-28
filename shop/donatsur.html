@@ -40,8 +40,10 @@ h1,h2,h3{color:gold;}
   margin-top:5px;
 }
 
-button{
-  cursor:pointer;
+.admin-panel{
+  border:2px solid red;
+  padding:20px;
+  margin-top:40px;
 }
 </style>
 </head>
@@ -51,7 +53,11 @@ button{
 <h1>🍩 SHOP DONATSUR</h1>
 <h2>CHASTE DRAGON SQUAD</h2>
 
+<h2 id="shopStatus" style="color:lime;">SHOP SEDANG BUKA</h2>
+
 <hr style="border:1px solid gold;margin:30px 0;">
+
+<div id="shopContent">
 
 <h3>Pilih Paket</h3>
 <select id="paket" onchange="resetSemua()" style="padding:10px;">
@@ -77,21 +83,28 @@ style="padding:15px 30px;background:gold;color:black;font-weight:bold;border:non
 Pesan Sekarang
 </button>
 
+</div>
+
+<!-- ================= ADMIN PANEL ================= -->
+
+<div class="admin-panel">
+<h3 style="color:red;">🔐 ADMIN PANEL</h3>
+
+<div id="loginArea">
+<input type="password" id="adminPass" placeholder="Masukkan Password">
+<button onclick="loginAdmin()">Login</button>
+</div>
+
+<div id="adminControls" style="display:none;">
+<button onclick="toggleShop()">Buka / Tutup Shop</button>
+<button onclick="logoutAdmin()">Logout</button>
+</div>
+</div>
+
 <script>
 const hargaSatuan = 8000;
-const phoneNumber = "628XXXXXXXXXX"; // GANTI NOMOR ADMIN
-
-let stokVarian = {
-"Coklat": {stok:10, image:"https://i.imgur.com/6X4KQ5b.jpg"},
-"Regal Matcha": {stok:8, image:"https://i.imgur.com/8Km9tLL.jpg"},
-"Tiramisu Biscoff": {stok:5, image:"https://i.imgur.com/U9WbG4F.jpg"},
-"Keju": {stok:12, image:"https://i.imgur.com/W5kY6aJ.jpg"},
-"Custard Milk": {stok:6, image:"https://i.imgur.com/yP4X5gT.jpg"},
-"Sugar Dust": {stok:15, image:"https://i.imgur.com/V9kZx3H.jpg"},
-"Buttery Glazed": {stok:7, image:"https://i.imgur.com/Bn6qT4E.jpg"},
-"Triple Choco": {stok:4, image:"https://i.imgur.com/F3hY8Kq.jpg"},
-"Double Choco": {stok:9, image:"https://i.imgur.com/J7lMn2R.jpg"}
-};
+const phoneNumber = "628XXXXXXXXXX"; // GANTI NOMOR
+const adminPassword = "dragon123";
 
 const promoList = {
 "DRAGON5":0.05,
@@ -99,23 +112,35 @@ const promoList = {
 };
 
 let cart = {};
+let shopOpen = true;
+
+const varianList = [
+"Coklat",
+"Regal Matcha",
+"Tiramisu Biscoff",
+"Keju",
+"Custard Milk",
+"Sugar Dust",
+"Buttery Glazed",
+"Triple Choco",
+"Double Choco"
+];
 
 function generateMenu(){
   const container = document.getElementById("varianContainer");
   container.innerHTML = "";
+  cart = {};
 
-  for(let rasa in stokVarian){
-
+  varianList.forEach(rasa=>{
     cart[rasa] = 0;
 
     const item = document.createElement("div");
     item.className = "varian-item";
 
     item.innerHTML = `
-      <img src="${stokVarian[rasa].image}">
+      <img src="https://via.placeholder.com/150">
       <p><strong>${rasa}</strong></p>
       <p style="color:gold;">Rp ${hargaSatuan.toLocaleString("id-ID")}</p>
-      <p>Stok: ${stokVarian[rasa].stok}</p>
       <div class="qty-box">
         <button onclick="kurang('${rasa}')">-</button>
         <span id="qty-${rasa}">0</span>
@@ -124,28 +149,21 @@ function generateMenu(){
     `;
 
     container.appendChild(item);
-  }
+  });
 
   hitungTotal();
 }
 
-function totalItemDipilih(){
+function totalItem(){
   return Object.values(cart).reduce((a,b)=>a+b,0);
 }
 
 function tambah(rasa){
   const paket = parseInt(document.getElementById("paket").value);
-
-  if(totalItemDipilih() >= paket){
-    alert("Jumlah donat sudah sesuai paket!");
+  if(totalItem() >= paket){
+    alert("Jumlah sesuai paket!");
     return;
   }
-
-  if(cart[rasa] >= stokVarian[rasa].stok){
-    alert("Stok tidak cukup!");
-    return;
-  }
-
   cart[rasa]++;
   document.getElementById("qty-"+rasa).innerText = cart[rasa];
   hitungTotal();
@@ -161,12 +179,9 @@ function kurang(rasa){
 
 function hitungTotal(){
   const paket = parseInt(document.getElementById("paket").value);
-  let subtotal = totalItemDipilih() * hargaSatuan;
+  let subtotal = totalItem() * hargaSatuan;
 
-  let diskon = 0;
-  if(paket === 3) diskon = subtotal * 0.05;
-  if(paket === 6) diskon = subtotal * 0.10;
-
+  let diskon = paket===3 ? subtotal*0.05 : subtotal*0.10;
   let total = subtotal - diskon;
 
   const kode = document.getElementById("promoInput").value.toUpperCase();
@@ -179,17 +194,21 @@ function hitungTotal(){
 }
 
 function pesanSekarang(){
-  const paket = parseInt(document.getElementById("paket").value);
-
-  if(totalItemDipilih() !== paket){
-    alert("Jumlah donat harus sesuai paket!");
+  if(!shopOpen){
+    alert("Shop sedang tutup!");
     return;
   }
 
-  let detail = "";
+  const paket = parseInt(document.getElementById("paket").value);
+
+  if(totalItem() !== paket){
+    alert("Jumlah harus sesuai paket!");
+    return;
+  }
+
+  let detail="";
   for(let rasa in cart){
-    if(cart[rasa] > 0){
-      stokVarian[rasa].stok -= cart[rasa];
+    if(cart[rasa]>0){
       detail += `${rasa} x${cart[rasa]}%0A`;
     }
   }
@@ -198,16 +217,38 @@ function pesanSekarang(){
 
   const pesan = `Halo Admin DonatSur 🍩%0A
 Pesanan:%0A${detail}
-${total}%0A
-Terima kasih 🙏`;
+${total}`;
 
   window.open(`https://wa.me/${phoneNumber}?text=${pesan}`,"_blank");
-
-  resetSemua();
 }
 
-function resetSemua(){
-  generateMenu();
+function loginAdmin(){
+  const pass = document.getElementById("adminPass").value;
+  if(pass === adminPassword){
+    document.getElementById("loginArea").style.display="none";
+    document.getElementById("adminControls").style.display="block";
+  }else{
+    alert("Password salah!");
+  }
+}
+
+function logoutAdmin(){
+  document.getElementById("loginArea").style.display="block";
+  document.getElementById("adminControls").style.display="none";
+}
+
+function toggleShop(){
+  shopOpen = !shopOpen;
+
+  if(shopOpen){
+    document.getElementById("shopStatus").innerText="SHOP SEDANG BUKA";
+    document.getElementById("shopStatus").style.color="lime";
+    document.getElementById("shopContent").style.display="block";
+  }else{
+    document.getElementById("shopStatus").innerText="SHOP SEDANG TUTUP";
+    document.getElementById("shopStatus").style.color="red";
+    document.getElementById("shopContent").style.display="none";
+  }
 }
 
 generateMenu();
