@@ -126,17 +126,20 @@ label{
 <hr style="border:1px solid gold;margin:30px 0;">
 
 <div class="description">
-MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR.  
-Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.
+<b>ID:</b> Mohon membaca dan memahami seluruh peraturan sebelum mendaftar.  
+Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.<br><br>
+
+<b>EN:</b> Please read and understand all rules before registering.  
+By registering, you agree to participate in the Walla / Heesay singing event.
 </div>
 
 <a href="sing-walla-heesay-rules.html" class="rules-button">
-📜 BACA PERATURAN
+📜 BACA PERATURAN / VIEW RULES
 </a>
 
 <form id="formWalla">
 
-<label>Pilih Admin</label>
+<label>Pilih Admin / Select Admin</label>
 <select id="admin" required>
   <option value="">-- Pilih Admin --</option>
   <option value="6285191295022">Admin Jessica</option>
@@ -148,19 +151,22 @@ Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.
 <label>Full Name</label>
 <input type="text" id="nama" required>
 
-<label>Age</label>
+<label>Age / Umur</label>
 <input type="number" id="umur" required>
 
-<label>From</label>
+<label>From / Asal</label>
 <input type="text" id="asal" required>
 
 <label>Name Group Sing</label>
 <input type="text" id="groupname" required>
 
-<label>How many people are there in the group?</label>
+<label>How many people are there in the group? / Jumlah member</label>
 <input type="number" id="jumlah" required>
 
-<label>What song will you sing?</label>
+<label>Name Member Group / Nama member group</label>
+<input type="text" id="membergroup" placeholder="Example: A, B, C" required>
+
+<label>What song will you sing? / Lagu yang dibawakan</label>
 <input type="text" id="lagu" required>
 
 <label>Link Account Walla-Heesay</label>
@@ -169,7 +175,8 @@ Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.
 <label>
 Link Group Sing  
 <span style="font-size:12px;color:#ccc;">
-(information: Your Group Sing, if don't have make sure to create and make group sing)
+(ID: Jika belum punya, silakan buat group sing terlebih dahulu)<br>
+(EN: If you don't have one, please create your group sing first)
 </span>
 </label>
 <input type="text" id="linkgroup" required>
@@ -177,7 +184,8 @@ Link Group Sing
 <div class="checkbox-area">
   <input type="checkbox" id="setuju">
   <label for="setuju">
-  Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.
+  <b>ID:</b> Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.<br>
+  <b>EN:</b> I confirm that I have read and agreed to all rules.
   </label>
 </div>
 
@@ -199,7 +207,7 @@ document.getElementById("formWalla").addEventListener("submit", function(e){
   e.preventDefault();
 
   if(!document.getElementById("setuju").checked){
-    alert("Anda harus menyetujui peraturan terlebih dahulu!");
+    alert("Please agree to the rules first / Anda harus menyetujui peraturan terlebih dahulu!");
     return;
   }
 
@@ -209,23 +217,24 @@ document.getElementById("formWalla").addEventListener("submit", function(e){
   let asal = document.getElementById("asal").value;
   let groupname = document.getElementById("groupname").value;
   let jumlah = document.getElementById("jumlah").value;
+  let membergroup = document.getElementById("membergroup").value;
   let lagu = document.getElementById("lagu").value;
   let link = document.getElementById("link").value;
   let linkgroup = document.getElementById("linkgroup").value;
 
-  let pesan = `Halo Admin, saya ingin mendaftar Singing Event WALLA / HEESAY.
+  let pesan = `Hello Admin, I would like to register for the WALLA / HEESAY Singing Event.
 
 Full Name: ${nama}
 Age: ${umur}
 From: ${asal}
-Name Group Sing: ${groupname}
+Group Name: ${groupname}
 Total Members: ${jumlah}
+Member Names: ${membergroup}
 Song: ${lagu}
-Link Account: ${link}
-Link Group Sing: ${linkgroup}`;
+Account Link: ${link}
+Group Link: ${linkgroup}`;
 
   let url = "https://wa.me/" + admin + "?text=" + encodeURIComponent(pesan);
-
   window.open(url, "_blank");
 });
 </script>
