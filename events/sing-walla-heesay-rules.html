@@ -1,99 +1,223 @@
-<!-- ========================= -->
-<!-- File: rules-walla.html -->
-<!-- ========================= -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>RULES EVENT SING - WALLA / HEESAY</title>
+<meta charset="UTF-8">
+<title>RULES EVENT SING - WALLA / HEESAY</title>
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins,sans-serif;
+  padding:40px;
+  line-height:1.8;
+}
+h1,h2,h3{
+  color:gold;
+  text-align:center;
+}
+hr{
+  border:1px solid gold;
+  margin:30px 0;
+}
+p{
+  margin-bottom:15px;
+}
+.translate-btn{
+  display:block;
+  width:220px;
+  margin:0 auto 25px auto;
+  padding:10px;
+  border-radius:30px;
+  border:1px solid gold;
+  background:transparent;
+  color:gold;
+  cursor:pointer;
+  font-weight:bold;
+  text-align:center;
+  transition:0.3s;
+}
+.translate-btn:hover{
+  background:gold;
+  color:black;
+}
+.back-bottom{
+  display:block;
+  text-align:center;
+  margin-top:20px;
+  padding:12px;
+  border-radius:30px;
+  border:1px solid gold;
+  color:gold;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+.back-bottom:hover{
+  background:gold;
+  color:black;
+}
+.rule-title{
+  color:gold;
+  font-weight:bold;
+  margin-top:20px;
+}
+</style>
 </head>
+<body>
 
-<body style="background:black;color:white;font-family:Poppins,sans-serif;padding:40px;line-height:1.8;">
-
-<h1 style="color:gold;text-align:center;">🎤 RULES EVENT SING</h1>
+<h1>🎤 RULES EVENT SING</h1>
 <p style="text-align:center;">CHASTE DRAGON Squad 2026</p>
 
-<hr style="border:1px solid gold;margin:30px 0;">
+<button class="translate-btn" onclick="toggleLang()" id="btnTranslate">
+🌐 Translate: ID
+</button>
 
-<h2 style="color:gold;">RULES SINGING EVENT WALLA / HEESAY</h2>
+<hr>
 
-<p>
-<b>ID:</b> Peraturan ini berlaku untuk seluruh peserta yang mengikuti event singing CHASTE DRAGON melalui aplikasi Walla / Heesay. Dengan mengikuti event, peserta dianggap telah membaca dan menyetujui seluruh peraturan.<br><br>
+<div id="rulesContent">
 
-<b>EN:</b> These rules apply to all participants joining the CHASTE DRAGON singing event through the Walla / Heesay application. By participating, you agree to comply with all rules.
-</p>
+<h2 id="titleRules">RULES SINGING EVENT WALLA / HEESAY</h2>
+<p id="intro">Semua peserta diwajibkan membaca dan mematuhi peraturan event.</p>
 
-<p style="color:gold;font-weight:bold;">1. WAJIB MENGGUNAKAN IDENTITAS YANG SOPAN<br>
-<span style="color:white;font-weight:normal;">USE PROPER IDENTITY</span>
-</p>
-<p>
-<b>ID:</b> Gunakan nickname yang pantas dan tidak mengandung unsur provokatif, SARA, atau merusak suasana event.<br>
-<b>EN:</b> Use an appropriate nickname. Provocative, offensive, or disruptive names are strictly prohibited.
-</p>
+<div class="rule">
+  <p class="rule-title">1. WAJIB MENGGUNAKAN IDENTITAS YANG SOPAN</p>
+  <p id="rule1">Gunakan nama panggilan yang sopan dan tidak menyinggung.</p>
+</div>
 
-<p style="color:gold;font-weight:bold;">2. PESERTA WAJIB SIAP TAMPIL<br>
-<span style="color:white;font-weight:normal;">PARTICIPANTS MUST BE READY TO PERFORM</span>
-</p>
-<p>
-<b>ID:</b> Pastikan koneksi stabil, mic jelas, dan lagu sudah dipersiapkan. Keterlambatan atau ketidaksiapan dapat mempengaruhi giliran tampil.<br>
-<b>EN:</b> Ensure stable connection, clear microphone, and prepared song. Delays or unpreparedness may affect your performance slot.
-</p>
+<div class="rule">
+  <p class="rule-title">2. PESERTA WAJIB SIAP TAMPIL</p>
+  <p id="rule2">Pastikan koneksi stabil, mic jelas, dan lagu siap.</p>
+</div>
 
-<p style="color:gold;font-weight:bold;">3. DILARANG TOXIC & DRAMA<br>
-<span style="color:white;font-weight:normal;">NO TOXIC BEHAVIOR & DRAMA</span>
-</p>
-<p>
-<b>ID:</b> Tidak diperbolehkan menghina peserta lain, juri, host, atau membuat keributan selama event berlangsung.<br>
-<b>EN:</b> Insulting participants, judges, or hosts and creating disturbances during the event is strictly prohibited.
-</p>
+<div class="rule">
+  <p class="rule-title">3. DILARANG TOXIC & DRAMA</p>
+  <p id="rule3">Tidak boleh menghina peserta, juri, atau host.</p>
+</div>
 
-<p style="color:gold;font-weight:bold;">4. JAGA ETIKA SAAT PERFORMANCE<br>
-<span style="color:white;font-weight:normal;">MAINTAIN PERFORMANCE ETIQUETTE</span>
-</p>
-<p>
-<b>ID:</b> Dilarang spam mic, backsound mengganggu, atau tindakan yang merusak jalannya penampilan.<br>
-<b>EN:</b> Mic spamming, disruptive background noise, or any action that interferes with performances is not allowed.
-</p>
+<div class="rule">
+  <p class="rule-title">4. JAGA ETIKA SAAT PERFORMANCE</p>
+  <p id="rule4">Jangan spam mic atau mengganggu penampilan.</p>
+</div>
 
-<p style="color:gold;font-weight:bold;">5. PRIVASI & KEAMANAN<br>
-<span style="color:white;font-weight:normal;">PRIVACY & SECURITY</span>
-</p>
-<p>
-<b>ID:</b> Dilarang merekam atau menyebarkan data pribadi peserta tanpa izin resmi dari pihak CHASTE DRAGON.<br>
-<b>EN:</b> Recording or sharing participants' personal data without official permission from CHASTE DRAGON is prohibited.
-</p>
+<div class="rule">
+  <p class="rule-title">5. PRIVASI & KEAMANAN</p>
+  <p id="rule5">Dilarang merekam atau menyebarkan data pribadi peserta.</p>
+</div>
 
-<p style="color:gold;font-weight:bold;">6. KEPUTUSAN JURI FINAL<br>
-<span style="color:white;font-weight:normal;">JUDGES’ DECISION IS FINAL</span>
-</p>
-<p>
-<b>ID:</b> Seluruh hasil penilaian juri bersifat mutlak dan tidak dapat diganggu gugat.<br>
-<b>EN:</b> All judges’ decisions are final and cannot be contested.
-</p>
+<div class="rule">
+  <p class="rule-title">6. KEPUTUSAN JURI FINAL</p>
+  <p id="rule6">Keputusan juri bersifat final.</p>
+</div>
 
-<hr style="border:1px solid gold;margin:30px 0;">
+<hr>
 
-<h3 style="color:gold;">SANKSI PELANGGARAN / PENALTIES</h3>
-<p>
+<h3 style="color:gold;">SANKSI / PENALTIES</h3>
+<p id="penalties">
 • Teguran / Warning<br>
 • Mute dari Room / Room Mute<br>
 • Diskualifikasi / Disqualification<br>
 • Blacklist Event / Event Blacklist
 </p>
 
-<hr style="border:1px solid gold;margin:30px 0;">
+<hr>
 
-<p style="text-align:center;color:gold;font-weight:bold;">
+<p style="text-align:center;color:gold;font-weight:bold;" id="footerText">
 CHASTE DRAGON SINGING EVENT<br>
 Disiplin • Solid • Respect
 </p>
 
 <p style="text-align:center;margin-top:25px;">
-<a href="sing-walla-heesay-registration.html" 
-   style="display:inline-block;padding:12px 25px;background:linear-gradient(90deg,gold,orange);color:black;font-weight:bold;border-radius:30px;text-decoration:none;">
-   KEMBALI KE WEBSITE
+<a href="sing-walla-heesay-registration.html" class="back-bottom" id="btnBack">
+⬅ KEMBALI KE WEBSITE
 </a>
 </p>
+
+</div>
+
+<script>
+const langs = ["id","en","cn","ph","kr"];
+let indexLang = 0;
+
+function toggleLang(){
+  indexLang = (indexLang+1)%langs.length;
+  const lang = langs[indexLang];
+  const btn = document.getElementById("btnTranslate");
+
+  const translations = {
+    "id":{
+      btn:"🌐 Translate: ID",
+      intro:"Semua peserta diwajibkan membaca dan mematuhi peraturan event.",
+      rule1:"Gunakan nama panggilan yang sopan dan tidak menyinggung.",
+      rule2:"Pastikan koneksi stabil, mic jelas, dan lagu siap.",
+      rule3:"Tidak boleh menghina peserta, juri, atau host.",
+      rule4:"Jangan spam mic atau mengganggu penampilan.",
+      rule5:"Dilarang merekam atau menyebarkan data pribadi peserta.",
+      rule6:"Keputusan juri bersifat final.",
+      penalties:"• Teguran\n• Mute dari Room\n• Diskualifikasi\n• Blacklist Event",
+      back:"⬅ KEMBALI KE WEBSITE"
+    },
+    "en":{
+      btn:"🌐 Translate: EN",
+      intro:"All participants must read and follow the event rules.",
+      rule1:"Use an appropriate nickname without offensive content.",
+      rule2:"Ensure stable connection, clear microphone, and prepared song.",
+      rule3:"Insulting participants, judges, or hosts is prohibited.",
+      rule4:"No mic spamming or disruptive actions during performance.",
+      rule5:"Recording or sharing participants’ personal data is prohibited.",
+      rule6:"Judges’ decision is final.",
+      penalties:"• Warning\n• Room Mute\n• Disqualification\n• Event Blacklist",
+      back:"⬅ BACK TO WEBSITE"
+    },
+    "cn":{
+      btn:"🌐 Translate: CN",
+      intro:"报名之前请阅读并遵守规则。",
+      rule1:"使用合适的昵称，不得含有冒犯内容。",
+      rule2:"确保连接稳定，麦克风清晰，并准备好歌曲。",
+      rule3:"禁止侮辱其他参赛者、评委或主持人。",
+      rule4:"不得在表演过程中发送垃圾麦克风或干扰。",
+      rule5:"禁止在未经许可的情况下录制或分享参赛者个人信息。",
+      rule6:"评委的决定为最终决定。",
+      penalties:"• 警告\n• 房间静音\n• 取消资格\n• 活动黑名单",
+      back:"⬅ 返回网站"
+    },
+    "ph":{
+      btn:"🌐 Translate: PH",
+      intro:"Bago mag-register, basahin at sundin ang mga patakaran.",
+      rule1:"Gumamit ng angkop na palayaw at huwag manakit ng damdamin.",
+      rule2:"Siguraduhing maayos ang koneksyon, malinaw ang mic, at handa na ang kanta.",
+      rule3:"Ipinagbabawal ang pang-iinsulto sa ibang kalahok, hurado o host.",
+      rule4:"Huwag mag-spam ng mic o sagabal sa pagtatanghal.",
+      rule5:"Ipinagbabawal ang pag-record o pagbabahagi ng personal na impormasyon ng kalahok.",
+      rule6:"Ang desisyon ng hurado ay pinal at hindi mababago.",
+      penalties:"• Babala\n• Room Mute\n• Diskwalipikasyon\n• Event Blacklist",
+      back:"⬅ BALIK SA WEBSITE"
+    },
+    "kr":{
+      btn:"🌐 Translate: KR",
+      intro:"등록하기 전에 모든 규칙을 읽고 준수하세요.",
+      rule1:"적절한 닉네임 사용, 모욕 금지.",
+      rule2:"안정적인 연결, 명확한 마이크, 준비된 곡.",
+      rule3:"참가자, 심사위원 또는 진행자 모욕 금지.",
+      rule4:"공연 중 마이크 스팸 또는 방해 금지.",
+      rule5:"참가자의 개인 정보 녹음/공유 금지.",
+      rule6:"심사위원의 결정은 최종입니다.",
+      penalties:"• 경고\n• 룸 음소거\n• 실격\n• 이벤트 블랙리스트",
+      back:"⬅ 웹사이트로 돌아가기"
+    }
+  };
+
+  btn.innerHTML = translations[lang].btn;
+  document.getElementById("intro").innerHTML = translations[lang].intro;
+  document.getElementById("rule1").innerHTML = translations[lang].rule1;
+  document.getElementById("rule2").innerHTML = translations[lang].rule2;
+  document.getElementById("rule3").innerHTML = translations[lang].rule3;
+  document.getElementById("rule4").innerHTML = translations[lang].rule4;
+  document.getElementById("rule5").innerHTML = translations[lang].rule5;
+  document.getElementById("rule6").innerHTML = translations[lang].rule6;
+  document.getElementById("penalties").innerHTML = translations[lang].penalties.replace(/\n/g,"<br>");
+  document.getElementById("btnBack").innerHTML = translations[lang].back;
+}
+</script>
 
 </body>
 </html>
