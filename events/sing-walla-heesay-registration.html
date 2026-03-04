@@ -2,13 +2,14 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SINGING REGISTRATION - WALLA / HEESAY</title>
 
 <style>
 body{
   background:black;
   color:white;
-  font-family:Poppins, sans-serif;
+  font-family:Poppins, Arial, sans-serif;
   padding:40px;
   line-height:1.6;
 }
@@ -16,93 +17,76 @@ body{
 h1,h2{
   color:gold;
   text-align:center;
+  margin:0;
 }
 
 .container{
   max-width:900px;
   margin:auto;
   background:#111;
-  padding:40px;
+  padding:30px;
   border-radius:15px;
   border:2px solid gold;
-  box-shadow:0 0 30px rgba(255,215,0,0.4);
-}
-
-.description{
-  background:#000;
-  border:1px solid gold;
-  padding:20px;
-  border-radius:10px;
-  margin-bottom:20px;
-  color:gold;
-  font-weight:bold;
-  text-align:center;
-}
-
-.rules-button{
-  display:block;
-  text-align:center;
-  padding:12px;
-  background:transparent;
-  border:1px solid gold;
-  color:gold;
-  border-radius:30px;
-  text-decoration:none;
-  margin-bottom:30px;
-  transition:0.3s;
-}
-
-.rules-button:hover{
-  background:gold;
-  color:black;
+  box-shadow:0 0 25px rgba(255,215,0,0.35);
 }
 
 .translate-btn{
   display:block;
-  width:240px;
-  margin:0 auto 25px auto;
-  padding:10px;
+  margin:20px auto;
+  padding:10px 22px;
   border-radius:30px;
   border:1px solid gold;
   background:transparent;
   color:gold;
-  cursor:pointer;
   font-weight:bold;
+  cursor:pointer;
 }
 
-input, select{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  margin-bottom:20px;
-  border-radius:8px;
+.translate-btn:hover{
+  background:gold;
+  color:black;
+}
+
+.form-box{
   border:1px solid gold;
-  background:black;
-  color:white;
+  border-radius:12px;
+  padding:20px;
+  margin-top:25px;
+  background:#000;
 }
 
 label{
+  display:block;
+  margin-top:12px;
   font-weight:bold;
   color:gold;
 }
 
-/* ✅ CHECKBOX RAPAT (FIXED) */
+input, textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  margin-bottom:16px;
+  border-radius:8px;
+  border:1px solid gold;
+  background:black;
+  color:white;
+  font-size:14px;
+}
+
+/* CHECKBOX RAPAT */
 .checkbox-area{
   margin:20px 0;
   background:#000;
-  padding:14px 16px;
+  padding:15px;
   border-radius:10px;
   border:1px solid gold;
-
-  display:flex;
-  align-items:flex-start;
-  gap:6px;
-  line-height:1.4;
 }
 
 .checkbox-area input[type="checkbox"]{
-  margin-top:3px;
-  transform:scale(1.1);
+  width:auto;
+  margin-right:8px;
+  vertical-align:top;
   cursor:pointer;
 }
 
@@ -112,28 +96,33 @@ label{
   cursor:pointer;
 }
 
-.button-wa{
-  display:inline-block;
-  padding:14px 30px;
+button.submit-btn{
+  width:100%;
+  padding:14px;
   background:linear-gradient(90deg,gold,orange);
   color:black;
   font-weight:bold;
-  border-radius:40px;
   border:none;
+  border-radius:40px;
   cursor:pointer;
-  width:100%;
+  font-size:16px;
 }
 
 .footer{
-  margin-top:40px;
+  margin-top:35px;
   text-align:center;
   color:gold;
   font-weight:bold;
+}
+
+@media(max-width:600px){
+  body{ padding:20px; }
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <h1 id="title1">🎤 SINGING REGISTRATION</h1>
@@ -144,57 +133,32 @@ label{
 🌐 Language: ID
 </button>
 
-<hr style="border:1px solid gold;margin:30px 0;">
-
-<div class="description" id="descText"></div>
-
-<a href="sing-walla-heesay-rules.html" class="rules-button" id="rulesBtn"></a>
-
+<div class="form-box">
 <form id="formWalla">
 
-<label id="lblAdmin"></label>
-<select id="admin" required>
-  <option value="">-- Select Admin --</option>
-  <option value="6285191295022">Admin Jessica</option>
-  <option value="6288291996193">Admin Panda</option>
-  <option value="6282246142678">Admin Surya</option>
-  <option value="6283126442689">Admin Rara</option>
-</select>
+<label id="lblNama">Nama Lengkap</label>
+<input type="text">
 
-<label id="lblNama"></label>
-<input type="text" id="nama" required>
+<label id="lblUmur">Umur</label>
+<input type="number">
 
-<label id="lblUmur"></label>
-<input type="number" id="umur" required>
+<label id="lblAsal">Asal</label>
+<input type="text">
 
-<label id="lblAsal"></label>
-<input type="text" id="asal" required>
-
-<label id="lblGroup"></label>
-<input type="text" id="groupname" required>
-
-<label id="lblJumlah"></label>
-<input type="number" id="jumlah" required>
-
-<label id="lblMember"></label>
-<input type="text" id="membergroup" required>
-
-<label id="lblLagu"></label>
-<input type="text" id="lagu" required>
-
-<label id="lblLink"></label>
-<input type="text" id="link" required>
-
-<label id="lblLinkGroup"></label>
-<input type="text" id="linkgroup" required>
+<label id="lblLagu">Lagu yang akan dinyanyikan</label>
+<input type="text">
 
 <div class="checkbox-area">
-  <input type="checkbox" id="setuju">
-  <label for="setuju" id="lblAgree"></label>
+  <input type="checkbox" id="agree">
+  <label for="agree" id="lblAgree">Saya menyetujui seluruh peraturan.</label>
 </div>
 
-<button type="submit" class="button-wa" id="btnSubmit"></button>
+<button type="submit" class="submit-btn" id="btnSubmit">
+KIRIM PENDAFTARAN
+</button>
+
 </form>
+</div>
 
 <div class="footer">
 OFFICIAL SINGING REGISTRATION 2026<br>
@@ -208,30 +172,72 @@ const langs = ["id","en","cn","kr","vn","ph","th"];
 let indexLang = 0;
 
 const text = {
-id:{desc:"MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR.",rules:"📜 BACA PERATURAN",admin:"Pilih Admin",nama:"Nama Lengkap",umur:"Umur",asal:"Asal",group:"Nama Group",jumlah:"Jumlah anggota group",member:"Nama anggota group",lagu:"Lagu yang akan dinyanyikan",link:"Link akun Walla-Heesay",linkgroup:"Link Group Sing",agree:"Saya menyetujui seluruh peraturan.",submit:"KIRIM PENDAFTARAN VIA WHATSAPP"},
-en:{desc:"PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING.",rules:"📜 READ THE RULES",admin:"Select Admin",nama:"Full Name",umur:"Age",asal:"From",group:"Group Name",jumlah:"Total group members",member:"Member names",lagu:"Song to perform",link:"Walla-Heesay account link",linkgroup:"Group link",agree:"I agree to all rules.",submit:"SEND REGISTRATION VIA WHATSAPP"},
-cn:{desc:"报名之前请阅读并理解所有规则。",rules:"📜 阅读规则",admin:"选择管理员",nama:"全名",umur:"年龄",asal:"来自",group:"组合名称",jumlah:"成员人数",member:"成员姓名",lagu:"演唱歌曲",link:"账号链接",linkgroup:"组合链接",agree:"我已阅读并同意所有规则。",submit:"通过WhatsApp发送报名"},
-kr:{desc:"등록 전에 모든 규칙을 읽고 이해하세요.",rules:"📜 규칙 보기",admin:"관리자 선택",nama:"이름",umur:"나이",asal:"출신",group:"그룹 이름",jumlah:"그룹 인원수",member:"멤버 이름",lagu:"부를 노래",link:"계정 링크",linkgroup:"그룹 링크",agree:"모든 규칙에 동의합니다.",submit:"WhatsApp으로 신청 보내기"},
-vn:{desc:"Vui lòng đọc và hiểu tất cả quy định trước khi đăng ký.",rules:"📜 Xem quy định",admin:"Chọn Admin",nama:"Họ tên",umur:"Tuổi",asal:"Đến từ",group:"Tên nhóm",jumlah:"Số thành viên",member:"Tên thành viên",lagu:"Bài hát trình bày",link:"Link tài khoản",linkgroup:"Link nhóm",agree:"Tôi đồng ý với tất cả quy định.",submit:"GỬI ĐĂNG KÝ QUA WHATSAPP"},
-ph:{desc:"Pakibasa at unawain ang lahat ng patakaran bago mag-register.",rules:"📜 Basahin ang Rules",admin:"Piliin ang Admin",nama:"Buong Pangalan",umur:"Edad",asal:"Mula sa",group:"Pangalan ng Grupo",jumlah:"Ilang miyembro",member:"Mga pangalan ng miyembro",lagu:"Kantang kakantahin",link:"Link ng account",linkgroup:"Link ng grupo",agree:"Sumasang-ayon ako sa lahat ng patakaran.",submit:"IPADALA ANG REGISTRATION VIA WHATSAPP"},
-th:{desc:"โปรดอ่านและทำความเข้าใจกฎทั้งหมดก่อนสมัคร",rules:"📜 อ่านกฎ",admin:"เลือกแอดมิน",nama:"ชื่อเต็ม",umur:"อายุ",asal:"มาจาก",group:"ชื่อกลุ่ม",jumlah:"จำนวนสมาชิก",member:"ชื่อสมาชิก",lagu:"เพลงที่จะร้อง",link:"ลิงก์บัญชี",linkgroup:"ลิงก์กลุ่ม",agree:"ฉันยอมรับกฎทั้งหมด",submit:"ส่งสมัครผ่าน WhatsApp"}
+id:{
+nama:"Nama Lengkap",
+umur:"Umur",
+asal:"Asal",
+lagu:"Lagu yang akan dinyanyikan",
+agree:"Saya menyetujui seluruh peraturan.",
+submit:"KIRIM PENDAFTARAN"
+},
+en:{
+nama:"Full Name",
+umur:"Age",
+asal:"From",
+lagu:"Song to perform",
+agree:"I agree to all rules.",
+submit:"SEND REGISTRATION"
+},
+cn:{
+nama:"全名",
+umur:"年龄",
+asal:"来自",
+lagu:"演唱歌曲",
+agree:"我已阅读并同意所有规则。",
+submit:"提交报名"
+},
+kr:{
+nama:"이름",
+umur:"나이",
+asal:"출신",
+lagu:"부를 노래",
+agree:"모든 규칙에 동의합니다.",
+submit:"신청 보내기"
+},
+vn:{
+nama:"Họ tên",
+umur:"Tuổi",
+asal:"Đến từ",
+lagu:"Bài hát trình bày",
+agree:"Tôi đồng ý với tất cả quy định.",
+submit:"GỬI ĐĂNG KÝ"
+},
+ph:{
+nama:"Buong Pangalan",
+umur:"Edad",
+asal:"Mula sa",
+lagu:"Kantang kakantahin",
+agree:"Sumasang-ayon ako sa lahat ng patakaran.",
+submit:"IPADALA ANG REGISTRATION"
+},
+th:{
+nama:"ชื่อเต็ม",
+umur:"อายุ",
+asal:"มาจาก",
+lagu:"เพลงที่จะร้อง",
+agree:"ฉันยอมรับกฎทั้งหมด",
+submit:"ส่งสมัคร"
+}
 };
 
 function applyLang(){
   const t = text[langs[indexLang]];
-  document.getElementById("btnTranslate").innerText = "🌐 Language: " + langs[indexLang].toUpperCase();
-  document.getElementById("descText").innerText = t.desc;
-  document.getElementById("rulesBtn").innerText = t.rules;
-  document.getElementById("lblAdmin").innerText = t.admin;
+  document.getElementById("btnTranslate").innerText =
+    "🌐 Language: " + langs[indexLang].toUpperCase();
   document.getElementById("lblNama").innerText = t.nama;
   document.getElementById("lblUmur").innerText = t.umur;
   document.getElementById("lblAsal").innerText = t.asal;
-  document.getElementById("lblGroup").innerText = t.group;
-  document.getElementById("lblJumlah").innerText = t.jumlah;
-  document.getElementById("lblMember").innerText = t.member;
   document.getElementById("lblLagu").innerText = t.lagu;
-  document.getElementById("lblLink").innerText = t.link;
-  document.getElementById("lblLinkGroup").innerText = t.linkgroup;
   document.getElementById("lblAgree").innerText = t.agree;
   document.getElementById("btnSubmit").innerText = t.submit;
 }
