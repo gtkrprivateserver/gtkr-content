@@ -86,22 +86,23 @@ label{
   color:gold;
 }
 
-/* ✅ CHECKBOX RAPI */
+/* ✅ CHECKBOX RAPAT (FIXED) */
 .checkbox-area{
-  margin:25px 0;
+  margin:20px 0;
   background:#000;
-  padding:18px 20px;
-  border-radius:12px;
+  padding:14px 16px;
+  border-radius:10px;
   border:1px solid gold;
+
   display:flex;
   align-items:flex-start;
-  gap:10px;
-  line-height:1.5;
+  gap:6px;
+  line-height:1.4;
 }
 
 .checkbox-area input[type="checkbox"]{
-  margin-top:4px;
-  transform:scale(1.2);
+  margin-top:3px;
+  transform:scale(1.1);
   cursor:pointer;
 }
 
@@ -187,7 +188,6 @@ label{
 <label id="lblLinkGroup"></label>
 <input type="text" id="linkgroup" required>
 
-<!-- ✅ CHECKBOX RAPI -->
 <div class="checkbox-area">
   <input type="checkbox" id="setuju">
   <label for="setuju" id="lblAgree"></label>
@@ -208,38 +208,8 @@ const langs = ["id","en","cn","kr","vn","ph","th"];
 let indexLang = 0;
 
 const text = {
-id:{
-desc:"MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR.",
-rules:"📜 BACA PERATURAN",
-admin:"Pilih Admin",
-nama:"Nama Lengkap",
-umur:"Umur",
-asal:"Asal",
-group:"Nama Group",
-jumlah:"Jumlah anggota group",
-member:"Nama anggota group",
-lagu:"Lagu yang akan dinyanyikan",
-link:"Link akun Walla-Heesay",
-linkgroup:"Link Group Sing",
-agree:"Saya menyetujui seluruh peraturan.",
-submit:"KIRIM PENDAFTARAN VIA WHATSAPP"
-},
-en:{
-desc:"PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING.",
-rules:"📜 READ THE RULES",
-admin:"Select Admin",
-nama:"Full Name",
-umur:"Age",
-asal:"From",
-group:"Group Name",
-jumlah:"Total group members",
-member:"Member names",
-lagu:"Song to perform",
-link:"Walla-Heesay account link",
-linkgroup:"Group link",
-agree:"I agree to all rules.",
-submit:"SEND REGISTRATION VIA WHATSAPP"
-},
+id:{desc:"MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR.",rules:"📜 BACA PERATURAN",admin:"Pilih Admin",nama:"Nama Lengkap",umur:"Umur",asal:"Asal",group:"Nama Group",jumlah:"Jumlah anggota group",member:"Nama anggota group",lagu:"Lagu yang akan dinyanyikan",link:"Link akun Walla-Heesay",linkgroup:"Link Group Sing",agree:"Saya menyetujui seluruh peraturan.",submit:"KIRIM PENDAFTARAN VIA WHATSAPP"},
+en:{desc:"PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING.",rules:"📜 READ THE RULES",admin:"Select Admin",nama:"Full Name",umur:"Age",asal:"From",group:"Group Name",jumlah:"Total group members",member:"Member names",lagu:"Song to perform",link:"Walla-Heesay account link",linkgroup:"Group link",agree:"I agree to all rules.",submit:"SEND REGISTRATION VIA WHATSAPP"},
 cn:{desc:"报名之前请阅读并理解所有规则。",rules:"📜 阅读规则",admin:"选择管理员",nama:"全名",umur:"年龄",asal:"来自",group:"组合名称",jumlah:"成员人数",member:"成员姓名",lagu:"演唱歌曲",link:"账号链接",linkgroup:"组合链接",agree:"我已阅读并同意所有规则。",submit:"通过WhatsApp发送报名"},
 kr:{desc:"등록 전에 모든 규칙을 읽고 이해하세요.",rules:"📜 규칙 보기",admin:"관리자 선택",nama:"이름",umur:"나이",asal:"출신",group:"그룹 이름",jumlah:"그룹 인원수",member:"멤버 이름",lagu:"부를 노래",link:"계정 링크",linkgroup:"그룹 링크",agree:"모든 규칙에 동의합니다.",submit:"WhatsApp으로 신청 보내기"},
 vn:{desc:"Vui lòng đọc và hiểu tất cả quy định trước khi đăng ký.",rules:"📜 Xem quy định",admin:"Chọn Admin",nama:"Họ tên",umur:"Tuổi",asal:"Đến từ",group:"Tên nhóm",jumlah:"Số thành viên",member:"Tên thành viên",lagu:"Bài hát trình bày",link:"Link tài khoản",linkgroup:"Link nhóm",agree:"Tôi đồng ý với tất cả quy định.",submit:"GỬI ĐĂNG KÝ QUA WHATSAPP"},
@@ -272,15 +242,6 @@ function changeLang(){
 }
 
 applyLang();
-
-// submit WA
-document.getElementById("formWalla").addEventListener("submit", function(e){
-  e.preventDefault();
-  if(!document.getElementById("setuju").checked){
-    alert("Please agree to the rules first!");
-    return;
-  }
-});
 </script>
 
 </body>
