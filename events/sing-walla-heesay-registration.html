@@ -151,7 +151,7 @@ label{
 <h2>WALLA / HEESAY DIVISION</h2>
 
 <button class="translate-btn" onclick="toggleLang()" id="btnTranslate">
-🌐 Translate: EN
+🌐 Translate: ID
 </button>
 
 <hr style="border:1px solid gold;margin:30px 0;">
@@ -162,7 +162,7 @@ Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.
 </div>
 
 <a href="sing-walla-heesay-rules.html" class="rules-button" id="rulesBtn">
-📜 Read The Rules
+📜 BACA PERATURAN
 </a>
 
 <form id="formWalla">
@@ -221,7 +221,7 @@ KIRIM PENDAFTARAN VIA WHATSAPP
 
 </form>
 
-<!-- ✅ tombol kembali DI BAWAH FORM -->
+<!-- tombol kembali DI BAWAH FORM -->
 <a href="sing-walla-heesay.html" class="back-bottom">
 ⬅ Kembali ke Halaman Utama
 </a>
@@ -259,11 +259,9 @@ infoGroup.innerText="(informasi: jika kamu belum memilikinya, silakan buat grup)
 lblAgree.innerText="Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.";
 btnSubmit.innerText="KIRIM PENDAFTARAN VIA WHATSAPP";
 }
-
 else if(lang==="en"){
 btn.innerText="🌐 Translate: EN";
-descText.innerText="PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING.
-By registering, you are ready to participate in singing events at Walla/Heesay.";
+descText.innerText="PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING.";
 rulesBtn.innerText="📜 READ THE RULES";
 lblAdmin.innerText="Select Admin";
 lblNama.innerText="Full Name";
@@ -278,10 +276,9 @@ infoGroup.innerText="(information: if you don't have one, please create a group)
 lblAgree.innerText="I agree to all rules.";
 btnSubmit.innerText="SEND REGISTRATION VIA WHATSAPP";
 }
-
 else if(lang==="cn"){
 btn.innerText="🌐 Translate: CN";
-descText.innerText="请在注册前仔细阅读并理解所有规则。注册后，您即可参加在瓦拉/希赛举办的歌唱活动。";
+descText.innerText="报名之前请阅读并理解所有规则。";
 rulesBtn.innerText="📜 阅读规则";
 lblAdmin.innerText="选择管理员";
 lblNama.innerText="姓名";
@@ -296,11 +293,9 @@ infoGroup.innerText="（如果没有，请创建组合）";
 lblAgree.innerText="我已阅读并同意所有规则。";
 btnSubmit.innerText="通过WhatsApp发送报名";
 }
-
 else if(lang==="ph"){
 btn.innerText="🌐 Translate: PH";
-descText.innerText="PAKIBASA AT UNAWAIN ANG LAHAT NG MGA PATAKARAN BAGO MAGPAREHISTRO.
-Sa pamamagitan ng pagpaparehistro, handa ka nang lumahok sa mga kaganapan sa pag-awit sa Walla/Heesay.";
+descText.innerText="Pakibasa at unawain ang lahat ng patakaran bago mag-register.";
 rulesBtn.innerText="📜 Basahin ang Rules";
 lblAdmin.innerText="Piliin ang Admin";
 lblNama.innerText="Buong Pangalan";
@@ -315,10 +310,9 @@ infoGroup.innerText="(kung wala pa, gumawa ng group)";
 lblAgree.innerText="Sumasang-ayon ako sa lahat ng patakaran.";
 btnSubmit.innerText="IPADALA ANG REGISTRATION VIA WHATSAPP";
 }
-
 else if(lang==="kr"){
 btn.innerText="🌐 Translate: KR";
-descText.innerText="등록하기 전에 모든 규칙을 읽고 이해해 주십시오. 등록하시면 Walla/Heesay에서 열리는 노래 행사에 참여할 수 있습니다.";
+descText.innerText="등록 전에 모든 규칙을 읽고 이해하세요.";
 rulesBtn.innerText="📜 규칙 보기";
 lblAdmin.innerText="관리자 선택";
 lblNama.innerText="이름";
@@ -335,10 +329,23 @@ btnSubmit.innerText="WhatsApp으로 신청 보내기";
 }
 }
 
+// ✅ submit WA ikut bahasa
 document.getElementById("formWalla").addEventListener("submit",function(e){
 e.preventDefault();
-if(!setuju.checked){alert("Harus setuju dulu!");return;}
-let pesan=`Halo Admin, saya ingin mendaftar Singing Event WALLA / HEESAY.\n\nFull Name: ${nama.value}\nAge: ${umur.value}\nFrom: ${asal.value}\nName Group Sing: ${groupname.value}\nTotal Members: ${jumlah.value}\nName Member Group: ${membergroup.value}\nSong: ${lagu.value}\nLink Account: ${link.value}\nLink Group Sing: ${linkgroup.value}`;
+if(!setuju.checked){alert("Harus setuju dulu!"); return;}
+let lang=langs[indexLang];
+let pesan="";
+if(lang==="id"){
+pesan=`Halo Admin, saya ingin mendaftar Singing Event WALLA / HEESAY.\n\nNama: ${nama.value}\nUmur: ${umur.value}\nAsal: ${asal.value}\nNama Group: ${groupname.value}\nJumlah Anggota: ${jumlah.value}\nNama Member Group: ${membergroup.value}\nLagu: ${lagu.value}\nLink Akun: ${link.value}\nLink Group Sing: ${linkgroup.value}`;
+}else if(lang==="en"){
+pesan=`Hello Admin, I would like to register for the WALLA / HEESAY Singing Event.\n\nFull Name: ${nama.value}\nAge: ${umur.value}\nFrom: ${asal.value}\nGroup Name: ${groupname.value}\nTotal Members: ${jumlah.value}\nMember Names: ${membergroup.value}\nSong: ${lagu.value}\nAccount Link: ${link.value}\nGroup Link: ${linkgroup.value}`;
+}else if(lang==="cn"){
+pesan=`管理员您好，我想报名参加 WALLA / HEESAY 歌唱活动。\n\n姓名: ${nama.value}\n年龄: ${umur.value}\n来自: ${asal.value}\n组合名称: ${groupname.value}\n成员人数: ${jumlah.value}\n成员姓名: ${membergroup.value}\n歌曲: ${lagu.value}\n账号链接: ${link.value}\n组合链接: ${linkgroup.value}`;
+}else if(lang==="ph"){
+pesan=`Hello Admin, gusto kong mag-register sa WALLA / HEESAY Singing Event.\n\nBuong Pangalan: ${nama.value}\nEdad: ${umur.value}\nMula sa: ${asal.value}\nPangalan ng Grupo: ${groupname.value}\nIlang miyembro: ${jumlah.value}\nMga pangalan ng miyembro: ${membergroup.value}\nKanta: ${lagu.value}\nLink ng account: ${link.value}\nLink ng grupo: ${linkgroup.value}`;
+}else if(lang==="kr"){
+pesan=`관리자님 안녕하세요, WALLA / HEESAY Singing Event에 등록하고 싶습니다.\n\n이름: ${nama.value}\n나이: ${umur.value}\n출신: ${asal.value}\n그룹 이름: ${groupname.value}\n총 멤버 수: ${jumlah.value}\n멤버 이름: ${membergroup.value}\n노래: ${lagu.value}\n계정 링크: ${link.value}\n그룹 링크: ${linkgroup.value}`;
+}
 window.open("https://wa.me/"+admin.value+"?text="+encodeURIComponent(pesan),"_blank");
 });
 </script>
