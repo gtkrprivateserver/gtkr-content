@@ -124,9 +124,10 @@ label{
 <h2>WALLA / HEESAY DIVISION</h2><button class="translate-btn" onclick="toggleLang()" id="btnTranslate">🌐 Translate: EN</button>
 
 <hr style="border:1px solid gold;margin:30px 0;"><div class="description" id="descText">
-PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING. By registering, you agree to join the Walla / Heesay singing event.
+MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR.  
+Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.
 </div><a href="sing-walla-heesay-rules.html" class="rules-button" id="rulesBtn">
-📜 Read The Rules
+📜 BACA PERATURAN
 </a><form id="formWalla"><label id="lblAdmin">Pilih Admin</label> <select id="admin" required>
 
   <option value="">-- Select Admin --</option>
@@ -175,20 +176,19 @@ function toggleLang(){
 
     document.getElementById("btnTranslate").innerText = "🌐 Translate: ID";
     document.getElementById("descText").innerText =
-      "MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR.  
-Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.";
+      "MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR. Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.";
     document.getElementById("rulesBtn").innerText = "📜 Baca Aturan";
     document.getElementById("lblAdmin").innerText = "Pilih Admin";
     document.getElementById("lblNama").innerText = "Nama Lengkap Peserta";
     document.getElementById("lblUmur").innerText = "Umur Para Peserta";
     document.getElementById("lblAsal").innerText = "Asal Kota";
     document.getElementById("lblGroup").innerText = "Nama Group";
-    document.getElementById("lblJumlah").innerText = "Berapa Orang Di Dalam Group?";
-    document.getElementById("lblMember").innerText = "Nama Member Group";
+    document.getElementById("lblJumlah").innerText = "Ada berapa orang dalam group?";
+    document.getElementById("lblMember").innerText = "Nama Anggota Grup";
     document.getElementById("lblLagu").innerText = "Lagu apa yang akan kamu nyanyikan?";
     document.getElementById("lblLink").innerText = "Walla-Heesay Account Link";
     document.getElementById("infoGroup").innerText =
-      "(information: Grup Bernyanyi, jika kamu belum memilikinya, silakan buat grup)";
+      "(information: jika kamu belum memilikinya, silakan buat grup)";
     document.getElementById("lblAgree").innerText =
       "Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.";
     document.getElementById("btnSubmit").innerText =
@@ -200,7 +200,7 @@ Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.";
     document.getElementById("btnTranslate").innerText = "🌐 Translate: EN";
     document.getElementById("descText").innerText =
       "PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING. By registering, you agree to join the Walla / Heesay singing event.";
-    document.getElementById("rulesBtn").innerText = "📜 Ready The Rules";
+    document.getElementById("rulesBtn").innerText = "📜 Read The Rules";
     document.getElementById("lblAdmin").innerText = "Select Admin";
     document.getElementById("lblNama").innerText = "Full Name";
     document.getElementById("lblUmur").innerText = "Age";
@@ -213,7 +213,7 @@ Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.";
     document.getElementById("infoGroup").innerText =
       "(information: Your Group Sing, if don't have make sure to create and make group sing)";
     document.getElementById("lblAgree").innerText =
-      "I confirm that I have read and agree to all the rules";
+      "I confirm that I have read and agree to all the rules.";
     document.getElementById("btnSubmit").innerText =
       "SEND REGISTRATION VIA WHATSAPP";
   }
