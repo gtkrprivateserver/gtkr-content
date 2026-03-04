@@ -1,13 +1,7 @@
-<!-- ========================= -->
-<!-- File: pendaftaran-walla-heesay.html -->
-<!-- ========================= -->
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>SINGING REGISTRATION - WALLA / HEESAY</title>
-
-<style>
+<title>SINGING REGISTRATION - WALLA / HEESAY</title><style>
 body{
   background:black;
   color:white;
@@ -58,6 +52,19 @@ h1,h2{
 .rules-button:hover{
   background:gold;
   color:black;
+}
+
+.translate-btn{
+  display:block;
+  width:200px;
+  margin:0 auto 25px auto;
+  padding:10px;
+  border-radius:30px;
+  border:1px solid gold;
+  background:transparent;
+  color:gold;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 input, select{
@@ -112,102 +119,114 @@ label{
   color:gold;
   font-weight:bold;
 }
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>🎤 SINGING REGISTRATION</h1>
+</style></head><body><div class="container"><h1 id="title1">🎤 SINGING REGISTRATION</h1>
 <h2>CHASTE DRAGON SQUAD</h2>
-<h2>WALLA / HEESAY DIVISION</h2>
+<h2>WALLA / HEESAY DIVISION</h2><button class="translate-btn" onclick="toggleLang()" id="btnTranslate">🌐 Translate: EN</button>
 
-<hr style="border:1px solid gold;margin:30px 0;">
+<hr style="border:1px solid gold;margin:30px 0;"><div class="description" id="descText">
+MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR.  
+Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.
+</div><a href="sing-walla-heesay-rules.html" class="rules-button" id="rulesBtn">
+📜 BACA PERATURAN
+</a><form id="formWalla"><label id="lblAdmin">Pilih Admin</label> <select id="admin" required>
 
-<div class="description">
-<b>ID:</b> Mohon membaca dan memahami seluruh peraturan sebelum mendaftar.  
-Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.<br><br>
-
-<b>EN:</b> Please read and understand all rules before registering.  
-By registering, you agree to participate in the Walla / Heesay singing event.
-</div>
-
-<a href="sing-walla-heesay-rules.html" class="rules-button">
-📜 BACA PERATURAN / VIEW RULES
-</a>
-
-<form id="formWalla">
-
-<label>Pilih Admin / Select Admin</label>
-<select id="admin" required>
   <option value="">-- Pilih Admin --</option>
   <option value="6285191295022">Admin Jessica</option>
   <option value="6288291996193">Admin Panda</option>
   <option value="6282246142678">Admin Surya</option>
   <option value="6283126442689">Admin Rara</option>
-</select>
+</select><label id="lblNama">Full Name</label> <input type="text" id="nama" required>
 
-<label>Full Name</label>
-<input type="text" id="nama" required>
+<label id="lblUmur">Age</label> <input type="number" id="umur" required>
 
-<label>Age / Umur</label>
-<input type="number" id="umur" required>
+<label id="lblAsal">From</label> <input type="text" id="asal" required>
 
-<label>From / Asal</label>
-<input type="text" id="asal" required>
+<label id="lblGroup">Name Group Sing</label> <input type="text" id="groupname" required>
 
-<label>Name Group Sing</label>
-<input type="text" id="groupname" required>
+<label id="lblJumlah">How many people are there in the group?</label> <input type="number" id="jumlah" required>
 
-<label>How many people are there in the group? / Jumlah member</label>
-<input type="number" id="jumlah" required>
+<label id="lblMember">Name Member Group</label> <input type="text" id="membergroup" required>
 
-<label>Name Member Group / Nama member group</label>
-<input type="text" id="membergroup" placeholder="Example: A, B, C" required>
+<label id="lblLagu">What song will you sing?</label> <input type="text" id="lagu" required>
 
-<label>What song will you sing? / Lagu yang dibawakan</label>
-<input type="text" id="lagu" required>
+<label id="lblLink">Link Account Walla-Heesay</label> <input type="text" id="link" required>
 
-<label>Link Account Walla-Heesay</label>
-<input type="text" id="link" required>
-
-<label>
+<label id="lblLinkGroup">
 Link Group Sing  
-<span style="font-size:12px;color:#ccc;">
-(ID: Jika belum punya, silakan buat group sing terlebih dahulu)<br>
-(EN: If you don't have one, please create your group sing first)
+<span id="infoGroup" style="font-size:12px;color:#ccc;">
+(information: Your Group Sing, if don't have make sure to create and make group sing)
 </span>
 </label>
-<input type="text" id="linkgroup" required>
-
-<div class="checkbox-area">
+<input type="text" id="linkgroup" required><div class="checkbox-area">
   <input type="checkbox" id="setuju">
-  <label for="setuju">
-  <b>ID:</b> Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.<br>
-  <b>EN:</b> I confirm that I have read and agreed to all rules.
+  <label for="setuju" id="lblAgree">
+  Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.
   </label>
-</div>
-
-<button type="submit" class="button-wa">
+</div><button type="submit" class="button-wa" id="btnSubmit">
 KIRIM PENDAFTARAN VIA WHATSAPP
-</button>
-
-</form>
-
-<div class="footer">
+</button></form><div class="footer" id="footerText">
 OFFICIAL SINGING REGISTRATION 2026<br>
 © CHASTE DRAGON
-</div>
+</div></div><script>
+let currentLang = "id";
 
-</div>
+function toggleLang(){
+  if(currentLang === "id"){
+    currentLang = "en";
 
-<script>
+    document.getElementById("btnTranslate").innerText = "🌐 Translate: ID";
+    document.getElementById("descText").innerText =
+      "PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING. By registering, you agree to join the Walla / Heesay singing event.";
+    document.getElementById("rulesBtn").innerText = "📜 Baca Aturan";
+    document.getElementById("lblAdmin").innerText = "Pilih Admin";
+    document.getElementById("lblNama").innerText = "Nama Lengkap Peserta";
+    document.getElementById("lblUmur").innerText = "Umur Para Peserta";
+    document.getElementById("lblAsal").innerText = "Asal Kota";
+    document.getElementById("lblGroup").innerText = "Nama Group";
+    document.getElementById("lblJumlah").innerText = "Berapa Orang Di Dalam Group?";
+    document.getElementById("lblMember").innerText = "Nama Member Group";
+    document.getElementById("lblLagu").innerText = "Lagu apa yang akan kamu nyanyikan?";
+    document.getElementById("lblLink").innerText = "Walla-Heesay Account Link";
+    document.getElementById("infoGroup").innerText =
+      "(information: Grup Bernyanyi, jika kamu belum memilikinya, silakan buat grup)";
+    document.getElementById("lblAgree").innerText =
+      "Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.";
+    document.getElementById("btnSubmit").innerText =
+      "KIRIM PENDAFTARAN VIA WHATSAPP";
+
+  } else {
+    currentLang = "id";
+
+    document.getElementById("btnTranslate").innerText = "🌐 Translate: EN";
+    document.getElementById("descText").innerText =
+      "MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR. Dengan mendaftar berarti Anda siap mengikuti event singing di Walla / Heesay.";
+    document.getElementById("rulesBtn").innerText = "📜 Ready The Rules";
+    document.getElementById("lblAdmin").innerText = "Select Admin";
+    document.getElementById("lblNama").innerText = "Full Name";
+    document.getElementById("lblUmur").innerText = "Age";
+    document.getElementById("lblAsal").innerText = "From";
+    document.getElementById("lblGroup").innerText = "Name Group Sing";
+    document.getElementById("lblJumlah").innerText = "How many people are there in the group?";
+    document.getElementById("lblMember").innerText = "Name Member Group";
+    document.getElementById("lblLagu").innerText = "What song will you sing?";
+    document.getElementById("lblLink").innerText = "Link Account Walla-Heesay";
+    document.getElementById("infoGroup").innerText =
+      "(information: Your Group Sing, if don't have make sure to create and make group sing)";
+    document.getElementById("lblAgree").innerText =
+      "I confirm that I have read and agree to all the rules";
+    document.getElementById("btnSubmit").innerText =
+      "SEND REGISTRATION VIA WHATSAPP";
+  }
+}
+
+// ===== submit WA =====
 document.getElementById("formWalla").addEventListener("submit", function(e){
   e.preventDefault();
 
   if(!document.getElementById("setuju").checked){
-    alert("Please agree to the rules first / Anda harus menyetujui peraturan terlebih dahulu!");
+    alert(currentLang === "id"
+      ? "Anda harus menyetujui peraturan terlebih dahulu!"
+      : "You must agree to the rules first!");
     return;
   }
 
@@ -222,25 +241,12 @@ document.getElementById("formWalla").addEventListener("submit", function(e){
   let link = document.getElementById("link").value;
   let linkgroup = document.getElementById("linkgroup").value;
 
-  let pesan = `Hello Admin, I would like to register for the WALLA / HEESAY Singing Event.
-
-Full Name: ${nama}
-Age: ${umur}
-From: ${asal}
-Group Name: ${groupname}
-Total Members: ${jumlah}
-Member Names: ${membergroup}
-Song: ${lagu}
-Account Link: ${link}
-Group Link: ${linkgroup}`;
+  let pesan = `Halo Admin, saya ingin mendaftar Singing Event WALLA / HEESAY.\n\nFull Name: ${nama}\nAge: ${umur}\nFrom: ${asal}\nName Group Sing: ${groupname}\nTotal Members: ${jumlah}\nName Member Group: ${membergroup}\nSong: ${lagu}\nLink Account: ${link}\nLink Group Sing: ${linkgroup}`;
 
   let url = "https://wa.me/" + admin + "?text=" + encodeURIComponent(pesan);
   window.open(url, "_blank");
 });
-</script>
-
-<br><br>
-<a href="sing-walla-heesay.html" style="color:gold;">⬅ Kembali</a>
+</script><br><br> <a href="sing-walla-heesay.html" style="color:gold;">⬅ Kembali/Back</a>
 
 </body>
 </html>
