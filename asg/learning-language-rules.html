@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>RULES LANGUAGE LEARNING</title>
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins,sans-serif;
+  padding:40px;
+  line-height:1.8;
+}
+
+h1,h2,h3{
+  color:gold;
+  text-align:center;
+}
+
+hr{
+  border:1px solid gold;
+  margin:30px 0;
+}
+
+p{
+  margin-bottom:15px;
+}
+
+.translate-btn{
+  display:block;
+  width:220px;
+  margin:0 auto 25px auto;
+  padding:10px;
+  border-radius:30px;
+  border:1px solid gold;
+  background:transparent;
+  color:gold;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.translate-btn:hover{
+  background:gold;
+  color:black;
+}
+
+.back-bottom{
+  display:block;
+  text-align:center;
+  margin-top:20px;
+  padding:12px;
+  border-radius:30px;
+  border:1px solid gold;
+  color:gold;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.back-bottom:hover{
+  background:gold;
+  color:black;
+}
+
+.rule-title{
+  color:gold;
+  font-weight:bold;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌏 RULES LANGUAGE LEARNING</h1>
+<p style="text-align:center;">CHASTE DRAGON Squad 2026</p>
+
+<button class="translate-btn" onclick="toggleLang()" id="btnTranslate">
+🌐 Translate: ID
+</button>
+
+<hr>
+
+<div id="rulesContent">
+
+<h2 id="titleRules">FOREIGN LANGUAGE LEARNING RULES</h2>
+
+<p id="intro">
+Semua peserta diwajibkan membaca dan mematuhi peraturan program belajar bahasa asing.
+</p>
+
+<div class="rule">
+<p class="rule-title">1. GUNAKAN IDENTITAS YANG SOPAN</p>
+<p id="rule1">
+Gunakan nama yang sopan dan tidak menyinggung peserta lain.
+</p>
+</div>
+
+<div class="rule">
+<p class="rule-title">2. SALING MENGHORMATI</p>
+<p id="rule2">
+Hormati semua peserta dari negara atau bahasa yang berbeda.
+</p>
+</div>
+
+<div class="rule">
+<p class="rule-title">3. FOKUS BELAJAR</p>
+<p id="rule3">
+Gunakan room untuk belajar bahasa, latihan berbicara, dan diskusi.
+</p>
+</div>
+
+<div class="rule">
+<p class="rule-title">4. DILARANG TOXIC</p>
+<p id="rule4">
+Dilarang menghina, mengejek aksen, atau merendahkan kemampuan bahasa peserta lain.
+</p>
+</div>
+
+<div class="rule">
+<p class="rule-title">5. PRIVASI & KEAMANAN</p>
+<p id="rule5">
+Dilarang menyebarkan data pribadi peserta tanpa izin.
+</p>
+</div>
+
+<div class="rule">
+<p class="rule-title">6. IKUTI ARAHAN HOST / ADMIN</p>
+<p id="rule6">
+Peserta wajib mengikuti arahan host, admin, atau mentor saat sesi belajar berlangsung.
+</p>
+</div>
+
+<hr>
+
+<h3 style="color:gold;">SANKSI / PENALTIES</h3>
+
+<p id="penalties">
+• Teguran / Warning<br>
+• Mute dari Room / Room Mute<br>
+• Dikeluarkan dari kelas / Removed from Class<br>
+• Blacklist Program / Program Blacklist
+</p>
+
+<hr>
+
+<p style="text-align:center;color:gold;font-weight:bold;" id="footerText">
+CHASTE DRAGON LANGUAGE LEARNING PROGRAM<br>
+Discipline • Respect • Growth
+</p>
+
+<p style="text-align:center;margin-top:25px;">
+<a href="learning-language-registration.html" class="back-bottom" id="btnBack">
+⬅ KEMBALI KE WEBSITE
+</a>
+</p>
+
+</div>
+
+<script>
+
+const langs=["id","en","cn","ph","kr"];
+let indexLang=0;
+
+function toggleLang(){
+
+indexLang=(indexLang+1)%langs.length;
+
+const lang=langs[indexLang];
+const btn=document.getElementById("btnTranslate");
+
+const translations={
+
+"id":{
+btn:"🌐 Translate: ID",
+intro:"Semua peserta diwajibkan membaca dan mematuhi peraturan program belajar bahasa asing.",
+rule1:"Gunakan nama yang sopan dan tidak menyinggung peserta lain.",
+rule2:"Hormati semua peserta dari negara atau bahasa yang berbeda.",
+rule3:"Gunakan room untuk belajar bahasa, latihan berbicara, dan diskusi.",
+rule4:"Dilarang menghina atau merendahkan kemampuan bahasa peserta lain.",
+rule5:"Dilarang menyebarkan data pribadi peserta tanpa izin.",
+rule6:"Peserta wajib mengikuti arahan host atau admin.",
+penalties:"• Teguran\n• Room Mute\n• Dikeluarkan dari kelas\n• Blacklist Program",
+back:"⬅ KEMBALI KE WEBSITE"
+},
+
+"en":{
+btn:"🌐 Translate: EN",
+intro:"All participants must read and follow the foreign language learning program rules.",
+rule1:"Use a polite nickname without offensive content.",
+rule2:"Respect participants from different countries and languages.",
+rule3:"Use the room for language learning and practice.",
+rule4:"Insulting or mocking other participants' language ability is prohibited.",
+rule5:"Sharing participants’ personal data is prohibited.",
+rule6:"Participants must follow host or admin instructions.",
+penalties:"• Warning\n• Room Mute\n• Removed from Class\n• Program Blacklist",
+back:"⬅ BACK TO WEBSITE"
+},
+
+"cn":{
+btn:"🌐 Translate: CN",
+intro:"所有参与者必须阅读并遵守外语学习规则。",
+rule1:"使用礼貌的昵称。",
+rule2:"尊重来自不同国家的学习者。",
+rule3:"使用房间进行语言学习和练习。",
+rule4:"禁止嘲笑他人的语言能力。",
+rule5:"禁止传播他人的个人信息。",
+rule6:"必须遵守主持人或管理员的指示。",
+penalties:"• 警告\n• 房间静音\n• 移出课程\n• 黑名单",
+back:"⬅ 返回网站"
+},
+
+"ph":{
+btn:"🌐 Translate: PH",
+intro:"Ang lahat ng kalahok ay kailangang sundin ang mga patakaran sa language learning program.",
+rule1:"Gumamit ng maayos na pangalan.",
+rule2:"Igalang ang mga kalahok mula sa iba't ibang bansa.",
+rule3:"Gamitin ang room para sa pag-aaral ng wika.",
+rule4:"Bawal mang-insulto ng kakayahan sa wika.",
+rule5:"Bawal ipakalat ang personal na impormasyon.",
+rule6:"Sundin ang host o admin.",
+penalties:"• Babala\n• Room Mute\n• Alisin sa klase\n• Blacklist Program",
+back:"⬅ BALIK SA WEBSITE"
+},
+
+"kr":{
+btn:"🌐 Translate: KR",
+intro:"모든 참가자는 외국어 학습 규칙을 읽고 따라야 합니다.",
+rule1:"적절한 닉네임 사용.",
+rule2:"다른 나라 참가자를 존중하세요.",
+rule3:"언어 학습과 연습을 위해 방을 사용하세요.",
+rule4:"다른 사람의 언어 능력을 조롱하지 마세요.",
+rule5:"개인 정보 공유 금지.",
+rule6:"호스트 또는 관리자 지시를 따르세요.",
+penalties:"• 경고\n• 룸 음소거\n• 수업에서 제거\n• 블랙리스트",
+back:"⬅ 웹사이트로 돌아가기"
+}
+
+};
+
+btn.innerHTML=translations[lang].btn;
+intro.innerHTML=translations[lang].intro;
+rule1.innerHTML=translations[lang].rule1;
+rule2.innerHTML=translations[lang].rule2;
+rule3.innerHTML=translations[lang].rule3;
+rule4.innerHTML=translations[lang].rule4;
+rule5.innerHTML=translations[lang].rule5;
+rule6.innerHTML=translations[lang].rule6;
+penalties.innerHTML=translations[lang].penalties.replace(/\n/g,"<br>");
+btnBack.innerHTML=translations[lang].back;
+
+}
+
+</script>
+
+</body>
+</html>
