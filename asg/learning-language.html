@@ -3,66 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <title>INFO BELAJAR BAHASA</title>
+
 <style>
+
 body{
-  background:black;
-  color:white;
-  font-family:Poppins,sans-serif;
-  padding:40px;
-  line-height:1.8;
+background:black;
+color:white;
+font-family:Poppins,sans-serif;
+padding:40px;
+line-height:1.8;
 }
+
 h1,h2,h3{
-  color:gold;
-  text-align:center;
+color:gold;
+text-align:center;
 }
+
 hr{
-  border:1px solid gold;
-  margin:30px 0;
+border:1px solid gold;
+margin:30px 0;
 }
+
 p{
-  margin-bottom:15px;
+margin-bottom:15px;
 }
+
 .translate-btn{
-  display:block;
-  width:220px;
-  margin:0 auto 25px auto;
-  padding:10px;
-  border-radius:30px;
-  border:1px solid gold;
-  background:transparent;
-  color:gold;
-  cursor:pointer;
-  font-weight:bold;
-  text-align:center;
-  transition:0.3s;
+display:block;
+width:220px;
+margin:0 auto 25px auto;
+padding:10px;
+border-radius:30px;
+border:1px solid gold;
+background:transparent;
+color:gold;
+cursor:pointer;
+font-weight:bold;
+text-align:center;
 }
+
 .translate-btn:hover{
-  background:gold;
-  color:black;
+background:gold;
+color:black;
 }
+
+.register-btn{
+display:block;
+text-align:center;
+margin:30px auto;
+padding:14px;
+border-radius:40px;
+background:linear-gradient(90deg,gold,orange);
+color:black;
+text-decoration:none;
+font-weight:bold;
+width:300px;
+transition:0.3s;
+}
+
+.register-btn:hover{
+transform:scale(1.05);
+}
+
 .back-bottom{
-  display:block;
-  text-align:center;
-  margin-top:20px;
-  padding:12px;
-  border-radius:30px;
-  border:1px solid gold;
-  color:gold;
-  text-decoration:none;
-  font-weight:bold;
-  transition:0.3s;
+display:block;
+text-align:center;
+margin-top:20px;
+padding:12px;
+border-radius:30px;
+border:1px solid gold;
+color:gold;
+text-decoration:none;
+font-weight:bold;
 }
+
 .back-bottom:hover{
-  background:gold;
-  color:black;
+background:gold;
+color:black;
 }
+
 .rule-title{
-  color:gold;
-  font-weight:bold;
-  margin-top:20px;
+color:gold;
+font-weight:bold;
+margin-top:20px;
 }
+
 </style>
 </head>
+
 <body>
 
 <h1>🌍 BELAJAR BAHASA ASING</h1>
@@ -77,41 +105,57 @@ p{
 <div id="rulesContent">
 
 <h2 id="titleRules">INFORMASI BELAJAR BAHASA</h2>
-<p id="intro">Program ini dibuat untuk membantu member belajar bahasa asing bersama.</p>
+
+<p id="intro">
+Program ini dibuat untuk membantu member belajar bahasa asing bersama.
+</p>
 
 <div class="rule">
-  <p class="rule-title">1. TUJUAN PROGRAM</p>
-  <p id="rule1">Program ini membantu member meningkatkan kemampuan bahasa asing.</p>
+<p class="rule-title">1. TUJUAN PROGRAM</p>
+<p id="rule1">
+Program ini membantu member meningkatkan kemampuan bahasa asing.
+</p>
 </div>
 
 <div class="rule">
-  <p class="rule-title">2. BAHASA YANG DIPELAJARI</p>
-  <p id="rule2">Bahasa yang tersedia: English, Mandarin, Korean, dan bahasa lainnya.</p>
+<p class="rule-title">2. BAHASA YANG DIPELAJARI</p>
+<p id="rule2">
+Bahasa yang tersedia: English, Mandarin, Korean, dan bahasa lainnya.
+</p>
 </div>
 
 <div class="rule">
-  <p class="rule-title">3. BELAJAR BERSAMA</p>
-  <p id="rule3">Member dapat belajar bersama melalui voice room atau diskusi.</p>
+<p class="rule-title">3. BELAJAR BERSAMA</p>
+<p id="rule3">
+Member dapat belajar bersama melalui voice room atau diskusi.
+</p>
 </div>
 
 <div class="rule">
-  <p class="rule-title">4. JAGA RESPECT</p>
-  <p id="rule4">Dilarang menghina kemampuan bahasa member lain.</p>
+<p class="rule-title">4. JAGA RESPECT</p>
+<p id="rule4">
+Dilarang menghina kemampuan bahasa member lain.
+</p>
 </div>
 
 <div class="rule">
-  <p class="rule-title">5. PRAKTIK BERBICARA</p>
-  <p id="rule5">Member dianjurkan untuk berlatih berbicara secara langsung.</p>
+<p class="rule-title">5. PRAKTIK BERBICARA</p>
+<p id="rule5">
+Member dianjurkan untuk berlatih berbicara secara langsung.
+</p>
 </div>
 
 <div class="rule">
-  <p class="rule-title">6. TUJUAN UTAMA</p>
-  <p id="rule6">Belajar bersama dengan santai, fun, dan saling membantu.</p>
+<p class="rule-title">6. TUJUAN UTAMA</p>
+<p id="rule6">
+Belajar bersama dengan santai, fun, dan saling membantu.
+</p>
 </div>
 
 <hr>
 
 <h3 style="color:gold;">KEUNTUNGAN PROGRAM</h3>
+
 <p id="penalties">
 • Belajar bahasa dengan komunitas<br>
 • Meningkatkan skill komunikasi<br>
@@ -121,11 +165,17 @@ p{
 
 <hr>
 
-<p style="text-align:center;color:gold;font-weight:bold;" id="footerText">
+<p style="text-align:center;color:gold;font-weight:bold;">
 CHASTE DRAGON LANGUAGE LEARNING<br>
 Learn • Practice • Grow
 </p>
 
+<!-- TOMBOL DAFTAR -->
+<a href="learning-language-registration.html" class="register-btn" id="btnRegister">
+📚 DAFTAR BELAJAR BAHASA
+</a>
+
+<!-- TOMBOL KEMBALI -->
 <p style="text-align:center;margin-top:25px;">
 <a href="../index.html" class="back-bottom" id="btnBack">
 ⬅ KEMBALI KE WEBSITE
@@ -135,88 +185,105 @@ Learn • Practice • Grow
 </div>
 
 <script>
-const langs = ["id","en","cn","ph","kr"];
-let indexLang = 0;
+
+const langs=["id","en","cn","ph","kr"];
+let indexLang=0;
 
 function toggleLang(){
-  indexLang = (indexLang+1)%langs.length;
-  const lang = langs[indexLang];
-  const btn = document.getElementById("btnTranslate");
 
-  const translations = {
-    "id":{
-      btn:"🌐 Translate: ID",
-      intro:"Program ini dibuat untuk membantu member belajar bahasa asing bersama.",
-      rule1:"Program ini membantu member meningkatkan kemampuan bahasa asing.",
-      rule2:"Bahasa yang tersedia: English, Mandarin, Korean, dan bahasa lainnya.",
-      rule3:"Member dapat belajar bersama melalui voice room atau diskusi.",
-      rule4:"Dilarang menghina kemampuan bahasa member lain.",
-      rule5:"Member dianjurkan untuk berlatih berbicara secara langsung.",
-      rule6:"Belajar bersama dengan santai, fun, dan saling membantu.",
-      penalties:"• Belajar bahasa dengan komunitas\n• Meningkatkan skill komunikasi\n• Bertemu teman baru dari berbagai negara\n• Latihan speaking secara langsung",
-      back:"⬅ KEMBALI KE WEBSITE"
-    },
-    "en":{
-      btn:"🌐 Translate: EN",
-      intro:"This program helps members learn foreign languages together.",
-      rule1:"The program aims to improve language skills.",
-      rule2:"Available languages: English, Mandarin, Korean and others.",
-      rule3:"Members can learn together through voice rooms or discussions.",
-      rule4:"Respect others' language abilities.",
-      rule5:"Members are encouraged to practice speaking directly.",
-      rule6:"Learning together in a fun and supportive environment.",
-      penalties:"• Learn with a community\n• Improve communication skills\n• Meet friends from different countries\n• Practice speaking directly",
-      back:"⬅ BACK TO WEBSITE"
-    },
-    "cn":{
-      btn:"🌐 Translate: CN",
-      intro:"该项目帮助成员一起学习外语。",
-      rule1:"该项目旨在提高语言能力。",
-      rule2:"提供的语言：英语、中文、韩语等。",
-      rule3:"成员可以通过语音房间或讨论一起学习。",
-      rule4:"尊重其他成员的语言能力。",
-      rule5:"鼓励成员进行口语练习。",
-      rule6:"在轻松和友好的环境中一起学习。",
-      penalties:"• 与社区一起学习\n• 提高沟通能力\n• 结识来自不同国家的朋友\n• 练习口语",
-      back:"⬅ 返回网站"
-    },
-    "ph":{
-      btn:"🌐 Translate: PH",
-      intro:"Ang programang ito ay tumutulong sa mga miyembro na matuto ng ibang wika.",
-      rule1:"Layunin ng program na mapabuti ang language skills.",
-      rule2:"Mga wikang available: English, Mandarin, Korean at iba pa.",
-      rule3:"Maaaring mag-aral ang members sa voice room o discussion.",
-      rule4:"Igalang ang kakayahan ng ibang miyembro.",
-      rule5:"Hinihikayat ang practice sa pagsasalita.",
-      rule6:"Masayang pag-aaral kasama ang komunidad.",
-      penalties:"• Matuto kasama ang komunidad\n• Improve communication skills\n• Makakilala ng bagong kaibigan\n• Practice speaking",
-      back:"⬅ BALIK SA WEBSITE"
-    },
-    "kr":{
-      btn:"🌐 Translate: KR",
-      intro:"이 프로그램은 외국어 학습을 돕기 위해 만들어졌습니다.",
-      rule1:"언어 능력 향상을 목표로 합니다.",
-      rule2:"가능한 언어: 영어, 중국어, 한국어 등.",
-      rule3:"음성방 또는 토론을 통해 함께 학습할 수 있습니다.",
-      rule4:"다른 회원의 언어 능력을 존중하세요.",
-      rule5:"직접 말하기 연습을 권장합니다.",
-      rule6:"편안하고 즐거운 환경에서 함께 학습합니다.",
-      penalties:"• 커뮤니티와 함께 학습\n• 의사소통 능력 향상\n• 새로운 친구 만나기\n• 말하기 연습",
-      back:"⬅ 웹사이트로 돌아가기"
-    }
-  };
+indexLang=(indexLang+1)%langs.length;
 
-  btn.innerHTML = translations[lang].btn;
-  document.getElementById("intro").innerHTML = translations[lang].intro;
-  document.getElementById("rule1").innerHTML = translations[lang].rule1;
-  document.getElementById("rule2").innerHTML = translations[lang].rule2;
-  document.getElementById("rule3").innerHTML = translations[lang].rule3;
-  document.getElementById("rule4").innerHTML = translations[lang].rule4;
-  document.getElementById("rule5").innerHTML = translations[lang].rule5;
-  document.getElementById("rule6").innerHTML = translations[lang].rule6;
-  document.getElementById("penalties").innerHTML = translations[lang].penalties.replace(/\n/g,"<br>");
-  document.getElementById("btnBack").innerHTML = translations[lang].back;
+const lang=langs[indexLang];
+const btn=document.getElementById("btnTranslate");
+
+const translations={
+
+"id":{
+btn:"🌐 Translate: ID",
+intro:"Program ini dibuat untuk membantu member belajar bahasa asing bersama.",
+rule1:"Program ini membantu member meningkatkan kemampuan bahasa asing.",
+rule2:"Bahasa yang tersedia: English, Mandarin, Korean dan lainnya.",
+rule3:"Member dapat belajar bersama melalui voice room atau diskusi.",
+rule4:"Dilarang menghina kemampuan bahasa member lain.",
+rule5:"Member dianjurkan untuk berlatih berbicara secara langsung.",
+rule6:"Belajar bersama dengan santai, fun, dan saling membantu.",
+penalties:"• Belajar bahasa dengan komunitas\n• Meningkatkan skill komunikasi\n• Bertemu teman baru dari berbagai negara\n• Latihan speaking secara langsung",
+register:"📚 DAFTAR BELAJAR BAHASA",
+back:"⬅ KEMBALI KE WEBSITE"
+},
+
+"en":{
+btn:"🌐 Translate: EN",
+intro:"This program helps members learn foreign languages together.",
+rule1:"The program aims to improve language skills.",
+rule2:"Available languages: English, Mandarin, Korean and others.",
+rule3:"Members can learn through voice rooms or discussions.",
+rule4:"Respect others' language abilities.",
+rule5:"Members are encouraged to practice speaking.",
+rule6:"Learning together in a fun environment.",
+penalties:"• Learn with a community\n• Improve communication skills\n• Meet friends from different countries\n• Practice speaking directly",
+register:"📚 REGISTER LANGUAGE LEARNING",
+back:"⬅ BACK TO WEBSITE"
+},
+
+"cn":{
+btn:"🌐 Translate: CN",
+intro:"该项目帮助成员一起学习外语。",
+rule1:"该项目旨在提高语言能力。",
+rule2:"提供语言：英语、中文、韩语等。",
+rule3:"成员可以通过语音房间或讨论一起学习。",
+rule4:"尊重他人的语言能力。",
+rule5:"鼓励成员练习口语。",
+rule6:"在轻松的环境中一起学习。",
+penalties:"• 与社区一起学习\n• 提高沟通能力\n• 结识新朋友\n• 练习口语",
+register:"📚 报名学习语言",
+back:"⬅ 返回网站"
+},
+
+"ph":{
+btn:"🌐 Translate: PH",
+intro:"Ang programang ito ay tumutulong sa mga miyembro na matuto ng ibang wika.",
+rule1:"Layunin ng program na mapabuti ang language skills.",
+rule2:"Available na wika: English, Mandarin, Korean at iba pa.",
+rule3:"Maaaring mag-aral sa voice room o discussion.",
+rule4:"Igalang ang kakayahan ng ibang miyembro.",
+rule5:"Hinihikayat ang practice sa speaking.",
+rule6:"Masayang pag-aaral kasama ang komunidad.",
+penalties:"• Matuto kasama ang komunidad\n• Improve communication\n• Makakilala ng bagong kaibigan\n• Practice speaking",
+register:"📚 MAG-REGISTER SA LANGUAGE PROGRAM",
+back:"⬅ BALIK SA WEBSITE"
+},
+
+"kr":{
+btn:"🌐 Translate: KR",
+intro:"이 프로그램은 외국어 학습을 돕기 위해 만들어졌습니다.",
+rule1:"언어 능력 향상을 목표로 합니다.",
+rule2:"가능한 언어: 영어, 중국어, 한국어 등.",
+rule3:"음성방 또는 토론으로 함께 학습합니다.",
+rule4:"다른 회원의 언어 능력을 존중하세요.",
+rule5:"말하기 연습을 권장합니다.",
+rule6:"편안하고 즐거운 환경에서 학습합니다.",
+penalties:"• 커뮤니티와 함께 학습\n• 의사소통 능력 향상\n• 새로운 친구\n• 말하기 연습",
+register:"📚 언어 학습 등록",
+back:"⬅ 웹사이트로 돌아가기"
 }
+
+};
+
+btn.innerHTML=translations[lang].btn;
+intro.innerHTML=translations[lang].intro;
+rule1.innerHTML=translations[lang].rule1;
+rule2.innerHTML=translations[lang].rule2;
+rule3.innerHTML=translations[lang].rule3;
+rule4.innerHTML=translations[lang].rule4;
+rule5.innerHTML=translations[lang].rule5;
+rule6.innerHTML=translations[lang].rule6;
+penalties.innerHTML=translations[lang].penalties.replace(/\n/g,"<br>");
+btnRegister.innerHTML=translations[lang].register;
+btnBack.innerHTML=translations[lang].back;
+
+}
+
 </script>
 
 </body>
