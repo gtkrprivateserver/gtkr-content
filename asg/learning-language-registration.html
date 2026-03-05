@@ -1,1 +1,309 @@
-a
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>LANGUAGE LEARNING REGISTRATION - CHASTE DRAGON</title>
+
+<style>
+
+body{
+background:black;
+color:white;
+font-family:Poppins, sans-serif;
+padding:40px;
+line-height:1.6;
+}
+
+h1,h2{
+color:gold;
+text-align:center;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:#111;
+padding:40px;
+border-radius:15px;
+border:2px solid gold;
+box-shadow:0 0 30px rgba(255,215,0,0.4);
+}
+
+.description{
+background:#000;
+border:1px solid gold;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+color:gold;
+font-weight:bold;
+text-align:center;
+}
+
+.rules-button{
+display:block;
+text-align:center;
+padding:12px;
+background:transparent;
+border:1px solid gold;
+color:gold;
+border-radius:30px;
+text-decoration:none;
+margin-bottom:30px;
+}
+
+.rules-button:hover{
+background:gold;
+color:black;
+}
+
+.translate-btn{
+display:block;
+width:220px;
+margin:0 auto 25px auto;
+padding:10px;
+border-radius:30px;
+border:1px solid gold;
+background:transparent;
+color:gold;
+cursor:pointer;
+font-weight:bold;
+}
+
+input, select{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:20px;
+border-radius:8px;
+border:1px solid gold;
+background:black;
+color:white;
+}
+
+label{
+font-weight:bold;
+color:gold;
+}
+
+.checkbox-area{
+margin:20px 0;
+background:#000;
+padding:15px;
+border-radius:10px;
+border:1px solid gold;
+}
+
+.button-wa{
+padding:14px;
+background:linear-gradient(90deg,gold,orange);
+color:black;
+font-weight:bold;
+border-radius:40px;
+border:none;
+cursor:pointer;
+width:100%;
+}
+
+.button-wa:hover{
+transform:scale(1.05);
+}
+
+.back-bottom{
+display:block;
+text-align:center;
+margin-top:20px;
+padding:12px;
+border-radius:30px;
+border:1px solid gold;
+color:gold;
+text-decoration:none;
+font-weight:bold;
+}
+
+.back-bottom:hover{
+background:gold;
+color:black;
+}
+
+.footer{
+margin-top:40px;
+text-align:center;
+color:gold;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌏 LANGUAGE LEARNING REGISTRATION</h1>
+<h2>CHASTE DRAGON SQUAD</h2>
+<h2>ASG - FOREIGN LANGUAGE DIVISION</h2>
+
+<button class="translate-btn" onclick="toggleLang()" id="btnTranslate">
+🌐 Translate: EN
+</button>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<div class="description" id="descText">
+PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING. By registering, you are ready to join the foreign language learning program.
+</div>
+
+<a href="learning-language-rules.html" class="rules-button" id="rulesBtn">
+📜 READ THE RULES
+</a>
+
+<form id="formBelajar">
+
+<label id="lblAdmin">Select Admin</label>
+<select id="admin" required>
+<option value="">-- Select Admin --</option>
+<option value="6285191295022">Admin Jessica (ID-EN)</option>
+<option value="6288291996193">Admin Panda (ID)</option>
+<option value="6282246142678">Admin Surya (ID)</option>
+<option value="6283126442689">Admin Rara (ID)</option>
+</select>
+
+<label id="lblNama">Full Name</label>
+<input type="text" id="nama" required>
+
+<label id="lblUmur">Age</label>
+<input type="number" id="umur" required>
+
+<label id="lblAsal">From</label>
+<input type="text" id="asal" required>
+
+<label id="lblBahasa">Language You Want To Learn</label>
+<select id="bahasa">
+<option>English</option>
+<option>Chinese</option>
+<option>Korean</option>
+<option>Japanese</option>
+<option>Indonesian</option>
+<option>Filipino</option>
+</select>
+
+<label id="lblLevel">Your Level</label>
+<select id="level">
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+</select>
+
+<label id="lblLink">Account Link</label>
+<input type="text" id="link" required>
+
+<div class="checkbox-area">
+<input type="checkbox" id="setuju">
+<label for="setuju" id="lblAgree">
+I agree to all rules
+</label>
+</div>
+
+<button type="submit" class="button-wa" id="btnSubmit">
+SEND REGISTRATION VIA WHATSAPP
+</button>
+
+</form>
+
+<a href="learning-language.html" class="back-bottom">
+⬅ Back to Main Page
+</a>
+
+<div class="footer">
+OFFICIAL LANGUAGE LEARNING REGISTRATION 2026<br>
+© CHASTE DRAGON
+</div>
+
+</div>
+
+<script>
+
+const langs=["id","en","cn","ph","kr","jp"];
+let indexLang=0;
+
+function toggleLang(){
+
+indexLang=(indexLang+1)%langs.length;
+let lang=langs[indexLang];
+
+const btn=document.getElementById("btnTranslate");
+
+if(lang==="id"){
+btn.innerText="🌐 Translate: ID";
+descText.innerText="MOHON MEMBACA DAN MEMAHAMI PERATURAN SEBELUM MENDAFTAR. Dengan mendaftar berarti Anda siap mengikuti program belajar bahasa asing.";
+rulesBtn.innerText="📜 BACA PERATURAN";
+lblAdmin.innerText="Pilih Admin";
+lblNama.innerText="Nama Lengkap";
+lblUmur.innerText="Umur";
+lblAsal.innerText="Asal Kota";
+lblBahasa.innerText="Bahasa yang ingin dipelajari";
+lblLevel.innerText="Level kamu";
+lblLink.innerText="Link akun";
+lblAgree.innerText="Saya menyetujui seluruh peraturan.";
+btnSubmit.innerText="KIRIM PENDAFTARAN VIA WHATSAPP";
+}
+
+if(lang==="en"){
+btn.innerText="🌐 Translate: EN";
+descText.innerText="PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING. By registering, you are ready to join the foreign language learning program.";
+rulesBtn.innerText="📜 READ THE RULES";
+}
+
+if(lang==="cn"){
+btn.innerText="🌐 Translate: CN";
+descText.innerText="请在注册前阅读并理解所有规则。注册后您将加入外语学习计划。";
+rulesBtn.innerText="📜 阅读规则";
+}
+
+if(lang==="ph"){
+btn.innerText="🌐 Translate: PH";
+descText.innerText="PAKIBASA AT UNAWAIN ANG MGA PATAKARAN BAGO MAGPAREHISTRO. Sa pagrehistro ay handa kang sumali sa language learning program.";
+rulesBtn.innerText="📜 Basahin ang Rules";
+}
+
+if(lang==="kr"){
+btn.innerText="🌐 Translate: KR";
+descText.innerText="등록하기 전에 모든 규칙을 읽고 이해해 주세요. 등록하면 외국어 학습 프로그램에 참여할 수 있습니다.";
+rulesBtn.innerText="📜 규칙 보기";
+}
+
+if(lang==="jp"){
+btn.innerText="🌐 Translate: JP";
+descText.innerText="登録する前にすべてのルールを読んで理解してください。登録すると外国語学習プログラムに参加できます。";
+rulesBtn.innerText="📜 ルールを見る";
+}
+
+}
+
+document.getElementById("formBelajar").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+if(!setuju.checked){
+alert("You must agree to the rules first!");
+return;
+}
+
+let pesan=`Hello Admin, I want to register for the Foreign Language Learning Program.
+
+Name: ${nama.value}
+Age: ${umur.value}
+From: ${asal.value}
+Language: ${bahasa.value}
+Level: ${level.value}
+Account Link: ${link.value}`;
+
+window.open("https://wa.me/"+admin.value+"?text="+encodeURIComponent(pesan),"_blank");
+
+});
+
+</script>
+
+</body>
+</html>
