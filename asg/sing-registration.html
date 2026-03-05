@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>SINGING REGISTRATION - Event Sing</title>
+
+<style>
+body{
+  background:black;
+  color:white;
+  font-family:Poppins, sans-serif;
+  padding:40px;
+  line-height:1.6;
+}
+
+h1,h2{
+  color:gold;
+  text-align:center;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  background:#111;
+  padding:40px;
+  border-radius:15px;
+  border:2px solid gold;
+  box-shadow:0 0 30px rgba(255,215,0,0.4);
+}
+
+.description{
+  background:#000;
+  border:1px solid gold;
+  padding:20px;
+  border-radius:10px;
+  margin-bottom:20px;
+  color:gold;
+  font-weight:bold;
+  text-align:center;
+}
+
+.rules-button{
+  display:block;
+  text-align:center;
+  padding:12px;
+  background:transparent;
+  border:1px solid gold;
+  color:gold;
+  border-radius:30px;
+  text-decoration:none;
+  margin-bottom:30px;
+  transition:0.3s;
+}
+
+.rules-button:hover{
+  background:gold;
+  color:black;
+}
+
+.translate-btn{
+  display:block;
+  width:220px;
+  margin:0 auto 25px auto;
+  padding:10px;
+  border-radius:30px;
+  border:1px solid gold;
+  background:transparent;
+  color:gold;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+input, select{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  margin-bottom:20px;
+  border-radius:8px;
+  border:1px solid gold;
+  background:black;
+  color:white;
+}
+
+label{
+  font-weight:bold;
+  color:gold;
+}
+
+.checkbox-area{
+  margin:20px 0;
+  background:#000;
+  padding:15px;
+  border-radius:10px;
+  border:1px solid gold;
+}
+
+.checkbox-area input{
+  width:auto;
+  margin-right:10px;
+}
+
+.button-wa{
+  display:inline-block;
+  padding:14px 30px;
+  background:linear-gradient(90deg,gold,orange);
+  color:black;
+  font-weight:bold;
+  border-radius:40px;
+  border:none;
+  cursor:pointer;
+  transition:0.3s;
+  width:100%;
+}
+
+.button-wa:hover{
+  transform:scale(1.05);
+}
+
+.back-bottom{
+  display:block;
+  text-align:center;
+  margin-top:20px;
+  padding:12px;
+  border-radius:30px;
+  border:1px solid gold;
+  color:gold;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.back-bottom:hover{
+  background:gold;
+  color:black;
+}
+
+.footer{
+  margin-top:40px;
+  text-align:center;
+  color:gold;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🎤 SINGING REGISTRATION</h1>
+<h2>CHASTE DRAGON SQUAD</h2>
+<h2>ASG - Asian Singer Global DIVISION</h2>
+
+<button class="translate-btn" onclick="toggleLang()" id="btnTranslate">
+🌐 Translate: EN
+</button>
+
+<hr style="border:1px solid gold;margin:30px 0;">
+
+<div class="description" id="descText">
+PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING. By registering, you are ready to participate in singing events.
+</div>
+
+<a href="sing-rules.html" class="rules-button" id="rulesBtn">
+📜 READ THE RULES
+</a>
+
+<form id="formWalla">
+
+<label id="lblAdmin">Select Admin</label>
+<select id="admin" required>
+<option value="">-- Select Admin --</option>
+<option value="6285191295022">Admin Jessica</option>
+<option value="6288291996193">Admin Panda</option>
+<option value="6282246142678">Admin Surya</option>
+<option value="6283126442689">Admin Rara</option>
+</select>
+
+<label id="lblNama">Full Name</label>
+<input type="text" id="nama" required>
+
+<label id="lblUmur">Age</label>
+<input type="number" id="umur" required>
+
+<label id="lblAsal">From</label>
+<input type="text" id="asal" required>
+
+<label id="lblGroup">Group Name</label>
+<input type="text" id="groupname" required>
+
+<label id="lblJumlah">How many people are in the group?</label>
+<input type="number" id="jumlah" required>
+
+<label id="lblMember">Member Names</label>
+<input type="text" id="membergroup" required>
+
+<label id="lblLagu">Song to perform</label>
+<input type="text" id="lagu" required>
+
+<label id="lblLink">Link Account</label>
+<input type="text" id="link" required>
+
+<label id="lblLinkGroup">
+Link Group Sing  
+<span id="infoGroup" style="font-size:12px;color:#ccc;">
+(information: if you don't have one, please create a group)
+</span>
+</label>
+<input type="text" id="linkgroup" required>
+
+<div class="checkbox-area">
+<input type="checkbox" id="setuju">
+<label for="setuju" id="lblAgree">
+I agree to all rules
+</label>
+</div>
+
+<button type="submit" class="button-wa" id="btnSubmit">
+SEND REGISTRATION VIA WHATSAPP
+</button>
+
+</form>
+
+<!-- tombol kembali DI BAWAH FORM -->
+<a href="sing.html" class="back-bottom">
+⬅ Kembali ke Halaman Utama
+</a>
+
+<div class="footer">
+OFFICIAL SINGING REGISTRATION 2026<br>
+© CHASTE DRAGON
+</div>
+
+</div>
+
+<script>
+const langs=["id","en","cn","ph","kr"];
+let indexLang=0;
+
+function toggleLang(){
+indexLang=(indexLang+1)%langs.length;
+const lang=langs[indexLang];
+const btn=document.getElementById("btnTranslate");
+
+if(lang==="id"){
+btn.innerText="🌐 Translate: ID";
+descText.innerText="MOHON MEMBACA DAN MEMAHAMI SELURUH PERATURAN SEBELUM MENDAFTAR. Dengan mendaftar berarti Anda siap mengikuti event singing.";
+rulesBtn.innerText="📜 BACA PERATURAN";
+lblAdmin.innerText="Pilih Admin";
+lblNama.innerText="Nama Lengkap Peserta";
+lblUmur.innerText="Umur Para Peserta";
+lblAsal.innerText="Asal Kota";
+lblGroup.innerText="Nama Group";
+lblJumlah.innerText="Ada berapa orang dalam group?";
+lblMember.innerText="Nama Anggota Grup";
+lblLagu.innerText="Lagu apa yang akan kamu nyanyikan?";
+lblLink.innerText="Link akun";
+infoGroup.innerText="(informasi: jika kamu belum memilikinya, silakan buat grup)";
+lblAgree.innerText="Saya menyatakan sudah membaca dan menyetujui seluruh peraturan.";
+btnSubmit.innerText="KIRIM PENDAFTARAN VIA WHATSAPP";
+}
+else if(lang==="en"){
+btn.innerText="🌐 Translate: EN";
+descText.innerText="PLEASE READ AND UNDERSTAND ALL RULES BEFORE REGISTERING. By registering, you are ready to participate in singing events";
+rulesBtn.innerText="📜 READ THE RULES";
+lblAdmin.innerText="Select Admin";
+lblNama.innerText="Full Name";
+lblUmur.innerText="Age";
+lblAsal.innerText="From";
+lblGroup.innerText="Group Name";
+lblJumlah.innerText="How many people are in the group?";
+lblMember.innerText="Member Names";
+lblLagu.innerText="Song to perform";
+lblLink.innerText="Link Account";
+infoGroup.innerText="(information: if you don't have one, please create a group)";
+lblAgree.innerText="I agree to all rules.";
+btnSubmit.innerText="SEND REGISTRATION VIA WHATSAPP";
+}
+else if(lang==="cn"){
+btn.innerText="🌐 Translate: CN";
+descText.innerText="请在注册前仔细阅读并理解所有规则。注册后，您即可参加在瓦拉/希赛举办的歌唱活动。";
+rulesBtn.innerText="📜 阅读规则";
+lblAdmin.innerText="选择管理员";
+lblNama.innerText="姓名";
+lblUmur.innerText="年龄";
+lblAsal.innerText="来自";
+lblGroup.innerText="组合名称";
+lblJumlah.innerText="成员人数";
+lblMember.innerText="成员姓名";
+lblLagu.innerText="演唱歌曲";
+lblLink.innerText="账号链接";
+infoGroup.innerText="（如果没有，请创建组合）";
+lblAgree.innerText="我已阅读并同意所有规则。";
+btnSubmit.innerText="通过WhatsApp发送报名";
+}
+else if(lang==="ph"){
+btn.innerText="🌐 Translate: PH";
+descText.innerText="PAKIBASA AT UNAWAIN ANG LAHAT NG MGA PATAKARAN BAGO MAGPAREHISTRO. Sa pamamagitan ng pagpaparehistro, handa ka nang lumahok sa mga kaganapan sa pag-awit sa.";
+rulesBtn.innerText="📜 Basahin ang Rules";
+lblAdmin.innerText="Piliin ang Admin";
+lblNama.innerText="Buong Pangalan";
+lblUmur.innerText="Edad";
+lblAsal.innerText="Mula sa";
+lblGroup.innerText="Pangalan ng Grupo";
+lblJumlah.innerText="Ilang miyembro";
+lblMember.innerText="Mga pangalan ng miyembro";
+lblLagu.innerText="Kantang kakantahin";
+lblLink.innerText="Link ng account";
+infoGroup.innerText="(kung wala pa, gumawa ng group)";
+lblAgree.innerText="Sumasang-ayon ako sa lahat ng patakaran.";
+btnSubmit.innerText="IPADALA ANG REGISTRATION VIA WHATSAPP";
+}
+else if(lang==="kr"){
+btn.innerText="🌐 Translate: KR";
+descText.innerText="등록하기 전에 모든 규칙을 읽고 이해해 주십시오. 등록하시면 EVENTs SING에서 열리는 노래 행사에 참여할 수 있습니다.";
+rulesBtn.innerText="📜 규칙 보기";
+lblAdmin.innerText="관리자 선택";
+lblNama.innerText="이름";
+lblUmur.innerText="나이";
+lblAsal.innerText="출신";
+lblGroup.innerText="그룹 이름";
+lblJumlah.innerText="그룹 인원수";
+lblMember.innerText="멤버 이름";
+lblLagu.innerText="부를 노래";
+lblLink.innerText="계정 링크";
+infoGroup.innerText="(없으면 그룹을 만드세요)";
+lblAgree.innerText="모든 규칙에 동의합니다.";
+btnSubmit.innerText="WhatsApp으로 신청 보내기";
+}
+}
+
+// ✅ submit WA ikut bahasa
+document.getElementById("formWalla").addEventListener("submit",function(e){
+e.preventDefault();
+if(!setuju.checked){alert("Harus setuju dulu!"); return;}
+let lang=langs[indexLang];
+let pesan="";
+if(lang==="id"){
+pesan=`Halo Admin, saya ingin mendaftar Singing Event.\n\nNama: ${nama.value}\nUmur: ${umur.value}\nAsal: ${asal.value}\nNama Group: ${groupname.value}\nJumlah Anggota: ${jumlah.value}\nNama Member Group: ${membergroup.value}\nLagu: ${lagu.value}\nLink Akun: ${link.value}\nLink Group Sing: ${linkgroup.value}`;
+}else if(lang==="en"){
+pesan=`Hello Admin, I would like to register for the l Singing Event.\n\nFull Name: ${nama.value}\nAge: ${umur.value}\nFrom: ${asal.value}\nGroup Name: ${groupname.value}\nTotal Members: ${jumlah.value}\nMember Names: ${membergroup.value}\nSong: ${lagu.value}\nAccount Link: ${link.value}\nGroup Link: ${linkgroup.value}`;
+}else if(lang==="cn"){
+pesan=`管理员您好，我想报名参加 歌唱活动。\n\n姓名: ${nama.value}\n年龄: ${umur.value}\n来自: ${asal.value}\n组合名称: ${groupname.value}\n成员人数: ${jumlah.value}\n成员姓名: ${membergroup.value}\n歌曲: ${lagu.value}\n账号链接: ${link.value}\n组合链接: ${linkgroup.value}`;
+}else if(lang==="ph"){
+pesan=`Hello Admin, gusto kong mag-register sa Singing Event.\n\nBuong Pangalan: ${nama.value}\nEdad: ${umur.value}\nMula sa: ${asal.value}\nPangalan ng Grupo: ${groupname.value}\nIlang miyembro: ${jumlah.value}\nMga pangalan ng miyembro: ${membergroup.value}\nKanta: ${lagu.value}\nLink ng account: ${link.value}\nLink ng grupo: ${linkgroup.value}`;
+}else if(lang==="kr"){
+pesan=`관리자님 안녕하세요, Singing Event에 등록하고 싶습니다.\n\n이름: ${nama.value}\n나이: ${umur.value}\n출신: ${asal.value}\n그룹 이름: ${groupname.value}\n총 멤버 수: ${jumlah.value}\n멤버 이름: ${membergroup.value}\n노래: ${lagu.value}\n계정 링크: ${link.value}\n그룹 링크: ${linkgroup.value}`;
+}
+window.open("https://wa.me/"+admin.value+"?text="+encodeURIComponent(pesan),"_blank");
+});
+</script>
+
+</body>
+</html>
